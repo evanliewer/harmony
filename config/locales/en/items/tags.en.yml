@@ -1,0 +1,154 @@
+en:
+  items/tags: &tags
+    label: &label Tags
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-tags
+    buttons: &buttons
+      new: Add New Tag
+      create: Create Tag
+      edit: Edit Tag
+      update: Update Tag
+      destroy: Remove Tag
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{tag_name}? This will also remove any child resources and can't be undone.
+    tag:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Tag ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      ticketable:
+        _: &ticketable Ticketable
+        label: *ticketable
+        heading: *ticketable
+        api_title: *ticketable
+        api_description: *ticketable
+        options:
+          yes: "Yes"
+          no: "No"
+      schedulable:
+        _: &schedulable Schedulable
+        label: *schedulable
+        heading: *schedulable
+        api_title: *schedulable
+        api_description: *schedulable
+        options:
+          yes: "Yes"
+          no: "No"
+      optionable:
+        _: &optionable Optionable
+        label: *optionable
+        heading: *optionable
+        api_title: *optionable
+        api_description: *optionable
+        options:
+          yes: "Yes"
+          no: "No"
+      exclusivable:
+        _: &exclusivable Exclusivable
+        label: *exclusivable
+        heading: *exclusivable
+        api_title: *exclusivable
+        api_description: *exclusivable
+        options:
+          yes: "Yes"
+          no: "No"
+      cleanable:
+        _: &cleanable Cleanable
+        label: *cleanable
+        heading: *cleanable
+        api_title: *cleanable
+        api_description: *cleanable
+        options:
+          yes: "Yes"
+          no: "No"
+      publicable:
+        _: &publicable Publicable
+        label: *publicable
+        heading: *publicable
+        api_title: *publicable
+        api_description: *publicable
+        options:
+          yes: "Yes"
+          no: "No"
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Tags"
+      index: "List Tags"
+      create: "Add a New Tag"
+      member_actions: "Actions for an Individual Tag"
+      show: "Retrieve a Tag"
+      update: "Update a Tag"
+      destroy: "Delete a Tag"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Tags"
+      contexts:
+        team:
+          header: Tags
+          description: Below is a list of Tags that have been added for %{team_name}.
+          description_empty: No Tags have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{tag_name}"
+      header: Tag Details
+      description: Below are the details we have for %{tag_name}.
+      manage_description: You'll also find options for updating these details or removing %{tag_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Tag for %{team_name}"
+      header: New Tag Details
+      description: Please provide the details of the new Tag you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{tag_name}"
+      header: Edit Tag Details
+      description: You can update the details or settings for %{tag_name} below.
+      form: *form
+    notifications:
+      created: Tag was successfully created.
+      updated: Tag was successfully updated.
+      destroyed: Tag was successfully destroyed.
+  account:
+    items:
+      tags: *tags
+  activerecord:
+    attributes:
+      items/tag:
+        name: *name
+        ticketable: *ticketable
+        schedulable: *schedulable
+        optionable: *optionable
+        exclusivable: *exclusivable
+        cleanable: *cleanable
+        publicable: *publicable
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

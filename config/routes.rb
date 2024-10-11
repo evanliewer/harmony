@@ -74,6 +74,9 @@ Rails.application.routes.draw do
         resources :organizations
         resources :retreats
         resources :reservations
+        namespace :items do
+          resources :tags
+        end
       end
     end
   end

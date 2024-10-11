@@ -29,6 +29,7 @@ components:
     <%= automatic_components_for Organization %>
     <%= automatic_components_for Retreat %>
     <%= automatic_components_for Reservation %>
+    <%= automatic_components_for Items::Tag %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -70,4 +71,5 @@ paths:
   <%= automatic_paths_for Organization, Team %>
   <%= automatic_paths_for Retreat, Team %>
   <%= automatic_paths_for Reservation, Team %>
+  <%= automatic_paths_for Items::Tag, Team %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>

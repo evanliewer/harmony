@@ -46,9 +46,8 @@ rails g super_scaffold Reservation Team name:text_field retreat_id:super_select{
 
 rails g super_scaffold Items::Tag Team name:text_field ticketable:boolean schedulable:boolean optionable:boolean exclusivable:boolean cleanable:boolean publicable:boolean
 
-
-
-
+rails g super_scaffold:join_model Items::AppliedTag item_id{class_name=Item} host_id{class_name=Items::Tag}
+rails g super_scaffold:field Item item_ids:super_select{class_name=Items::Tag}
 
 
 
