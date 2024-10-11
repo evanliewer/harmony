@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_034923) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_044333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -140,6 +140,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_034923) do
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_items_on_location_id"
     t.index ["team_id"], name: "index_items_on_team_id"
+  end
+
+  create_table "items_applied_tags", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.bigint "host_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["host_id"], name: "index_items_applied_tags_on_host_id"
+    t.index ["item_id"], name: "index_items_applied_tags_on_item_id"
   end
 
   create_table "items_tags", force: :cascade do |t|
@@ -515,6 +524,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_034923) do
   add_foreign_key "invitations", "teams"
   add_foreign_key "items", "locations"
   add_foreign_key "items", "teams"
+  add_foreign_key "items_applied_tags", "items"
+  add_foreign_key "items_applied_tags", "items_tags", column: "host_id"
   add_foreign_key "items_tags", "teams"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "invitations"

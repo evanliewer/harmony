@@ -87,6 +87,14 @@ en:
         heading: *beds
         api_title: *beds
         api_description: *beds
+      tag_ids: &tags
+        _: &tag_ids Tags
+        label: *tag_ids
+        heading: *tag_ids
+        api_title: *tag_ids
+        api_description: *tag_ids
+        placeholder: None
+      tags: *tags
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -151,6 +159,7 @@ en:
         clean: *clean
         flip_time: *flip_time
         beds: *beds
+        tag_ids: *tag_ids
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

@@ -7,6 +7,8 @@ class Item < ApplicationRecord
   belongs_to :location, optional: true
   # 🚅 add belongs_to associations above.
 
+  has_many :applied_tags, class_name: "Items::AppliedTag", dependent: :destroy
+  has_many :tags, through: :applied_tags, class_name: "Items::Tag"
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
@@ -23,6 +25,10 @@ class Item < ApplicationRecord
 
   def valid_locations
     team.locations
+  end
+
+  def valid_tags
+    team.items_tags.order(:name)
   end
 
   # 🚅 add methods above.

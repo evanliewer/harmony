@@ -40,6 +40,7 @@ class Api::V1::ItemsControllerTest < Api::Test
     assert_equal_or_nil item_data['clean'], item.clean
     assert_equal_or_nil item_data['flip_time'], item.flip_time
     assert_equal_or_nil item_data['beds'], item.beds
+    assert_equal_or_nil item_data['tag_ids'], item.tag_ids
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal item_data["team_id"], item.team_id
