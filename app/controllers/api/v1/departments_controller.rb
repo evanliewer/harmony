@@ -48,6 +48,7 @@ if defined?(Api::V1::ApplicationController)
           :dashboard,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
+          tag_ids: [],
           # 🚅 super scaffolding will insert new arrays above this line.
         )
 

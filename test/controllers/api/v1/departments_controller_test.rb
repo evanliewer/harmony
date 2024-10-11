@@ -33,6 +33,7 @@ class Api::V1::DepartmentsControllerTest < Api::Test
 
     assert_equal_or_nil department_data['name'], department.name
     assert_equal_or_nil department_data['dashboard'], department.dashboard
+    assert_equal_or_nil department_data['tag_ids'], department.tag_ids
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal department_data["team_id"], department.team_id

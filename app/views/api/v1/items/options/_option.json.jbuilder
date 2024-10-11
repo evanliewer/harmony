@@ -4,6 +4,7 @@ json.extract! option,
   :name,
   :capacity,
   :image_tag,
+  :description,
   # 🚅 super scaffolding will insert new fields above this line.
   :created_at,
   :updated_at

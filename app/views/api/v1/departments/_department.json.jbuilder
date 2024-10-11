@@ -3,6 +3,7 @@ json.extract! department,
   :team_id,
   :name,
   :dashboard,
+  :tag_ids,
   # 🚅 super scaffolding will insert new fields above this line.
   :created_at,
   :updated_at

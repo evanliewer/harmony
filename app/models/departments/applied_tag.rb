@@ -1,33 +1,27 @@
-class Department < ApplicationRecord
-  include Sortable
+class Departments::AppliedTag < ApplicationRecord
   # 🚅 add concerns above.
 
   # 🚅 add attribute accessors above.
 
-  belongs_to :team
+  belongs_to :department
+  belongs_to :tag, class_name: "Items::Tag"
   # 🚅 add belongs_to associations above.
 
-  has_many :applied_tags, class_name: "Departments::AppliedTag", dependent: :destroy
-  has_many :items_tags, through: :applied_tags, class_name: "Items::Tag"
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
 
   # 🚅 add scopes above.
 
-  validates :name, presence: true
+  validates :tag, scope: true
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.
 
   # 🚅 add delegations above.
 
-  def collection
-    team.departments
-  end
-
   def valid_tags
-    team.items_tags.order(:name)
+    department.valid_items_tags
   end
 
   # 🚅 add methods above.

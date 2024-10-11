@@ -29,7 +29,7 @@ class Item < ApplicationRecord
   end
 
   def valid_tags
-   # team.items_tags.order(:name)
+   team.items_tags.order(:name)
   end
 
   # 🚅 add methods above.

@@ -35,6 +35,7 @@ class Api::V1::Items::OptionsControllerTest < Api::Test
     assert_equal_or_nil option_data['name'], option.name
     assert_equal_or_nil option_data['capacity'], option.capacity
     assert_equal_or_nil option_data['image_tag'], option.image_tag
+    assert_equal_or_nil option_data['description'], option.description
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal option_data["item_id"], option.item_id
@@ -94,6 +95,7 @@ class Api::V1::Items::OptionsControllerTest < Api::Test
       access_token: access_token,
       items_option: {
         name: 'Alternative String Value',
+        description: 'Alternative String Value',
         # 🚅 super scaffolding will also insert new fields above this line.
       }
     }
@@ -106,6 +108,7 @@ class Api::V1::Items::OptionsControllerTest < Api::Test
     # But we have to manually assert the value was properly updated.
     @option.reload
     assert_equal @option.name, 'Alternative String Value'
+    assert_equal @option.description, 'Alternative String Value'
     # 🚅 super scaffolding will additionally insert new fields above this line.
 
     # Also ensure we can't do that same action as another user.

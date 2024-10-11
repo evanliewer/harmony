@@ -43,6 +43,12 @@ en:
         heading: *image_tag
         api_title: *image_tag
         api_description: *image_tag
+      description:
+        _: &description Description
+        label: *description
+        heading: *description
+        api_title: *description
+        api_description: *description
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added

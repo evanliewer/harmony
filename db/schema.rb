@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_052304) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_053716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_052304) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_departments_on_team_id"
+  end
+
+  create_table "departments_applied_tags", force: :cascade do |t|
+    t.bigint "department_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_departments_applied_tags_on_department_id"
+    t.index ["tag_id"], name: "index_departments_applied_tags_on_tag_id"
   end
 
   create_table "flights", force: :cascade do |t|
@@ -198,6 +207,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_052304) do
     t.string "image_tag"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
     t.index ["item_id"], name: "index_items_options_on_item_id"
   end
 
@@ -568,6 +578,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_052304) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "demographics", "teams"
   add_foreign_key "departments", "teams"
+  add_foreign_key "departments_applied_tags", "departments"
+  add_foreign_key "departments_applied_tags", "items_tags", column: "tag_id"
   add_foreign_key "flights", "flights_timeframes"
   add_foreign_key "flights", "teams"
   add_foreign_key "flights_checks", "flights"
