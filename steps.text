@@ -22,6 +22,8 @@ bin/super-scaffold crud Reservation Team name:text_field retreat_id:super_select
  rails g model Flight team:references name:string description:string external:boolean preflight:boolean warning:integer sort_order:integer
  bin/super-scaffold crud Flight Team name:text_field description:text_field external:boolean preflight:boolean warning:text_field --sortable
 
+rails g model Resources::Option resource:references name:string capacity:integer image_tag:string sort_order:integer
+bin/super-scaffold crud Resources::Option Resource,Team name:text_field capacity:text_field image_tag:cloudinary_image --sortable
 
 
 rails g super_scaffold Demographic Team name:text_field --sortable
@@ -58,6 +60,35 @@ rails g super_scaffold Flights::Timeframe Team name:text_field --sortable
 
 
 rails g super_scaffold:field Flight flights_timeframe_id:super_select{class_name=Flights::Timeframe}
+
+
+rails g super_scaffold Flights::Check Team name:text_field retreat_id:super_select{class_name=Retreat} flight_id:super_select{class_name=Flight} user_id:super_select{class_name=Membership} completed_at:date_and_time_field
+
+
+
+rails g super_scaffold Items::Option Item,Team name:text_field capacity:number_field image_tag:image --sortable
+
+
+rails g super_scaffold:join_model Departments::AppliedTag department_id{class_name=Department} tag_id{class_name=Items::Tag}
+rails g super_scaffold:field Department tag_ids:super_select{class_name=Items::Tag}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
