@@ -11,6 +11,7 @@ class Team < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :organizations, dependent: :destroy
   has_many :retreats, dependent: :destroy
+  has_many :reservations, dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.

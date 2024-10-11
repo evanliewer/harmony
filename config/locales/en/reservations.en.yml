@@ -1,0 +1,178 @@
+en:
+  reservations: &reservations
+    label: &label Reservations
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-calendar-clock
+    buttons: &buttons
+      new: Add New Reservation
+      create: Create Reservation
+      edit: Edit Reservation
+      update: Update Reservation
+      destroy: Remove Reservation
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{reservation_name}? This will also remove any child resources and can't be undone.
+    reservation:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Reservation ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      retreat_id: &retreat
+        _: &retreat_id Retreat
+        label: *retreat_id
+        heading: *retreat_id
+        api_title: *retreat_id
+        api_description: *retreat_id
+        placeholder: None
+      retreat: *retreat
+      item_id: &item
+        _: &item_id Item
+        label: *item_id
+        heading: *item_id
+        api_title: *item_id
+        api_description: *item_id
+        placeholder: None
+      item: *item
+      user_id: &user
+        _: &user_id User
+        label: *user_id
+        heading: *user_id
+        api_title: *user_id
+        api_description: *user_id
+        placeholder: None
+      user: *user
+      start_time:
+        _: &start_time Start Time
+        label: *start_time
+        heading: *start_time
+        api_title: *start_time
+        api_description: *start_time
+      end_time:
+        _: &end_time End Time
+        label: *end_time
+        heading: *end_time
+        api_title: *end_time
+        api_description: *end_time
+      quantity:
+        _: &quantity Quantity
+        label: *quantity
+        heading: *quantity
+        api_title: *quantity
+        api_description: *quantity
+      notes:
+        _: &notes Notes
+        label: *notes
+        heading: *notes
+        api_title: *notes
+        api_description: *notes
+      seasonal_default:
+        _: &seasonal_default Seasonal Default
+        label: *seasonal_default
+        heading: *seasonal_default
+        api_title: *seasonal_default
+        api_description: *seasonal_default
+        options:
+          yes: "Yes"
+          no: "No"
+      exclusive:
+        _: &exclusive Exclusive
+        label: *exclusive
+        heading: *exclusive
+        api_title: *exclusive
+        api_description: *exclusive
+        options:
+          yes: "Yes"
+          no: "No"
+      active:
+        _: &active Active
+        label: *active
+        heading: *active
+        api_title: *active
+        api_description: *active
+        options:
+          yes: "Yes"
+          no: "No"
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Reservations"
+      index: "List Reservations"
+      create: "Add a New Reservation"
+      member_actions: "Actions for an Individual Reservation"
+      show: "Retrieve a Reservation"
+      update: "Update a Reservation"
+      destroy: "Delete a Reservation"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Reservations"
+      contexts:
+        team:
+          header: Reservations
+          description: Below is a list of Reservations that have been added for %{team_name}.
+          description_empty: No Reservations have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{reservation_name}"
+      header: Reservation Details
+      description: Below are the details we have for %{reservation_name}.
+      manage_description: You'll also find options for updating these details or removing %{reservation_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Reservation for %{team_name}"
+      header: New Reservation Details
+      description: Please provide the details of the new Reservation you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{reservation_name}"
+      header: Edit Reservation Details
+      description: You can update the details or settings for %{reservation_name} below.
+      form: *form
+    notifications:
+      created: Reservation was successfully created.
+      updated: Reservation was successfully updated.
+      destroyed: Reservation was successfully destroyed.
+  account:
+    reservations: *reservations
+  activerecord:
+    attributes:
+      reservation:
+        name: *name
+        retreat_id: *retreat_id
+        item_id: *item_id
+        user_id: *user_id
+        start_time: *start_time
+        end_time: *end_time
+        quantity: *quantity
+        notes: *notes
+        seasonal_default: *seasonal_default
+        exclusive: *exclusive
+        active: *active
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

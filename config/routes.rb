@@ -73,6 +73,7 @@ Rails.application.routes.draw do
         resources :items
         resources :organizations
         resources :retreats
+        resources :reservations
       end
     end
   end

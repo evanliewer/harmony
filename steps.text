@@ -44,7 +44,7 @@ rails g super_scaffold:field Retreat host_ids:super_select{class_name=Membership
 rails g super_scaffold Reservation Team name:text_field retreat_id:super_select{class_name=Retreat} item_id:super_select{class_name=Item} user_id:super_select{class_name=Membership} start_time:date_and_time_field end_time:date_and_time_field quantity:number_field notes:text_field seasonal_default:boolean exclusive:boolean active:boolean 
 
 
-
+rails g super_scaffold Items::Tag Team name:text_field ticketable:boolean schedulable:boolean optionable:boolean exclusivable:boolean cleanable:boolean publicable:boolean
 
 
 

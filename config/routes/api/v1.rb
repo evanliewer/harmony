@@ -37,6 +37,7 @@ shallow do
       resources :items
       resources :organizations
       resources :retreats
+      resources :reservations
     end
   end
 end

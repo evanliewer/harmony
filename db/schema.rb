@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_023725) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_024801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -240,6 +240,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_023725) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_organizations_on_team_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.bigint "retreat_id"
+    t.bigint "item_id"
+    t.bigint "user_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "quantity"
+    t.string "notes"
+    t.boolean "seasonal_default", default: false
+    t.boolean "exclusive", default: false
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_reservations_on_item_id"
+    t.index ["retreat_id"], name: "index_reservations_on_retreat_id"
+    t.index ["team_id"], name: "index_reservations_on_team_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "resources", force: :cascade do |t|
@@ -491,6 +512,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_023725) do
   add_foreign_key "oauth_applications", "teams"
   add_foreign_key "oauth_stripe_accounts", "users"
   add_foreign_key "organizations", "teams"
+  add_foreign_key "reservations", "items"
+  add_foreign_key "reservations", "memberships", column: "user_id"
+  add_foreign_key "reservations", "retreats"
+  add_foreign_key "reservations", "teams"
   add_foreign_key "resources", "locations"
   add_foreign_key "resources", "teams"
   add_foreign_key "retreats", "organizations"
