@@ -57,9 +57,7 @@ rails g super_scaffold Flight Team name:text_field description:text_field extern
 rails g super_scaffold Flights::Timeframe Team name:text_field --sortable
 
 
-
-
-
+rails g super_scaffold:field Flight flights_timeframe_id:super_select{class_name=Flights::Timeframe}
 
 
 

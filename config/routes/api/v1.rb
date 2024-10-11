@@ -43,6 +43,9 @@ shallow do
       end
 
       resources :flights, concerns: [:sortable]
+      namespace :flights do
+        resources :timeframes, concerns: [:sortable]
+      end
     end
   end
 end

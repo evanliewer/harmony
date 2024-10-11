@@ -1,0 +1,62 @@
+<% timeframes = timeframes.accessible_by(current_ability) %>
+<% team = @team %>
+<% context ||= team %>
+<% collection ||= :flights_timeframes %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% pagy ||= nil %>
+<% pagy, timeframes = pagy(timeframes, page_param: :timeframes_page) unless pagy %>
+
+<%= action_model_select_controller do %>
+  <% cable_ready_updates_for context, collection do %>
+    <%= render 'account/shared/box', pagy: pagy do |box| %>
+      <% box.title t(".contexts.#{context.class.name.underscore}.header") %>
+      <% box.description do %>
+        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless timeframes.any?}") %>
+        <%= render "shared/limits/index", model: timeframes.model %>
+      <% end %>
+
+      <% box.table do %>
+        <% if timeframes.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <%= render "shared/tables/select_all" %>
+                <th><%= t('.fields.name.heading') %></th>
+                <%# 🚅 super scaffolding will insert new field headers above this line. %>
+                <th><%= t('.fields.created_at.heading') %></th>
+                <th class="text-right"></th>
+              </tr>
+            </thead>
+            <tbody data-controller="sortable" data-sortable-reorder-path-value="<%= url_for [:reorder, :account, context, collection] %>">
+              <%= render partial: 'account/flights/timeframes/timeframe', collection: timeframes %>
+            </tbody>
+          </table>
+        <% end %>
+      <% end %>
+
+      <% box.actions do %>
+        <% unless hide_actions %>
+          <% if context == team %>
+            <% if can? :create, Flights::Timeframe.new(team: team) %>
+              <%= link_to t('.buttons.new'), [:new, :account, team, :flights_timeframe], class: "#{first_button_primary(:flights_timeframe)} new" %>
+            <% end %>
+          <% end %>
+
+          <%# 🚅 super scaffolding will insert new targets one parent action model buttons above this line. %>
+          <%# 🚅 super scaffolding will insert new bulk action model buttons above this line. %>
+          <%= render "shared/bulk_action_select" if timeframes.any? %>
+
+          <% unless hide_back %>
+            <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:flights_timeframe)} back" %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% box.raw_footer do %>
+        <%# 🚅 super scaffolding will insert new action model index views above this line. %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,8 @@
+<% timeframe ||= @timeframe %>
+<% team ||= @team || timeframe&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :flights_timeframes] %>
+<% if timeframe&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: timeframe.label_string, url: [:account, timeframe] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'flights/timeframes' %>

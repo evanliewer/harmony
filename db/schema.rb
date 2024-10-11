@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_045035) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_045708) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_045035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_flights_on_team_id"
+  end
+
+  create_table "flights_timeframes", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.integer "sort_order"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_flights_timeframes_on_team_id"
   end
 
   create_table "integrations_stripe_installations", force: :cascade do |t|
@@ -532,6 +541,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_045035) do
   add_foreign_key "demographics", "teams"
   add_foreign_key "departments", "teams"
   add_foreign_key "flights", "teams"
+  add_foreign_key "flights_timeframes", "teams"
   add_foreign_key "integrations_stripe_installations", "oauth_stripe_accounts"
   add_foreign_key "integrations_stripe_installations", "teams"
   add_foreign_key "invitations", "account_onboarding_invitation_lists", column: "invitation_list_id"

@@ -1,5 +1,6 @@
 default:
   models:
+    Flights::Timeframe: read
     Flight: read
     Items::Tag: read
     Reservation: read
@@ -37,6 +38,7 @@ admin:
     - admin
     - editor
   models:
+    Flights::Timeframe: manage
     Flight: manage
     Items::Tag: manage
     Reservation: manage

@@ -31,6 +31,7 @@ components:
     <%= automatic_components_for Reservation %>
     <%= automatic_components_for Items::Tag %>
     <%= automatic_components_for Flight %>
+    <%= automatic_components_for Flights::Timeframe %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -74,4 +75,5 @@ paths:
   <%= automatic_paths_for Reservation, Team %>
   <%= automatic_paths_for Items::Tag, Team %>
   <%= automatic_paths_for Flight, Team %>
+  <%= automatic_paths_for Flights::Timeframe, Team %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>
