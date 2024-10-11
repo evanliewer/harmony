@@ -43,6 +43,7 @@ class Api::V1::RetreatsControllerTest < Api::Test
     assert_equal_or_nil retreat_data['location_ids'], retreat.location_ids
     assert_equal_or_nil retreat_data['demographic_ids'], retreat.demographic_ids
     assert_equal_or_nil retreat_data['planner_ids'], retreat.planner_ids
+    assert_equal_or_nil retreat_data['host_ids'], retreat.host_ids
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal retreat_data["team_id"], retreat.team_id

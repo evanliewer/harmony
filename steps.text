@@ -16,6 +16,10 @@ bin/super-scaffold crud Resource Team name:text_field location_id:super_select{c
 rails g model Retreat team:references name:string arrival:datetime departure:datetime guest_count:integer organization:references
 bin/super-scaffold crud Retreat Team name:text_field arrival:date_and_time_field departure:date_and_time_field guest_count:text_field organization_id:super_select{class_name=Organization}
 
+rails g model Reservation team:references name:string retreat:references resource:references user:references start_time:datetime end_time:datetime quantity:integer notes:string seasonal_default:boolean exclusive:boolean
+
+bin/super-scaffold crud Reservation Team name:text_field retreat_id:super_select{class_name=Retreat} resource_id:super_select{class_name=Resource} user_id:super_select{class_name=Membership} start_time:date_and_time_field end_time:date_and_time_field quantity:text_field notes:text_field seasonal_default:boolean exclusive:boolean
+
 
 
 rails g super_scaffold Demographic Team name:text_field --sortable
@@ -33,4 +37,32 @@ rails g super_scaffold:field Retreat demographic_ids:super_select{class_name=Dem
 
 rails g super_scaffold:join_model Retreats::PlannerTag retreat_id{class_name=Retreat} planner_id{class_name=Membership}
 rails g super_scaffold:field Retreat planner_ids:super_select{class_name=Membership}
+
+rails g super_scaffold:join_model Retreats::HostTag retreat_id{class_name=Retreat} host_id{class_name=Membership}
+rails g super_scaffold:field Retreat host_ids:super_select{class_name=Membership}
+
+rails g super_scaffold Reservation Team name:text_field retreat_id:super_select{class_name=Retreat} item_id:super_select{class_name=Item} user_id:super_select{class_name=Membership} start_time:date_and_time_field end_time:date_and_time_field quantity:number_field notes:text_field seasonal_default:boolean exclusive:boolean active:boolean 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

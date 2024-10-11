@@ -6,6 +6,8 @@ class Membership < ApplicationRecord
 
   has_many :retreats_planner_tags, class_name: "Retreats::PlannerTag", dependent: :destroy
   has_many :retreats, through: :retreats_planner_tags
+  has_many :retreats_host_tags, class_name: "Retreats::HostTag", dependent: :destroy
+  has_many :retreats, through: :retreats_host_tags
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.

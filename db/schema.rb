@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_023305) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_023725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -285,6 +285,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_023305) do
     t.index ["retreat_id"], name: "index_retreats_demographic_tags_on_retreat_id"
   end
 
+  create_table "retreats_host_tags", force: :cascade do |t|
+    t.bigint "retreat_id", null: false
+    t.bigint "host_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["host_id"], name: "index_retreats_host_tags_on_host_id"
+    t.index ["retreat_id"], name: "index_retreats_host_tags_on_retreat_id"
+  end
+
   create_table "retreats_location_tags", force: :cascade do |t|
     t.bigint "retreat_id", null: false
     t.bigint "location_id", null: false
@@ -488,6 +497,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_023305) do
   add_foreign_key "retreats", "teams"
   add_foreign_key "retreats_demographic_tags", "demographics"
   add_foreign_key "retreats_demographic_tags", "retreats"
+  add_foreign_key "retreats_host_tags", "memberships", column: "host_id"
+  add_foreign_key "retreats_host_tags", "retreats"
   add_foreign_key "retreats_location_tags", "locations"
   add_foreign_key "retreats_location_tags", "retreats"
   add_foreign_key "retreats_planner_tags", "memberships", column: "planner_id"
