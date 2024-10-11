@@ -17,6 +17,8 @@
       <%= render 'shared/fields/text_field', method: :jotform %>
       <%= render 'shared/fields/super_select', method: :location_ids, html_options: {multiple: true},
         choices: @retreat.valid_locations.map { |location| [location.label_string, location.id] } %>
+      <%= render 'shared/fields/super_select', method: :demographic_ids, html_options: {multiple: true},
+        choices: @retreat.valid_demographics.map { |demographic| [demographic.label_string, demographic.id] } %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

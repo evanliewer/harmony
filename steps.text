@@ -30,3 +30,7 @@ rails g super_scaffold:field Retreat location_ids:super_select{class_name=Locati
 
 rails g super_scaffold:join_model Retreats::DemographicTag retreat_id{class_name=Retreat} demographic_id{class_name=Demographic}
 rails g super_scaffold:field Retreat demographic_ids:super_select{class_name=Demographic}
+
+rails g super_scaffold:join_model Retreats::PlannerTag retreat_id{class_name=Retreat} planner_id{class_name=Membership}
+rails g super_scaffold:field Retreat planner_ids:super_select{class_name=membership}
+

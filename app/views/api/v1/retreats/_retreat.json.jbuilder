@@ -11,6 +11,7 @@ json.extract! retreat,
   :active,
   :jotform,
   :location_ids,
+  :demographic_ids,
   # 🚅 super scaffolding will insert new fields above this line.
   :created_at,
   :updated_at

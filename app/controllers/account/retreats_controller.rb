@@ -69,6 +69,7 @@ class Account::RetreatsController < Account::ApplicationController
     assign_date_and_time(strong_params, :arrival)
     assign_date_and_time(strong_params, :departure)
     assign_select_options(strong_params, :location_ids)
+    assign_select_options(strong_params, :demographic_ids)
     # 🚅 super scaffolding will insert processing for new fields above this line.
   end
 end
