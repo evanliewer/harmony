@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_050553) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_051239) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -116,6 +116,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_050553) do
     t.bigint "flights_timeframe_id"
     t.index ["flights_timeframe_id"], name: "index_flights_on_flights_timeframe_id"
     t.index ["team_id"], name: "index_flights_on_team_id"
+  end
+
+  create_table "flights_checks", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.bigint "retreat_id"
+    t.bigint "flight_id"
+    t.bigint "user_id"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flight_id"], name: "index_flights_checks_on_flight_id"
+    t.index ["retreat_id"], name: "index_flights_checks_on_retreat_id"
+    t.index ["team_id"], name: "index_flights_checks_on_team_id"
+    t.index ["user_id"], name: "index_flights_checks_on_user_id"
   end
 
   create_table "flights_timeframes", force: :cascade do |t|
@@ -544,6 +559,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_050553) do
   add_foreign_key "departments", "teams"
   add_foreign_key "flights", "flights_timeframes"
   add_foreign_key "flights", "teams"
+  add_foreign_key "flights_checks", "flights"
+  add_foreign_key "flights_checks", "memberships", column: "user_id"
+  add_foreign_key "flights_checks", "retreats"
+  add_foreign_key "flights_checks", "teams"
   add_foreign_key "flights_timeframes", "teams"
   add_foreign_key "integrations_stripe_installations", "oauth_stripe_accounts"
   add_foreign_key "integrations_stripe_installations", "teams"

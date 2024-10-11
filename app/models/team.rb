@@ -15,6 +15,7 @@ class Team < ApplicationRecord
   has_many :items_tags, class_name: "Items::Tag", dependent: :destroy, enable_cable_ready_updates: true
   has_many :flights, dependent: :destroy, enable_cable_ready_updates: true
   has_many :flights_timeframes, class_name: "Flights::Timeframe", dependent: :destroy
+  has_many :flights_checks, class_name: "Flights::Check", dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.

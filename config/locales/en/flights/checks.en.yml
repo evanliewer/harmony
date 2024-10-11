@@ -1,0 +1,128 @@
+en:
+  flights/checks: &checks
+    label: &label Checks
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-plane-circle-check
+    buttons: &buttons
+      new: Add New Check
+      create: Create Check
+      edit: Edit Check
+      update: Update Check
+      destroy: Remove Check
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{check_name}? This will also remove any child resources and can't be undone.
+    check:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Check ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      retreat_id: &retreat
+        _: &retreat_id Retreat
+        label: *retreat_id
+        heading: *retreat_id
+        api_title: *retreat_id
+        api_description: *retreat_id
+        placeholder: None
+      retreat: *retreat
+      flight_id: &flight
+        _: &flight_id Flight
+        label: *flight_id
+        heading: *flight_id
+        api_title: *flight_id
+        api_description: *flight_id
+        placeholder: None
+      flight: *flight
+      user_id: &user
+        _: &user_id User
+        label: *user_id
+        heading: *user_id
+        api_title: *user_id
+        api_description: *user_id
+        placeholder: None
+      user: *user
+      completed_at:
+        _: &completed_at Completed At
+        label: *completed_at
+        heading: *completed_at
+        api_title: *completed_at
+        api_description: *completed_at
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Checks"
+      index: "List Checks"
+      create: "Add a New Check"
+      member_actions: "Actions for an Individual Check"
+      show: "Retrieve a Check"
+      update: "Update a Check"
+      destroy: "Delete a Check"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Checks"
+      contexts:
+        team:
+          header: Checks
+          description: Below is a list of Checks that have been added for %{team_name}.
+          description_empty: No Checks have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{check_name}"
+      header: Check Details
+      description: Below are the details we have for %{check_name}.
+      manage_description: You'll also find options for updating these details or removing %{check_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Check for %{team_name}"
+      header: New Check Details
+      description: Please provide the details of the new Check you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{check_name}"
+      header: Edit Check Details
+      description: You can update the details or settings for %{check_name} below.
+      form: *form
+    notifications:
+      created: Check was successfully created.
+      updated: Check was successfully updated.
+      destroyed: Check was successfully destroyed.
+  account:
+    flights:
+      checks: *checks
+  activerecord:
+    attributes:
+      flights/check:
+        name: *name
+        retreat_id: *retreat_id
+        flight_id: *flight_id
+        user_id: *user_id
+        completed_at: *completed_at
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

@@ -81,6 +81,7 @@ Rails.application.routes.draw do
         resources :flights, concerns: [:sortable]
         namespace :flights do
           resources :timeframes, concerns: [:sortable]
+          resources :checks
         end
       end
     end
