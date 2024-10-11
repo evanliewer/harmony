@@ -1,24 +1,28 @@
-class Membership < ApplicationRecord
-  include Memberships::Base
+class Retreats::PlannerTag < ApplicationRecord
   # 🚅 add concerns above.
 
+  # 🚅 add attribute accessors above.
+
+  belongs_to :retreat
+  belongs_to :planner, class_name: "Membership"
   # 🚅 add belongs_to associations above.
 
-  has_many :retreats_planner_tags, class_name: "Retreats::PlannerTag", dependent: :destroy
-  has_many :retreats, through: :retreats_planner_tags
   # 🚅 add has_many associations above.
-
-  # 🚅 add oauth providers above.
 
   # 🚅 add has_one associations above.
 
   # 🚅 add scopes above.
 
+  validates :planner, scope: true
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.
 
   # 🚅 add delegations above.
+
+  def valid_planners
+    retreat.valid_memberships
+  end
 
   # 🚅 add methods above.
 end

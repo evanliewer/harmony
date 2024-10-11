@@ -103,6 +103,14 @@ en:
         api_description: *demographic_ids
         placeholder: None
       demographics: *demographics
+      planner_ids: &planners
+        _: &planner_ids Planners
+        label: *planner_ids
+        heading: *planner_ids
+        api_title: *planner_ids
+        api_description: *planner_ids
+        placeholder: None
+      planners: *planners
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -169,6 +177,7 @@ en:
         jotform: *jotform
         location_ids: *location_ids
         demographic_ids: *demographic_ids
+        planner_ids: *planner_ids
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

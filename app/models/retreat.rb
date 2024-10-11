@@ -11,6 +11,8 @@ class Retreat < ApplicationRecord
   has_many :locations, through: :location_tags
   has_many :demographic_tags, class_name: "Retreats::DemographicTag", dependent: :destroy
   has_many :demographics, through: :demographic_tags
+  has_many :planner_tags, class_name: "Retreats::PlannerTag", dependent: :destroy
+  has_many :planners, through: :planner_tags, class_name: "Membership"
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
@@ -35,6 +37,11 @@ class Retreat < ApplicationRecord
 
   def valid_demographics
     team.demographics
+  end
+
+  def valid_planners
+    team.memberships.where("memberships.role_ids @> ?", '["planner"]')
+    team.memberships.current_and_invited
   end
 
   # 🚅 add methods above.
