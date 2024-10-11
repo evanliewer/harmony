@@ -1768,6 +1768,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fortawesome/fontawesome-pro@npm:^6.6.0":
+  version: 6.6.0
+  resolution: "@fortawesome/fontawesome-pro@npm:6.6.0::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-pro%2F-%2F6.6.0%2Ffontawesome-pro-6.6.0.tgz"
+  checksum: 10c0/6934502291abb23e4016fd0bdf9f201a3d5191ed42fbd612b3ea7976096f5a8dabf9609b0fed2c6d2202dde1238dd568b462d2c5821f14764d12aabc5b5dd619
+  languageName: node
+  linkType: hard
+
 "@fullhuman/postcss-purgecss@npm:6.0.0":
   version: 6.0.0
   resolution: "@fullhuman/postcss-purgecss@npm:6.0.0"
@@ -2202,6 +2209,7 @@ __metadata:
     "@bullet-train/bullet-train-sortable": "npm:1.7.22"
     "@bullet-train/fields": "npm:1.7.22"
     "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
+    "@fortawesome/fontawesome-pro": "npm:^6.6.0"
     "@fullhuman/postcss-purgecss": "npm:6.0.0"
     "@hotwired/turbo-rails": "npm:^8.0.5"
     "@icon/themify-icons": "npm:^1.0.1-alpha.3"

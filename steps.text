@@ -1,0 +1,18 @@
+rails g model Demographic team:references name:string sort_order:integer
+bin/super-scaffold crud Demographic Team name:text_field --sortable
+
+rails g model Department team:references name:string dashboard:boolean sort_order:integer
+bin/super-scaffold crud Department Team name:text_field dashboard:boolean --sortable
+
+rails g model Location team:references name:string initials:string capacity:integer hexcolor:string active:boolean sort_order:integer
+bin/super-scaffold crud Location Team name:text_field initials:text_field capacity:text_field hexcolor:color_picker active:buttons --sortable
+
+rails g model Organization team:references name:string address:string address_second:string city:string state:string zip:string website:string
+bin/super-scaffold crud Organization Team name:text_field address:text_field address_second:text_field city:text_field state:text_field zip:text_field website:text_field
+
+
+
+rails g super_scaffold Demographic Team name:text_field --sortable
+rails g super_scaffold Department Team name:text_field dashboard:boolean --sortable
+rails g super_scaffold Location Team name:text_field initials:text_field capacity:number_field hex_color:color_picker active:buttons --sortable
+rails g super_scaffold Organization Team name:text_field address:address_field website:text_field
