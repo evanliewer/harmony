@@ -13,10 +13,17 @@ bin/super-scaffold crud Organization Team name:text_field address:text_field add
 rails g model Resource team:references name:string location:references active:boolean overlap_offset:integer image_tag:string clean:boolean
 bin/super-scaffold crud Resource Team name:text_field location_id:super_select{class_name=Location} active:boolean overlap_offset:text_field image_tag:cloudinary_image clean:boolean
 
+rails g model Retreat team:references name:string arrival:datetime departure:datetime guest_count:integer organization:references
+bin/super-scaffold crud Retreat Team name:text_field arrival:date_and_time_field departure:date_and_time_field guest_count:text_field organization_id:super_select{class_name=Organization}
+
 
 
 rails g super_scaffold Demographic Team name:text_field --sortable
 rails g super_scaffold Department Team name:text_field dashboard:boolean --sortable
 rails g super_scaffold Location Team name:text_field initials:text_field capacity:number_field hex_color:color_picker active:buttons --sortable
 rails g super_scaffold Organization Team name:text_field address:address_field website:text_field
-rails g super_scaffold Item Team name:text_field description:text_field location_id:super_select{class_name=Location} active:boolean overlap_offset:number_field image_tag:image clean:boolean flip_time:integer beds:number_field
+rails g super_scaffold Item Team name:text_field description:text_field location_id:super_select{class_name=Location} active:boolean overlap_offset:number_field image_tag:image clean:boolean flip_time:number_field beds:number_field
+rails g super_scaffold Retreat Team name:text_field description:text_field arrival:date_and_time_field departure:date_and_time_field guest_count:number_field organization_id:super_select{class_name:Organization} internal:boolean active:boolean jotform:text_field
+
+rails g super_scaffold:join_model Retreats::LocationTag retreat_id{class_name=Retreat} location_id{class_name=Location}
+rails g super_scaffold:field Retreat location_ids:super_select{class_name=Location}

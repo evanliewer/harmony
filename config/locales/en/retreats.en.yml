@@ -1,0 +1,156 @@
+en:
+  retreats: &retreats
+    label: &label Retreats
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-tents
+    buttons: &buttons
+      new: Add New Retreat
+      create: Create Retreat
+      edit: Edit Retreat
+      update: Update Retreat
+      destroy: Remove Retreat
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{retreat_name}? This will also remove any child resources and can't be undone.
+    retreat:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Retreat ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      description:
+        _: &description Description
+        label: *description
+        heading: *description
+        api_title: *description
+        api_description: *description
+      arrival:
+        _: &arrival Arrival
+        label: *arrival
+        heading: *arrival
+        api_title: *arrival
+        api_description: *arrival
+      departure:
+        _: &departure Departure
+        label: *departure
+        heading: *departure
+        api_title: *departure
+        api_description: *departure
+      guest_count:
+        _: &guest_count Guest Count
+        label: *guest_count
+        heading: *guest_count
+        api_title: *guest_count
+        api_description: *guest_count
+      organization_id: &organization
+        _: &organization_id Organization
+        label: *organization_id
+        heading: *organization_id
+        api_title: *organization_id
+        api_description: *organization_id
+        placeholder: None
+      organization: *organization
+      internal:
+        _: &internal Internal
+        label: *internal
+        heading: *internal
+        api_title: *internal
+        api_description: *internal
+        options:
+          yes: "Yes"
+          no: "No"
+      active:
+        _: &active Active
+        label: *active
+        heading: *active
+        api_title: *active
+        api_description: *active
+        options:
+          yes: "Yes"
+          no: "No"
+      jotform:
+        _: &jotform Jotform
+        label: *jotform
+        heading: *jotform
+        api_title: *jotform
+        api_description: *jotform
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Retreats"
+      index: "List Retreats"
+      create: "Add a New Retreat"
+      member_actions: "Actions for an Individual Retreat"
+      show: "Retrieve a Retreat"
+      update: "Update a Retreat"
+      destroy: "Delete a Retreat"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Retreats"
+      contexts:
+        team:
+          header: Retreats
+          description: Below is a list of Retreats that have been added for %{team_name}.
+          description_empty: No Retreats have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{retreat_name}"
+      header: Retreat Details
+      description: Below are the details we have for %{retreat_name}.
+      manage_description: You'll also find options for updating these details or removing %{retreat_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Retreat for %{team_name}"
+      header: New Retreat Details
+      description: Please provide the details of the new Retreat you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{retreat_name}"
+      header: Edit Retreat Details
+      description: You can update the details or settings for %{retreat_name} below.
+      form: *form
+    notifications:
+      created: Retreat was successfully created.
+      updated: Retreat was successfully updated.
+      destroyed: Retreat was successfully destroyed.
+  account:
+    retreats: *retreats
+  activerecord:
+    attributes:
+      retreat:
+        name: *name
+        arrival: *arrival
+        departure: *departure
+        guest_count: *guest_count
+        organization_id: *organization_id
+        internal: *internal
+        active: *active
+        jotform: *jotform
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

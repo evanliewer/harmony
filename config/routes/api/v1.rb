@@ -34,6 +34,9 @@ shallow do
       resources :demographics, concerns: [:sortable]
       resources :departments, concerns: [:sortable]
       resources :locations, concerns: [:sortable]
+      resources :items
+      resources :organizations
+      resources :retreats
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_012210) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_021057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,6 +125,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_012210) do
     t.index ["team_id"], name: "index_invitations_on_team_id"
   end
 
+  create_table "items", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.string "description"
+    t.bigint "location_id"
+    t.boolean "active", default: false
+    t.integer "overlap_offset"
+    t.string "image_tag"
+    t.boolean "clean", default: false
+    t.integer "flip_time"
+    t.integer "beds"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_items_on_location_id"
+    t.index ["team_id"], name: "index_items_on_team_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.integer "sort_order"
@@ -214,6 +231,49 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_012210) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["uid"], name: "index_oauth_stripe_accounts_on_uid", unique: true
     t.index ["user_id"], name: "index_oauth_stripe_accounts_on_user_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.string "website"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_organizations_on_team_id"
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.string "description"
+    t.bigint "location_id"
+    t.boolean "active", default: false
+    t.integer "overlap_offset"
+    t.string "image_tag"
+    t.boolean "clean", default: false
+    t.integer "beds"
+    t.integer "flip_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_resources_on_location_id"
+    t.index ["team_id"], name: "index_resources_on_team_id"
+  end
+
+  create_table "retreats", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.string "description"
+    t.datetime "arrival"
+    t.datetime "departure"
+    t.integer "guest_count"
+    t.bigint "organization_id"
+    t.boolean "internal", default: false
+    t.boolean "active", default: false
+    t.string "jotform"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_retreats_on_organization_id"
+    t.index ["team_id"], name: "index_retreats_on_team_id"
   end
 
   create_table "scaffolding_absolutely_abstract_creative_concepts", force: :cascade do |t|
@@ -382,6 +442,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_012210) do
   add_foreign_key "integrations_stripe_installations", "teams"
   add_foreign_key "invitations", "account_onboarding_invitation_lists", column: "invitation_list_id"
   add_foreign_key "invitations", "teams"
+  add_foreign_key "items", "locations"
+  add_foreign_key "items", "teams"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "invitations"
   add_foreign_key "memberships", "memberships", column: "added_by_id"
@@ -392,6 +454,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_012210) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_applications", "teams"
   add_foreign_key "oauth_stripe_accounts", "users"
+  add_foreign_key "organizations", "teams"
+  add_foreign_key "resources", "locations"
+  add_foreign_key "resources", "teams"
+  add_foreign_key "retreats", "organizations"
+  add_foreign_key "retreats", "teams"
   add_foreign_key "scaffolding_absolutely_abstract_creative_concepts", "teams"
   add_foreign_key "scaffolding_completely_concrete_tangible_things", "scaffolding_absolutely_abstract_creative_concepts", column: "absolutely_abstract_creative_concept_id"
   add_foreign_key "scaffolding_completely_concrete_tangible_things_assignments", "memberships"

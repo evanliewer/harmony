@@ -25,6 +25,9 @@ components:
     <%= automatic_components_for Demographic %>
     <%= automatic_components_for Department %>
     <%= automatic_components_for Location %>
+    <%= automatic_components_for Item %>
+    <%= automatic_components_for Organization %>
+    <%= automatic_components_for Retreat %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -62,4 +65,7 @@ paths:
   <%= automatic_paths_for Demographic, Team %>
   <%= automatic_paths_for Department, Team %>
   <%= automatic_paths_for Location, Team %>
+  <%= automatic_paths_for Item, Team %>
+  <%= automatic_paths_for Organization, Team %>
+  <%= automatic_paths_for Retreat, Team %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>

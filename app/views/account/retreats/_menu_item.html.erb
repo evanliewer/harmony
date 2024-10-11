@@ -1,0 +1,10 @@
+<% if can? :read, Retreat.new(team: current_team) %>
+  <%= render 'account/shared/menu/item', {
+    url: main_app.polymorphic_path([:account, current_team, :retreats]),
+    label: t('retreats.navigation.label'),
+  } do |p| %>
+    <% p.icon do %>
+      <i class="<%= t('retreats.navigation.icon') %>"></i>
+    <% end %>
+  <% end %>
+<% end %>
