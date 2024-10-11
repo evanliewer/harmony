@@ -9,6 +9,7 @@ class Item < ApplicationRecord
 
   has_many :applied_tags, class_name: "Items::AppliedTag", dependent: :destroy
   has_many :tags, through: :applied_tags, class_name: "Items::Tag"
+  has_many :options, class_name: "Items::Option", dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
@@ -28,7 +29,7 @@ class Item < ApplicationRecord
   end
 
   def valid_tags
-    team.items_tags.order(:name)
+   # team.items_tags.order(:name)
   end
 
   # 🚅 add methods above.

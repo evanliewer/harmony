@@ -1,0 +1,8 @@
+<% option ||= @option %>
+<% item ||= @item || option&.item %>
+<%= render 'account/items/breadcrumbs', item: item %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, item, :options] %>
+<% if option&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: option.label_string, url: [:account, option] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'items/options' %>

@@ -1,0 +1,108 @@
+en:
+  items/options: &options
+    label: &label Options
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-puzzle-piece
+    buttons: &buttons
+      new: Add New Option
+      create: Create Option
+      edit: Edit Option
+      update: Update Option
+      destroy: Remove Option
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{option_name}? This will also remove any child resources and can't be undone.
+    option:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Option ID
+      item_id:
+        heading: Item ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      capacity:
+        _: &capacity Capacity
+        label: *capacity
+        heading: *capacity
+        api_title: *capacity
+        api_description: *capacity
+      image_tag:
+        _: &image_tag Image Tag
+        label: *image_tag
+        heading: *image_tag
+        api_title: *image_tag
+        api_description: *image_tag
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Options"
+      index: "List Options"
+      create: "Add a New Option"
+      member_actions: "Actions for an Individual Option"
+      show: "Retrieve a Option"
+      update: "Update a Option"
+      destroy: "Delete a Option"
+      fields: *fields
+    index:
+      section: "%{items_possessive} Options"
+      contexts:
+        item:
+          header: Options
+          description: Below is a list of Options that have been added for %{item_name}.
+          description_empty: No Options have been added for %{item_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{option_name}"
+      header: Option Details
+      description: Below are the details we have for %{option_name}.
+      manage_description: You'll also find options for updating these details or removing %{option_name} from %{item_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Option for %{item_name}"
+      header: New Option Details
+      description: Please provide the details of the new Option you'd like to add to %{item_name}.
+      form: *form
+    edit:
+      section: "%{option_name}"
+      header: Edit Option Details
+      description: You can update the details or settings for %{option_name} below.
+      form: *form
+    notifications:
+      created: Option was successfully created.
+      updated: Option was successfully updated.
+      destroyed: Option was successfully destroyed.
+  account:
+    items:
+      options: *options
+  activerecord:
+    attributes:
+      items/option:
+        name: *name
+        capacity: *capacity
+        image_tag: *image_tag
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at
