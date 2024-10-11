@@ -7,6 +7,8 @@ class Retreat < ApplicationRecord
   belongs_to :organization, optional: true
   # 🚅 add belongs_to associations above.
 
+  has_many :location_tags, class_name: "Retreats::LocationTag", dependent: :destroy
+  has_many :locations, through: :location_tags
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
@@ -23,6 +25,10 @@ class Retreat < ApplicationRecord
 
   def valid_organizations
     team.organizations
+  end
+
+  def valid_locations
+    team.locations
   end
 
   # 🚅 add methods above.

@@ -65,9 +65,8 @@ en:
         api_title: *active
         api_description: *active
         options:
-          one: One
-          two: Two
-          three: Three
+          one: True
+          two: False
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added

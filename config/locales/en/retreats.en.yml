@@ -87,6 +87,14 @@ en:
         heading: *jotform
         api_title: *jotform
         api_description: *jotform
+      location_ids: &locations
+        _: &location_ids Locations
+        label: *location_ids
+        heading: *location_ids
+        api_title: *location_ids
+        api_description: *location_ids
+        placeholder: None
+      locations: *locations
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -151,6 +159,7 @@ en:
         internal: *internal
         active: *active
         jotform: *jotform
+        location_ids: *location_ids
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

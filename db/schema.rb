@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_021057) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_021948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -276,6 +276,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_021057) do
     t.index ["team_id"], name: "index_retreats_on_team_id"
   end
 
+  create_table "retreats_location_tags", force: :cascade do |t|
+    t.bigint "retreat_id", null: false
+    t.bigint "location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_retreats_location_tags_on_location_id"
+    t.index ["retreat_id"], name: "index_retreats_location_tags_on_retreat_id"
+  end
+
   create_table "scaffolding_absolutely_abstract_creative_concepts", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.string "name"
@@ -459,6 +468,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_021057) do
   add_foreign_key "resources", "teams"
   add_foreign_key "retreats", "organizations"
   add_foreign_key "retreats", "teams"
+  add_foreign_key "retreats_location_tags", "locations"
+  add_foreign_key "retreats_location_tags", "retreats"
   add_foreign_key "scaffolding_absolutely_abstract_creative_concepts", "teams"
   add_foreign_key "scaffolding_completely_concrete_tangible_things", "scaffolding_absolutely_abstract_creative_concepts", column: "absolutely_abstract_creative_concept_id"
   add_foreign_key "scaffolding_completely_concrete_tangible_things_assignments", "memberships"

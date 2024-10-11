@@ -55,6 +55,7 @@ if defined?(Api::V1::ApplicationController)
           :jotform,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
+          location_ids: [],
           # 🚅 super scaffolding will insert new arrays above this line.
         )
 

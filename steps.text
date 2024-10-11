@@ -27,3 +27,6 @@ rails g super_scaffold Retreat Team name:text_field description:text_field arriv
 
 rails g super_scaffold:join_model Retreats::LocationTag retreat_id{class_name=Retreat} location_id{class_name=Location}
 rails g super_scaffold:field Retreat location_ids:super_select{class_name=Location}
+
+rails g super_scaffold:join_model Retreats::DemographicTag retreat_id{class_name=Retreat} demographic_id{class_name=Demographic}
+rails g super_scaffold:field Retreat demographic_ids:super_select{class_name=Demographic}
