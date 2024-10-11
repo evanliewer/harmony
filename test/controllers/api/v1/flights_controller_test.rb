@@ -36,6 +36,7 @@ class Api::V1::FlightsControllerTest < Api::Test
     assert_equal_or_nil flight_data['external'], flight.external
     assert_equal_or_nil flight_data['preflight'], flight.preflight
     assert_equal_or_nil flight_data['warning'], flight.warning
+    assert_equal_or_nil flight_data['flights_timeframe_id'], flight.flights_timeframe_id
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal flight_data["team_id"], flight.team_id

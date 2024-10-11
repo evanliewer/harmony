@@ -12,6 +12,7 @@
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :external %></td>
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :preflight %></td>
     <td><%= render 'shared/attributes/number', attribute: :warning %></td>
+    <td><%= render 'shared/attributes/belongs_to', attribute: :flights_timeframe %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
     <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">

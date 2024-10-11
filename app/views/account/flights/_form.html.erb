@@ -10,6 +10,8 @@
       <%= render 'shared/fields/options', method: :external %>
       <%= render 'shared/fields/options', method: :preflight %>
       <%= render 'shared/fields/number_field', method: :warning %>
+      <%= render 'shared/fields/super_select', method: :flights_timeframe_id, options: {}, html_options: {},
+        choices: @flight.valid_flights_timeframes.map { |timeframe| [timeframe.label_string, timeframe.id] } %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

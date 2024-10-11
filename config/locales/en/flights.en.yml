@@ -61,6 +61,14 @@ en:
         heading: *warning
         api_title: *warning
         api_description: *warning
+      flights_timeframe_id: &flights_timeframe
+        _: &flights_timeframe_id Flights Timeframe
+        label: *flights_timeframe_id
+        heading: *flights_timeframe_id
+        api_title: *flights_timeframe_id
+        api_description: *flights_timeframe_id
+        placeholder: None
+      flights_timeframe: *flights_timeframe
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -121,6 +129,7 @@ en:
         external: *external
         preflight: *preflight
         warning: *warning
+        flights_timeframe_id: *flights_timeframe_id
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

@@ -5,6 +5,7 @@ class Flight < ApplicationRecord
   # 🚅 add attribute accessors above.
 
   belongs_to :team
+  belongs_to :flights_timeframe, class_name: "Flights::Timeframe", optional: true
   # 🚅 add belongs_to associations above.
 
   # 🚅 add has_many associations above.
@@ -14,6 +15,7 @@ class Flight < ApplicationRecord
   # 🚅 add scopes above.
 
   validates :name, presence: true
+  validates :flights_timeframe, scope: true
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.
@@ -22,6 +24,10 @@ class Flight < ApplicationRecord
 
   def collection
     team.flights
+  end
+
+  def valid_flights_timeframes
+    team.flights_timeframes
   end
 
   # 🚅 add methods above.

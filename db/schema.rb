@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_045708) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_050553) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -113,6 +113,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_045708) do
     t.integer "warning"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "flights_timeframe_id"
+    t.index ["flights_timeframe_id"], name: "index_flights_on_flights_timeframe_id"
     t.index ["team_id"], name: "index_flights_on_team_id"
   end
 
@@ -540,6 +542,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_045708) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "demographics", "teams"
   add_foreign_key "departments", "teams"
+  add_foreign_key "flights", "flights_timeframes"
   add_foreign_key "flights", "teams"
   add_foreign_key "flights_timeframes", "teams"
   add_foreign_key "integrations_stripe_installations", "oauth_stripe_accounts"
