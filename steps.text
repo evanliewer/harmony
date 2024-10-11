@@ -72,16 +72,18 @@ rails g super_scaffold Items::Option Item,Team name:text_field capacity:number_f
 rails g super_scaffold:join_model Departments::AppliedTag department_id{class_name=Department} tag_id{class_name=Items::Tag}
 rails g super_scaffold:field Department tag_ids:super_select{class_name=Items::Tag}
 
-
-
 rails g super_scaffold:field Items::Option description:text_field
 
 
+rails g super_scaffold Organizations::Contact Team first_name:text_field last_name:text_field job_title:text_field primary_phone:text_field email:email_field 
 
 
+rails g model Retreats::AssignedContact retreat:references contact:references
+bin/super-scaffold join-model Retreats::AssignedContact retreat_id{class_name=Retreat} contact_id{class_name=Organizations::Contact}
+bin/super-scaffold crud-field Retreat contact_ids:super_select{class_name=Organizations::Contact}
 
-
-
+rails g super_scaffold:join_model Retreats::AssignedContact retreat_id{class_name=Retreat} contact_id{class_name=Organizations::Contact}
+rails g super_scaffold:field Retreat contact_ids:super_select{Organizations::Contact}
 
 
 

@@ -88,6 +88,10 @@ Rails.application.routes.draw do
           resources :timeframes, concerns: [:sortable]
           resources :checks
         end
+
+        namespace :organizations do
+          resources :contacts
+        end
       end
     end
   end

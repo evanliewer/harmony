@@ -34,6 +34,7 @@ components:
     <%= automatic_components_for Flights::Timeframe %>
     <%= automatic_components_for Flights::Check %>
     <%= automatic_components_for Items::Option %>
+    <%= automatic_components_for Organizations::Contact %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -80,4 +81,5 @@ paths:
   <%= automatic_paths_for Flights::Timeframe, Team %>
   <%= automatic_paths_for Flights::Check, Team %>
   <%= automatic_paths_for Items::Option, Item %>
+  <%= automatic_paths_for Organizations::Contact, Team %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>
