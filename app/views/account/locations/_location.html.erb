@@ -1,0 +1,29 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :locations %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: location do %>
+  <tr data-id="<%= location.id %>">
+    <%= render "shared/tables/checkbox", object: location %>
+    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, location] %></td>
+    <td><%= render 'shared/attributes/text', attribute: :initials %></td>
+    <td><%= render 'shared/attributes/number', attribute: :capacity %></td>
+    <td><%= render 'shared/attributes/code', attribute: :hex_color %></td>
+    <td><%= render 'shared/attributes/option', attribute: :active %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, location %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, location], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, location %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, location], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(location)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

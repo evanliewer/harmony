@@ -1,0 +1,8 @@
+<% location ||= @location %>
+<% team ||= @team || location&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :locations] %>
+<% if location&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: location.label_string, url: [:account, location] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'locations' %>

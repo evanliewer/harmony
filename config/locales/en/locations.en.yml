@@ -1,0 +1,134 @@
+en:
+  locations: &locations
+    label: &label Locations
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-location-dot
+    buttons: &buttons
+      new: Add New Location
+      create: Create Location
+      edit: Edit Location
+      update: Update Location
+      destroy: Remove Location
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{location_name}? This will also remove any child resources and can't be undone.
+    location:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Location ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      initials:
+        _: &initials Initials
+        label: *initials
+        heading: *initials
+        api_title: *initials
+        api_description: *initials
+      capacity:
+        _: &capacity Capacity
+        label: *capacity
+        heading: *capacity
+        api_title: *capacity
+        api_description: *capacity
+      hex_color:
+        _: &hex_color Hex Color
+        label: *hex_color
+        heading: *hex_color
+        api_title: *hex_color
+        api_description: *hex_color
+        options:
+          - '#9C73D2'
+          - '#48CDFE'
+          - '#53F3ED'
+          - '#47E37F'
+          - '#F2593D'
+          - '#F68421'
+          - '#F9DE00'
+          - '#929292'
+      active:
+        _: &active Active
+        label: *active
+        heading: *active
+        api_title: *active
+        api_description: *active
+        options:
+          one: One
+          two: Two
+          three: Three
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Locations"
+      index: "List Locations"
+      create: "Add a New Location"
+      member_actions: "Actions for an Individual Location"
+      show: "Retrieve a Location"
+      update: "Update a Location"
+      destroy: "Delete a Location"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Locations"
+      contexts:
+        team:
+          header: Locations
+          description: Below is a list of Locations that have been added for %{team_name}.
+          description_empty: No Locations have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{location_name}"
+      header: Location Details
+      description: Below are the details we have for %{location_name}.
+      manage_description: You'll also find options for updating these details or removing %{location_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Location for %{team_name}"
+      header: New Location Details
+      description: Please provide the details of the new Location you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{location_name}"
+      header: Edit Location Details
+      description: You can update the details or settings for %{location_name} below.
+      form: *form
+    notifications:
+      created: Location was successfully created.
+      updated: Location was successfully updated.
+      destroyed: Location was successfully destroyed.
+  account:
+    locations: *locations
+  activerecord:
+    attributes:
+      location:
+        name: *name
+        initials: *initials
+        capacity: *capacity
+        hex_color: *hex_color
+        active: *active
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at
