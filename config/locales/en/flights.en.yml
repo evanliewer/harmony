@@ -1,0 +1,126 @@
+en:
+  flights: &flights
+    label: &label Flights
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-plane-up
+    buttons: &buttons
+      new: Add New Flight
+      create: Create Flight
+      edit: Edit Flight
+      update: Update Flight
+      destroy: Remove Flight
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{flight_name}? This will also remove any child resources and can't be undone.
+    flight:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Flight ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      description:
+        _: &description Description
+        label: *description
+        heading: *description
+        api_title: *description
+        api_description: *description
+      external:
+        _: &external External
+        label: *external
+        heading: *external
+        api_title: *external
+        api_description: *external
+        options:
+          yes: "Yes"
+          no: "No"
+      preflight:
+        _: &preflight Preflight
+        label: *preflight
+        heading: *preflight
+        api_title: *preflight
+        api_description: *preflight
+        options:
+          yes: "Yes"
+          no: "No"
+      warning:
+        _: &warning Warning
+        label: *warning
+        heading: *warning
+        api_title: *warning
+        api_description: *warning
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Flights"
+      index: "List Flights"
+      create: "Add a New Flight"
+      member_actions: "Actions for an Individual Flight"
+      show: "Retrieve a Flight"
+      update: "Update a Flight"
+      destroy: "Delete a Flight"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Flights"
+      contexts:
+        team:
+          header: Flights
+          description: Below is a list of Flights that have been added for %{team_name}.
+          description_empty: No Flights have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{flight_name}"
+      header: Flight Details
+      description: Below are the details we have for %{flight_name}.
+      manage_description: You'll also find options for updating these details or removing %{flight_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Flight for %{team_name}"
+      header: New Flight Details
+      description: Please provide the details of the new Flight you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{flight_name}"
+      header: Edit Flight Details
+      description: You can update the details or settings for %{flight_name} below.
+      form: *form
+    notifications:
+      created: Flight was successfully created.
+      updated: Flight was successfully updated.
+      destroyed: Flight was successfully destroyed.
+  account:
+    flights: *flights
+  activerecord:
+    attributes:
+      flight:
+        name: *name
+        external: *external
+        preflight: *preflight
+        warning: *warning
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

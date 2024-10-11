@@ -41,6 +41,8 @@ shallow do
       namespace :items do
         resources :tags
       end
+
+      resources :flights, concerns: [:sortable]
     end
   end
 end

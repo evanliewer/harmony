@@ -1,0 +1,29 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :flights %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: flight do %>
+  <tr data-id="<%= flight.id %>">
+    <%= render "shared/tables/checkbox", object: flight %>
+    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, flight] %></td>
+    <td><%= render 'shared/attributes/text', attribute: :description %></td>
+    <td class="text-center"><%= render 'shared/attributes/option', attribute: :external %></td>
+    <td class="text-center"><%= render 'shared/attributes/option', attribute: :preflight %></td>
+    <td><%= render 'shared/attributes/number', attribute: :warning %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, flight %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, flight], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, flight %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, flight], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(flight)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

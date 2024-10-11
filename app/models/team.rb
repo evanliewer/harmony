@@ -5,14 +5,15 @@ class Team < ApplicationRecord
 
   # 🚅 add belongs_to associations above.
 
-  has_many :demographics, dependent: :destroy
-  has_many :departments, dependent: :destroy
-  has_many :locations, dependent: :destroy
-  has_many :items, dependent: :destroy
-  has_many :organizations, dependent: :destroy
-  has_many :retreats, dependent: :destroy
-  has_many :reservations, dependent: :destroy
-  has_many :items_tags, class_name: "Items::Tag", dependent: :destroy
+  has_many :demographics, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :departments, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :locations, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :items, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :organizations, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :retreats, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :reservations, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :items_tags, class_name: "Items::Tag", dependent: :destroy, enable_cable_ready_updates: true
+  has_many :flights, dependent: :destroy, enable_cable_ready_updates: true
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.

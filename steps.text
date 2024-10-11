@@ -19,6 +19,8 @@ bin/super-scaffold crud Retreat Team name:text_field arrival:date_and_time_field
 rails g model Reservation team:references name:string retreat:references resource:references user:references start_time:datetime end_time:datetime quantity:integer notes:string seasonal_default:boolean exclusive:boolean
 
 bin/super-scaffold crud Reservation Team name:text_field retreat_id:super_select{class_name=Retreat} resource_id:super_select{class_name=Resource} user_id:super_select{class_name=Membership} start_time:date_and_time_field end_time:date_and_time_field quantity:text_field notes:text_field seasonal_default:boolean exclusive:boolean
+ rails g model Flight team:references name:string description:string external:boolean preflight:boolean warning:integer sort_order:integer
+ bin/super-scaffold crud Flight Team name:text_field description:text_field external:boolean preflight:boolean warning:text_field --sortable
 
 
 
@@ -47,8 +49,12 @@ rails g super_scaffold Reservation Team name:text_field retreat_id:super_select{
 rails g super_scaffold Items::Tag Team name:text_field ticketable:boolean schedulable:boolean optionable:boolean exclusivable:boolean cleanable:boolean publicable:boolean
 
 rails g super_scaffold:join_model Items::AppliedTag item_id{class_name=Item} tag_id{class_name=Items::Tag}
-rails g super_scaffold:field Item item_ids:super_select{class_name=Items::Tag}
+rails g super_scaffold:field Item tag_ids:super_select{class_name=Items::Tag}
 
+
+
+rails g super_scaffold Flight Team name:text_field description:text_field external:boolean preflight:boolean warning:number_field --sortable
+rails g super_scaffold Flights::Timeframe Team name:text_field --sortable
 
 
 

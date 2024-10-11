@@ -1,0 +1,8 @@
+<% flight ||= @flight %>
+<% team ||= @team || flight&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :flights] %>
+<% if flight&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: flight.label_string, url: [:account, flight] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'flights' %>
