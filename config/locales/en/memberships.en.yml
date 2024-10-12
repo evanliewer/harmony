@@ -53,7 +53,7 @@ en:
             description: Can create all resources and areas.  Deep access over multiple areas
           planner:
             label: Planner
-            description: Can plan retreats and reserve any resources, but cannot create new ones.
+            description: Can plan retreats and reserve any resources, but cannot create new ones. Can view Retreat Comments
           leader:
             label: Group Leader
             description: Can plan and manage any retreat they are assigned to. This is designed for group leaders who are not staff.

@@ -1,0 +1,99 @@
+en:
+  questions: &questions
+    label: &label Questions
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-seal-question
+    buttons: &buttons
+      new: Add New Question
+      create: Create Question
+      edit: Edit Question
+      update: Update Question
+      destroy: Remove Question
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{question_name}? This will also remove any child resources and can't be undone.
+    question:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Question ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      description:
+        _: &description Description
+        label: *description
+        heading: *description
+        api_title: *description
+        api_description: *description
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Questions"
+      index: "List Questions"
+      create: "Add a New Question"
+      member_actions: "Actions for an Individual Question"
+      show: "Retrieve a Question"
+      update: "Update a Question"
+      destroy: "Delete a Question"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Questions"
+      contexts:
+        team:
+          header: Questions
+          description: Below is a list of Questions that have been added for %{team_name}.
+          description_empty: No Questions have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{question_name}"
+      header: Question Details
+      description: Below are the details we have for %{question_name}.
+      manage_description: You'll also find options for updating these details or removing %{question_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Question for %{team_name}"
+      header: New Question Details
+      description: Please provide the details of the new Question you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{question_name}"
+      header: Edit Question Details
+      description: You can update the details or settings for %{question_name} below.
+      form: *form
+    notifications:
+      created: Question was successfully created.
+      updated: Question was successfully updated.
+      destroyed: Question was successfully destroyed.
+  account:
+    questions: *questions
+  activerecord:
+    attributes:
+      question:
+        name: *name
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

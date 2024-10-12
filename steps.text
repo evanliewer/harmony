@@ -96,6 +96,30 @@ bin/super-scaffold crud Notifications::Request Team name:text_field user_id:supe
 
 rails g super_scaffold Notifications::Request Team name:text_field user_id:super_select{class_name=Membership} notifications_flag_id:super_select{class_name=Notifications::Flag} days_before:text_field email:boolean
 
+rails g super_scaffold Season Team name:text_field item_id:super_select{class_name=Item} season_start:date_and_time_field season_end:date_and_time_field start_time:date_and_time_field end_time:date_and_time_field quantity:number_field notes:text_field
+
+
+rails g super_scaffold Question Team name:text_field description:text_field --sortable
+
+
+
+rails g model Questions::LocationTag question:references location:references 
+
+rails g super_scaffold:join_model Questions::LocationTag question_id{class_name=Question} location_id{class_name=Location}
+rails g super_scaffold:field Question location_ids:super_select{class_name=Location}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

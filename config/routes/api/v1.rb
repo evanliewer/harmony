@@ -72,6 +72,7 @@ shallow do
       end
 
       resources :seasons
+      resources :questions, concerns: [:sortable]
     end
   end
 end

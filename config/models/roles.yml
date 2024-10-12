@@ -1,10 +1,10 @@
 default:
   models:
+    Question: read
     Season: read
     Notifications::Request: read
     Notifications::Flag: read
     Notification: read
-    Retreats::Comment: read
     Organizations::Contact: read
     Items::Option: read
     Flights::Check: read
@@ -46,10 +46,19 @@ host:
 planner:
   includes:
     - default
+  models:
+    Retreats::Comment: manage
+    Retreat: manage
+    Reservation: manage
+    Season: manage
+    
 
 resource_editor:
   models:
-    Items: manage
+    Items:
+      - create
+      - read
+      - update
     Items::Option: manage
     Items::Tag: manage      
 
@@ -63,6 +72,7 @@ admin:
     - resource_editor
     - host
   models:
+    Question: manage
     Season: manage
     Notifications::Request: manage
     Notifications::Flag: manage

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_12_033447) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_12_213650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -374,6 +374,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_033447) do
     t.index ["team_id"], name: "index_organizations_contacts_on_team_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.integer "sort_order"
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_questions_on_team_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.string "name"
@@ -702,6 +712,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_033447) do
   add_foreign_key "oauth_stripe_accounts", "users"
   add_foreign_key "organizations", "teams"
   add_foreign_key "organizations_contacts", "teams"
+  add_foreign_key "questions", "teams"
   add_foreign_key "reservations", "items"
   add_foreign_key "reservations", "memberships", column: "user_id"
   add_foreign_key "reservations", "retreats"

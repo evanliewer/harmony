@@ -1,0 +1,8 @@
+<% question ||= @question %>
+<% team ||= @team || question&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :questions] %>
+<% if question&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: question.label_string, url: [:account, question] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'questions' %>
