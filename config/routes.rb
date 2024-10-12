@@ -106,6 +106,8 @@ Rails.application.routes.draw do
           resources :flags
           resources :requests
         end
+
+        resources :seasons
       end
     end
   end

@@ -1,7 +1,7 @@
 en:
   application:
     name: Harmony
-    owner: Unidentified Developer
+    owner: Evan Liewer
     description: "You can update this description in `config/locales/en/application.en.yml`."
     keywords: harmony seo keywords
     support_email: change.me@localhost

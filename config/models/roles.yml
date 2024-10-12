@@ -1,5 +1,6 @@
 default:
   models:
+    Season: read
     Notifications::Request: read
     Notifications::Flag: read
     Notification: read
@@ -38,13 +39,31 @@ editor:
       - read
       - update
 
+host:
+  includes:
+    - default
+
+planner:
+  includes:
+    - default
+
+resource_editor:
+  models:
+    Items: manage
+    Items::Option: manage
+    Items::Tag: manage      
+
 admin:
   includes:
     - editor
   manageable_roles:
     - admin
     - editor
+    - planner
+    - resource_editor
+    - host
   models:
+    Season: manage
     Notifications::Request: manage
     Notifications::Flag: manage
     Notification: manage

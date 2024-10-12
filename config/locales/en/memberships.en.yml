@@ -1,10 +1,121 @@
 en:
-  memberships:
-    fields:
-      _:
-      # 🚅 super scaffolding will insert new fields above this line.
+  memberships: &memberships
+    label: &label Team Members
+    singular: Team Member
+    navigation:
+      label: *label
+      icon: fal fa-users ti ti-flag-alt
+    breadcrumbs:
+      label: *label
+    buttons: &buttons
+      edit: Settings
+      show: Details
+      update: Update Membership
+      demote: Demote from Admin
+      promote: Promote to Admin
+      destroy: Remove from Team
+      destroy_own: Leave This Team
+      reinvite: Re-Invite to Team
+      confirmations:
+        destroy: Are you sure you want to remove %{membership_name} from %{team_name}?
+        destroy_own: Are you sure you want to remove yourself from %{team_name}? You won't be able to undo this.
+        reinvite: Are you sure you want to re-invite %{membership_name} to %{team_name}?
+    fields: &fields
+      grant_privileges_of: Grant Privileges of
+      name:
+        _: &name Full Name
+        heading: *name
+      user_first_name:
+        name: &user_first_name First Name
+        label: *user_first_name
+      user_last_name:
+        name: &user_last_name Last Name
+        label: *user_last_name
+      user_profile_photo_id:
+        name: &user_profile_photo_id Profile Photo
+        label: *user_profile_photo_id
+      role_ids:
+        name: &roles Special Privileges
+        label: *roles
+        heading: *roles
+        options:
+          default:
+            label: Viewer
+            description: Can only view team data
+          admin:
+            label: Team Administrator
+            description: Can do anything
+          planner:
+            label: Event Planner
+            description: Can plan retreats and reserve any resources, but cannot create new ones.
+          editor:
+            label: Editor
+            description: Can create all resources and areas.  Deep access over multiple areas
+          planner:
+            label: Planner
+            description: Can plan retreats and reserve any resources, but cannot create new ones.
+          leader:
+            label: Group Leader
+            description: Can plan and manage any retreat they are assigned to. This is designed for group leaders who are not staff.
+          ticketing:
+            label: Maintenance Ticketing
+            description: Additional permission. Can be assigned to maintenance tickets and are able to update maintenance request tickets 
+          resource_editor:
+            label: Resource Editor
+            description: Given to staff who need to create or change resources.  They cannot delete them.  
+          host:
+            label: Host
+            description: Host Guest Groups   
+          basic:
+            label: Default Staff Access
+            description: Given to staff who can view all retreats.        
+        none: Viewer
+    index:
+      section: "%{team_name} Team Members"
+      contexts:
+        team:
+          header: Team Members
+          description: The following people are members of your team. You can also invite new team members.
+          fields: *fields
+      buttons: *buttons
+    tombstones:
+      contexts:
+        team:
+          header: Former Team Members
+          description: The following people have been removed from %{team_name}, but you can still manage their profile and reassign their assignments to other team members.
+      buttons: *buttons
+    form: &form
+      grant_privileges_of: Grant Privileges of %{role_key}
+      buttons: *buttons
+      fields: *fields
+    edit:
+      section: "%{membership_name} on %{team_name}"
+      header: Update Membership Settings
+      description: You can edit the settings for %{memberships_possessive} membership on %{team_name} below.
+      grant_privileges_of: Grant Privileges of %{role_key}
+      remove_header: Remove Team Member
+      remove_description: Removing %{membership_name} won't remove any resource assignments. Instead, you'll have the option of reassigning resources to another team member. You'll also be able to re-invite %{membership_name} back to the team in the future.
+      buttons: *buttons
+    show:
+      section: "%{memberships_possessive} Membership on %{team_name}"
+      header: Membership Details
+      invitation_header: Invitation Details
+      tombstone_header: Former Team Member
+      description: The following are the details for %{memberships_possessive} Membership on %{team_name}.
+      buttons: *buttons
+      fields: *fields
+    notifications:
+      updated: Membership successfully updated.
+      destroyed: That user has been successfully removed from the team.
+      no_members: You don't have any other team members yet! Get started by sending an invitation.
+      cant_demote: Sorry, you can't demote the last admin on a team. Please make someone else an admin first.
+      cant_remove: Sorry, you can't remove the last admin on a team. Please make someone else an admin first.
+      you_removed_yourself: You've successfully removed yourself from %{team_name}.
+      reinvited: The user has been successfully re-invited.  They will receive an email to rejoin the team.
+  account:
+    memberships: *memberships
   activerecord:
     attributes:
-      membership:
-        _:
-        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+      memberships:
+        user_first_name: *user_first_name
+        user_last_name: *user_last_name

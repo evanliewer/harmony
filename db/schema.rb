@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_12_033159) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_12_033447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -526,6 +526,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_033159) do
     t.index ["tangible_thing_id"], name: "index_tangible_things_assignments_on_tangible_thing_id"
   end
 
+  create_table "seasons", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.bigint "item_id"
+    t.datetime "season_start"
+    t.datetime "season_end"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "quantity"
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_seasons_on_item_id"
+    t.index ["team_id"], name: "index_seasons_on_team_id"
+  end
+
   create_table "teams", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "slug"
@@ -710,6 +726,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_033159) do
   add_foreign_key "scaffolding_completely_concrete_tangible_things", "scaffolding_absolutely_abstract_creative_concepts", column: "absolutely_abstract_creative_concept_id"
   add_foreign_key "scaffolding_completely_concrete_tangible_things_assignments", "memberships"
   add_foreign_key "scaffolding_completely_concrete_tangible_things_assignments", "scaffolding_completely_concrete_tangible_things", column: "tangible_thing_id"
+  add_foreign_key "seasons", "items"
+  add_foreign_key "seasons", "teams"
   add_foreign_key "users", "oauth_applications", column: "platform_agent_of_id"
   add_foreign_key "webhooks_outgoing_endpoints", "scaffolding_absolutely_abstract_creative_concepts"
   add_foreign_key "webhooks_outgoing_endpoints", "teams"

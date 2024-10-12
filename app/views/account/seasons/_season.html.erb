@@ -1,0 +1,32 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :seasons %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: season do %>
+  <tr data-id="<%= season.id %>">
+    <%= render "shared/tables/checkbox", object: season %>
+    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, season] %></td>
+    <td><%= render 'shared/attributes/belongs_to', attribute: :item %></td>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :season_start %></td>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :season_end %></td>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :start_time %></td>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :end_time %></td>
+    <td><%= render 'shared/attributes/number', attribute: :quantity %></td>
+    <td><%= render 'shared/attributes/text', attribute: :notes %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, season %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, season], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, season %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, season], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(season)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

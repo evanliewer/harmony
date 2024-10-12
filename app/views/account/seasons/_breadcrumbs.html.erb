@@ -1,0 +1,8 @@
+<% season ||= @season %>
+<% team ||= @team || season&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :seasons] %>
+<% if season&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: season.label_string, url: [:account, season] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'seasons' %>
