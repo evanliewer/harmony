@@ -1,0 +1,8 @@
+<% flag ||= @flag %>
+<% team ||= @team || flag&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :notifications_flags] %>
+<% if flag&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: flag.label_string, url: [:account, flag] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'notifications/flags' %>

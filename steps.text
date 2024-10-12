@@ -87,15 +87,14 @@ rails g super_scaffold Retreats::Comment Retreat,Team name:text_field user_id:su
 rails g super_scaffold Notification Team name:text_field user_id:super_select{class_name=Membership} read_at:date_and_time_field action_text:text_field emailed:boolean       #####notifiable:references{polymorphic}:index
 
 
-rails g model Notifications::Flag team:references name:string department:references  
-bin/super-scaffold crud Notifications::Flag Team name:text_field department_id:super_select{class_name=Department}
-
 rails g super_scaffold Notifications::Flag Team name:text_field department_id:super_select{class_name=Department}
 
 
+rails g model Notifications::Request team:references name:string user:references notifications_flag:references days_before:integer email:boolean
+bin/super-scaffold crud Notifications::Request Team name:text_field user_id:super_select{class_name=Membership} notifications_flag_id:super_select{class_name=Notifications::Flag} days_before:text_field email:boolean
 
 
-
+rails g super_select Notifications::Request Team name:text_field user_id:super_select{class_name=Membership} notifications_flag_id:super_select{class_name=Notifications::Flag} days_before:text_field email:boolean
 
 
 

@@ -1,0 +1,10 @@
+<% if can? :read, Notifications::Flag.new(team: current_team) %>
+  <%= render 'account/shared/menu/item', {
+    url: main_app.polymorphic_path([:account, current_team, :notifications_flags]),
+    label: t('notifications/flags.navigation.label'),
+  } do |p| %>
+    <% p.icon do %>
+      <i class="<%= t('notifications/flags.navigation.icon') %>"></i>
+    <% end %>
+  <% end %>
+<% end %>

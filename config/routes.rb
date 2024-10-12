@@ -102,6 +102,9 @@ Rails.application.routes.draw do
         end
 
         resources :notifications
+        namespace :notifications do
+          resources :flags
+        end
       end
     end
   end

@@ -1,0 +1,103 @@
+en:
+  notifications/flags: &flags
+    label: &label Flags
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-flag
+    buttons: &buttons
+      new: Add New Flag
+      create: Create Flag
+      edit: Edit Flag
+      update: Update Flag
+      destroy: Remove Flag
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{flag_name}? This will also remove any child resources and can't be undone.
+    flag:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Flag ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      department_id: &department
+        _: &department_id Department
+        label: *department_id
+        heading: *department_id
+        api_title: *department_id
+        api_description: *department_id
+        placeholder: None
+      department: *department
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Flags"
+      index: "List Flags"
+      create: "Add a New Flag"
+      member_actions: "Actions for an Individual Flag"
+      show: "Retrieve a Flag"
+      update: "Update a Flag"
+      destroy: "Delete a Flag"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Flags"
+      contexts:
+        team:
+          header: Flags
+          description: Below is a list of Flags that have been added for %{team_name}.
+          description_empty: No Flags have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{flag_name}"
+      header: Flag Details
+      description: Below are the details we have for %{flag_name}.
+      manage_description: You'll also find options for updating these details or removing %{flag_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Flag for %{team_name}"
+      header: New Flag Details
+      description: Please provide the details of the new Flag you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{flag_name}"
+      header: Edit Flag Details
+      description: You can update the details or settings for %{flag_name} below.
+      form: *form
+    notifications:
+      created: Flag was successfully created.
+      updated: Flag was successfully updated.
+      destroyed: Flag was successfully destroyed.
+  account:
+    notifications:
+      flags: *flags
+  activerecord:
+    attributes:
+      notifications/flag:
+        name: *name
+        department_id: *department_id
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

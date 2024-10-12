@@ -1,5 +1,6 @@
 default:
   models:
+    Notifications::Flag: read
     Notification: read
     Retreats::Comment: read
     Organizations::Contact: read
@@ -43,6 +44,7 @@ admin:
     - admin
     - editor
   models:
+    Notifications::Flag: manage
     Notification: manage
     Retreats::Comment: manage
     Organizations::Contact: manage
