@@ -37,6 +37,22 @@ en:
         heading: *description
         api_title: *description
         api_description: *description
+      location_ids: &locations
+        _: &location_ids Locations
+        label: *location_ids
+        heading: *location_ids
+        api_title: *location_ids
+        api_description: *location_ids
+        placeholder: None
+      locations: *locations
+      demographic_ids: &demographics
+        _: &demographic_ids Demographics
+        label: *demographic_ids
+        heading: *demographic_ids
+        api_title: *demographic_ids
+        api_description: *demographic_ids
+        placeholder: None
+      demographics: *demographics
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -94,6 +110,8 @@ en:
     attributes:
       question:
         name: *name
+        location_ids: *location_ids
+        demographic_ids: *demographic_ids
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

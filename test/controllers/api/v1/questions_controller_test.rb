@@ -33,6 +33,8 @@ class Api::V1::QuestionsControllerTest < Api::Test
 
     assert_equal_or_nil question_data['name'], question.name
     assert_equal_or_nil question_data['description'], question.description
+    assert_equal_or_nil question_data['location_ids'], question.location_ids
+    assert_equal_or_nil question_data['demographic_ids'], question.demographic_ids
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal question_data["team_id"], question.team_id

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_12_213650) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_12_221418) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -384,6 +384,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_213650) do
     t.index ["team_id"], name: "index_questions_on_team_id"
   end
 
+  create_table "questions_demographic_tags", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "demographic_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["demographic_id"], name: "index_questions_demographic_tags_on_demographic_id"
+    t.index ["question_id"], name: "index_questions_demographic_tags_on_question_id"
+  end
+
+  create_table "questions_location_tags", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_questions_location_tags_on_location_id"
+    t.index ["question_id"], name: "index_questions_location_tags_on_question_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.string "name"
@@ -713,6 +731,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_213650) do
   add_foreign_key "organizations", "teams"
   add_foreign_key "organizations_contacts", "teams"
   add_foreign_key "questions", "teams"
+  add_foreign_key "questions_demographic_tags", "demographics"
+  add_foreign_key "questions_demographic_tags", "questions"
+  add_foreign_key "questions_location_tags", "locations"
+  add_foreign_key "questions_location_tags", "questions"
   add_foreign_key "reservations", "items"
   add_foreign_key "reservations", "memberships", column: "user_id"
   add_foreign_key "reservations", "retreats"

@@ -101,19 +101,15 @@ rails g super_scaffold Season Team name:text_field item_id:super_select{class_na
 
 rails g super_scaffold Question Team name:text_field description:text_field --sortable
 
-
-
-rails g model Questions::LocationTag question:references location:references 
-
 rails g super_scaffold:join_model Questions::LocationTag question_id{class_name=Question} location_id{class_name=Location}
 rails g super_scaffold:field Question location_ids:super_select{class_name=Location}
 
+rails g super_scaffold:join_model Questions::DemographicTag question_id{class_name=Question} demographic_id{class_name=Demographic}
+rails g super_scaffold:field Question demographic_ids:super_select{class_name=Demographic}
 
 
 
-
-
-
+rails g super_scaffold:field Item layout:file_field
 
 
 

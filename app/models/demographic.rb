@@ -9,6 +9,8 @@ class Demographic < ApplicationRecord
 
   has_many :retreats_demographic_tags, class_name: "Retreats::DemographicTag", dependent: :destroy
   has_many :retreats, through: :retreats_demographic_tags
+  has_many :questions_demographic_tags, class_name: "Questions::DemographicTag", dependent: :destroy
+  has_many :questions, through: :questions_demographic_tags
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.

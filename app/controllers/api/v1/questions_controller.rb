@@ -48,6 +48,8 @@ if defined?(Api::V1::ApplicationController)
           :description,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
+          location_ids: [],
+          demographic_ids: [],
           # 🚅 super scaffolding will insert new arrays above this line.
         )
 
