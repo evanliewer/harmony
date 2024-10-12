@@ -68,6 +68,7 @@ shallow do
       resources :notifications
       namespace :notifications do
         resources :flags
+        resources :requests
       end
     end
   end

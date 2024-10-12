@@ -94,7 +94,7 @@ rails g model Notifications::Request team:references name:string user:references
 bin/super-scaffold crud Notifications::Request Team name:text_field user_id:super_select{class_name=Membership} notifications_flag_id:super_select{class_name=Notifications::Flag} days_before:text_field email:boolean
 
 
-rails g super_select Notifications::Request Team name:text_field user_id:super_select{class_name=Membership} notifications_flag_id:super_select{class_name=Notifications::Flag} days_before:text_field email:boolean
+rails g super_scaffold Notifications::Request Team name:text_field user_id:super_select{class_name=Membership} notifications_flag_id:super_select{class_name=Notifications::Flag} days_before:text_field email:boolean
 
 
 

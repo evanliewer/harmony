@@ -38,6 +38,7 @@ components:
     <%= automatic_components_for Retreats::Comment %>
     <%= automatic_components_for Notification %>
     <%= automatic_components_for Notifications::Flag %>
+    <%= automatic_components_for Notifications::Request %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -88,4 +89,5 @@ paths:
   <%= automatic_paths_for Retreats::Comment, Retreat %>
   <%= automatic_paths_for Notification, Team %>
   <%= automatic_paths_for Notifications::Flag, Team %>
+  <%= automatic_paths_for Notifications::Request, Team %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>

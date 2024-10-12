@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_12_032509) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_12_033159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -282,6 +282,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_032509) do
     t.index ["team_id"], name: "index_notifications_flags_on_team_id"
   end
 
+  create_table "notifications_requests", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.bigint "user_id"
+    t.bigint "notifications_flag_id"
+    t.string "days_before"
+    t.boolean "email", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifications_flag_id"], name: "index_notifications_requests_on_notifications_flag_id"
+    t.index ["team_id"], name: "index_notifications_requests_on_team_id"
+    t.index ["user_id"], name: "index_notifications_requests_on_user_id"
+  end
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.bigint "resource_owner_id", null: false
     t.bigint "application_id", null: false
@@ -520,6 +534,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_032509) do
     t.boolean "being_destroyed"
     t.string "time_zone"
     t.string "locale"
+    t.string "ct_api"
+    t.string "ct_query"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -661,6 +677,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_032509) do
   add_foreign_key "notifications", "teams"
   add_foreign_key "notifications_flags", "departments"
   add_foreign_key "notifications_flags", "teams"
+  add_foreign_key "notifications_requests", "memberships", column: "user_id"
+  add_foreign_key "notifications_requests", "notifications_flags"
+  add_foreign_key "notifications_requests", "teams"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_applications", "teams"
