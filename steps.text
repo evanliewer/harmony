@@ -82,6 +82,10 @@ rails g super_scaffold:join_model Retreats::AssignedContact retreat_id{class_nam
 rails g super_scaffold:field Retreat contact_ids:super_select{class_name=Organizations::Contact}
 
 
+rails g super_scaffold Retreats::Comment Retreat,Team name:text_field user_id:super_select{class_name=Membership}
+
+rails g super_scaffold Notification Team name:text_field user_id:super_select{class_name=Membership} read_at:date_and_time_field action_text:text_field emailed:boolean notifiable:references{polymorphic}:index
+
 
 
 
