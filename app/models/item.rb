@@ -1,6 +1,7 @@
 class Item < ApplicationRecord
   # 🚅 add concerns above.
 
+  attr_accessor :layout_removal
   # 🚅 add attribute accessors above.
 
   belongs_to :team
@@ -12,6 +13,7 @@ class Item < ApplicationRecord
   has_many :options, class_name: "Items::Option", dependent: :destroy
   # 🚅 add has_many associations above.
 
+  has_one_attached :layout
   # 🚅 add has_one associations above.
 
   # 🚅 add scopes above.
@@ -20,6 +22,7 @@ class Item < ApplicationRecord
   validates :location, scope: true
   # 🚅 add validations above.
 
+  after_validation :remove_layout, if: :layout_removal?
   # 🚅 add callbacks above.
 
   # 🚅 add delegations above.
@@ -30,6 +33,14 @@ class Item < ApplicationRecord
 
   def valid_tags
    team.items_tags.order(:name)
+  end
+
+  def layout_removal?
+    layout_removal.present?
+  end
+
+  def remove_layout
+    layout.purge
   end
 
   # 🚅 add methods above.

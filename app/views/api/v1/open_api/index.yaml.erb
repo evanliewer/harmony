@@ -41,6 +41,7 @@ components:
     <%= automatic_components_for Notifications::Request %>
     <%= automatic_components_for Season %>
     <%= automatic_components_for Question %>
+    <%= automatic_components_for Websiteimage %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -94,4 +95,5 @@ paths:
   <%= automatic_paths_for Notifications::Request, Team %>
   <%= automatic_paths_for Season, Team %>
   <%= automatic_paths_for Question, Team %>
+  <%= automatic_paths_for Websiteimage, Team %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>

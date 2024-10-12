@@ -95,6 +95,12 @@ en:
         api_description: *tag_ids
         placeholder: None
       tags: *tags
+      layout:
+        _: &layout Layout
+        label: *layout
+        heading: *layout
+        api_title: *layout
+        api_description: *layout
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -160,6 +166,7 @@ en:
         flip_time: *flip_time
         beds: *beds
         tag_ids: *tag_ids
+        layout: *layout
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

@@ -109,6 +109,7 @@ Rails.application.routes.draw do
 
         resources :seasons
         resources :questions, concerns: [:sortable]
+        resources :websiteimages
       end
     end
   end

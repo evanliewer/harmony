@@ -22,6 +22,7 @@ class Team < ApplicationRecord
   has_many :notifications_requests, class_name: "Notifications::Request", dependent: :destroy
   has_many :seasons, dependent: :destroy
   has_many :questions, dependent: :destroy
+  has_many :websiteimages, dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.

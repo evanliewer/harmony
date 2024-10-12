@@ -1,5 +1,6 @@
 default:
   models:
+    Websiteimage: read
     Question: read
     Season: read
     Notifications::Request: read
@@ -72,6 +73,7 @@ admin:
     - resource_editor
     - host
   models:
+    Websiteimage: manage
     Question: manage
     Season: manage
     Notifications::Request: manage

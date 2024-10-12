@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_12_221418) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_12_224113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -580,6 +580,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_221418) do
     t.string "locale"
     t.string "ct_api"
     t.string "ct_query"
+    t.string "ct_item_query"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -687,6 +688,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_221418) do
     t.index ["team_id"], name: "index_webhooks_outgoing_events_on_team_id"
   end
 
+  create_table "websiteimages", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.string "description"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_websiteimages_on_team_id"
+  end
+
   add_foreign_key "account_onboarding_invitation_lists", "teams"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
@@ -765,4 +776,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_221418) do
   add_foreign_key "webhooks_outgoing_endpoints", "scaffolding_absolutely_abstract_creative_concepts"
   add_foreign_key "webhooks_outgoing_endpoints", "teams"
   add_foreign_key "webhooks_outgoing_events", "teams"
+  add_foreign_key "websiteimages", "teams"
 end

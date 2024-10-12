@@ -1,0 +1,10 @@
+<% if can? :read, Websiteimage.new(team: current_team) %>
+  <%= render 'account/shared/menu/item', {
+    url: main_app.polymorphic_path([:account, current_team, :websiteimages]),
+    label: t('websiteimages.navigation.label'),
+  } do |p| %>
+    <% p.icon do %>
+      <i class="<%= t('websiteimages.navigation.icon') %>"></i>
+    <% end %>
+  <% end %>
+<% end %>

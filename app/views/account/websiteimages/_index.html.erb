@@ -1,45 +1,38 @@
-<% items = items.accessible_by(current_ability) %>
+<% websiteimages = websiteimages.accessible_by(current_ability) %>
 <% team = @team %>
 <% context ||= team %>
-<% collection ||= :items %>
+<% collection ||= :websiteimages %>
 <% hide_actions ||= false %>
 <% hide_back ||= false %>
 
 <% pagy ||= nil %>
-<% pagy, items = pagy(items, page_param: :items_page) unless pagy %>
+<% pagy, websiteimages = pagy(websiteimages, page_param: :websiteimages_page) unless pagy %>
 
 <%= action_model_select_controller do %>
   <% cable_ready_updates_for context, collection do %>
     <%= render 'account/shared/box', pagy: pagy do |box| %>
       <% box.title t(".contexts.#{context.class.name.underscore}.header") %>
       <% box.description do %>
-        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless items.any?}") %>
-        <%= render "shared/limits/index", model: items.model %>
+        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless websiteimages.any?}") %>
+        <%= render "shared/limits/index", model: websiteimages.model %>
       <% end %>
 
       <% box.table do %>
-        <% if items.any? %>
+        <% if websiteimages.any? %>
           <table class="table">
             <thead>
               <tr>
                 <%= render "shared/tables/select_all" %>
                 <th><%= t('.fields.name.heading') %></th>
                 <th><%= t('.fields.description.heading') %></th>
-                <th><%= t('.fields.location.heading') %></th>
-                <th  class="text-center"><%= t('.fields.active.heading') %></th>
-                <th><%= t('.fields.overlap_offset.heading') %></th>
-                <th><%= t('.fields.image_tag.heading') %></th>
-                <th  class="text-center"><%= t('.fields.clean.heading') %></th>
-                <th><%= t('.fields.flip_time.heading') %></th>
-                <th><%= t('.fields.beds.heading') %></th>
-                <th><%= t('.fields.layout.heading') %></th>
+                <th><%= t('.fields.image.heading') %></th>
                 <%# 🚅 super scaffolding will insert new field headers above this line. %>
                 <th><%= t('.fields.created_at.heading') %></th>
                 <th class="text-right"></th>
               </tr>
             </thead>
             <tbody>
-              <%= render partial: 'account/items/item', collection: items %>
+              <%= render partial: 'account/websiteimages/websiteimage', collection: websiteimages %>
             </tbody>
           </table>
         <% end %>
@@ -48,17 +41,17 @@
       <% box.actions do %>
         <% unless hide_actions %>
           <% if context == team %>
-            <% if can? :create, Item.new(team: team) %>
-              <%= link_to t('.buttons.new'), [:new, :account, team, :item], class: "#{first_button_primary(:item)} new" %>
+            <% if can? :create, Websiteimage.new(team: team) %>
+              <%= link_to t('.buttons.new'), [:new, :account, team, :websiteimage], class: "#{first_button_primary(:websiteimage)} new" %>
             <% end %>
           <% end %>
 
           <%# 🚅 super scaffolding will insert new targets one parent action model buttons above this line. %>
           <%# 🚅 super scaffolding will insert new bulk action model buttons above this line. %>
-          <%= render "shared/bulk_action_select" if items.any? %>
+          <%= render "shared/bulk_action_select" if websiteimages.any? %>
 
           <% unless hide_back %>
-            <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:item)} back" %>
+            <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:websiteimage)} back" %>
           <% end %>
         <% end %>
       <% end %>

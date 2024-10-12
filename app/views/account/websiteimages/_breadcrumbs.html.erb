@@ -1,0 +1,8 @@
+<% websiteimage ||= @websiteimage %>
+<% team ||= @team || websiteimage&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :websiteimages] %>
+<% if websiteimage&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: websiteimage.label_string, url: [:account, websiteimage] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'websiteimages' %>
