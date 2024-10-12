@@ -1,0 +1,126 @@
+en:
+  notifications: &notifications
+    label: &label Notifications
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-bullhorn
+    buttons: &buttons
+      new: Add New Notification
+      create: Create Notification
+      edit: Edit Notification
+      update: Update Notification
+      destroy: Remove Notification
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{notification_name}? This will also remove any child resources and can't be undone.
+    notification:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Notification ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      user_id: &user
+        _: &user_id User
+        label: *user_id
+        heading: *user_id
+        api_title: *user_id
+        api_description: *user_id
+        placeholder: None
+      user: *user
+      read_at:
+        _: &read_at Read At
+        label: *read_at
+        heading: *read_at
+        api_title: *read_at
+        api_description: *read_at
+      action_text:
+        _: &action_text Action Text
+        label: *action_text
+        heading: *action_text
+        api_title: *action_text
+        api_description: *action_text
+      emailed:
+        _: &emailed Emailed
+        label: *emailed
+        heading: *emailed
+        api_title: *emailed
+        api_description: *emailed
+        options:
+          yes: "Yes"
+          no: "No"
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Notifications"
+      index: "List Notifications"
+      create: "Add a New Notification"
+      member_actions: "Actions for an Individual Notification"
+      show: "Retrieve a Notification"
+      update: "Update a Notification"
+      destroy: "Delete a Notification"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Notifications"
+      contexts:
+        team:
+          header: Notifications
+          description: Below is a list of Notifications that have been added for %{team_name}.
+          description_empty: No Notifications have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{notification_name}"
+      header: Notification Details
+      description: Below are the details we have for %{notification_name}.
+      manage_description: You'll also find options for updating these details or removing %{notification_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Notification for %{team_name}"
+      header: New Notification Details
+      description: Please provide the details of the new Notification you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{notification_name}"
+      header: Edit Notification Details
+      description: You can update the details or settings for %{notification_name} below.
+      form: *form
+    notifications:
+      created: Notification was successfully created.
+      updated: Notification was successfully updated.
+      destroyed: Notification was successfully destroyed.
+  account:
+    notifications: *notifications
+  activerecord:
+    attributes:
+      notification:
+        name: *name
+        user_id: *user_id
+        read_at: *read_at
+        action_text: *action_text
+        emailed: *emailed
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

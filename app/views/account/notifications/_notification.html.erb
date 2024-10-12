@@ -1,0 +1,29 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :notifications %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: notification do %>
+  <tr data-id="<%= notification.id %>">
+    <%= render "shared/tables/checkbox", object: notification %>
+    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, notification] %></td>
+    <td><%= render 'shared/attributes/belongs_to', attribute: :user %></td>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :read_at %></td>
+    <td><%= render 'shared/attributes/text', attribute: :action_text %></td>
+    <td class="text-center"><%= render 'shared/attributes/option', attribute: :emailed %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, notification %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, notification], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, notification %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, notification], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(notification)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

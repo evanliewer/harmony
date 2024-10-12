@@ -1,5 +1,6 @@
 default:
   models:
+    Notification: read
     Retreats::Comment: read
     Organizations::Contact: read
     Items::Option: read
@@ -42,6 +43,7 @@ admin:
     - admin
     - editor
   models:
+    Notification: manage
     Retreats::Comment: manage
     Organizations::Contact: manage
     Items::Option: manage
