@@ -119,6 +119,14 @@ en:
         api_description: *host_ids
         placeholder: None
       hosts: *hosts
+      contact_ids: &contacts
+        _: &contact_ids Contacts
+        label: *contact_ids
+        heading: *contact_ids
+        api_title: *contact_ids
+        api_description: *contact_ids
+        placeholder: None
+      contacts: *contacts
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -187,6 +195,7 @@ en:
         demographic_ids: *demographic_ids
         planner_ids: *planner_ids
         host_ids: *host_ids
+        contact_ids: *contact_ids
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

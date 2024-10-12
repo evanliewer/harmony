@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_11_054502) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_055010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -392,6 +392,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_054502) do
     t.index ["team_id"], name: "index_retreats_on_team_id"
   end
 
+  create_table "retreats_assigned_contacts", force: :cascade do |t|
+    t.bigint "retreat_id", null: false
+    t.bigint "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_retreats_assigned_contacts_on_contact_id"
+    t.index ["retreat_id"], name: "index_retreats_assigned_contacts_on_retreat_id"
+  end
+
   create_table "retreats_demographic_tags", force: :cascade do |t|
     t.bigint "retreat_id", null: false
     t.bigint "demographic_id", null: false
@@ -629,6 +638,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_11_054502) do
   add_foreign_key "resources", "teams"
   add_foreign_key "retreats", "organizations"
   add_foreign_key "retreats", "teams"
+  add_foreign_key "retreats_assigned_contacts", "organizations_contacts", column: "contact_id"
+  add_foreign_key "retreats_assigned_contacts", "retreats"
   add_foreign_key "retreats_demographic_tags", "demographics"
   add_foreign_key "retreats_demographic_tags", "retreats"
   add_foreign_key "retreats_host_tags", "memberships", column: "host_id"

@@ -72,6 +72,7 @@ class Account::RetreatsController < Account::ApplicationController
     assign_select_options(strong_params, :demographic_ids)
     assign_select_options(strong_params, :planner_ids)
     assign_select_options(strong_params, :host_ids)
+    assign_select_options(strong_params, :contact_ids)
     # 🚅 super scaffolding will insert processing for new fields above this line.
   end
 end

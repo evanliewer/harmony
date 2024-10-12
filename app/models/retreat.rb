@@ -15,6 +15,8 @@ class Retreat < ApplicationRecord
   has_many :planners, through: :planner_tags, class_name: "Membership"
   has_many :host_tags, class_name: "Retreats::HostTag", dependent: :destroy
   has_many :hosts, through: :host_tags, class_name: "Membership"
+  has_many :assigned_contacts, class_name: "Retreats::AssignedContact", dependent: :destroy
+  has_many :organizations_contacts, through: :assigned_contacts, class_name: "Organizations::Contact"
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
@@ -48,6 +50,10 @@ class Retreat < ApplicationRecord
 
   def valid_hosts
     team.memberships.where("memberships.role_ids @> ?", '["host"]')
+  end
+
+  def valid_contacts
+    team.organizations_contacts
   end
 
   # 🚅 add methods above.
