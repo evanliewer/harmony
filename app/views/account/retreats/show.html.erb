@@ -42,6 +42,7 @@
       <% end %>
     <% end %>
 
+    <%= render 'account/retreats/comments/index', comments: @retreat.comments, hide_back: true %>
     <%# 🚅 super scaffolding will insert new children above this line. %>
   <% end %>
 <% end %>

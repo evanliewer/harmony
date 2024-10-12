@@ -18,6 +18,7 @@ class Retreat < ApplicationRecord
   has_many :assigned_contacts, class_name: "Retreats::AssignedContact", dependent: :destroy
   has_many :contacts, through: :assigned_contacts, class_name: "Organizations::Contact"
 
+  has_many :comments, class_name: "Retreats::Comment", dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.

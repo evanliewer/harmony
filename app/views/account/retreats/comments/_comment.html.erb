@@ -1,0 +1,26 @@
+<% retreat = @retreat || @retreat %>
+<% context ||= retreat %>
+<% collection ||= :comments %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: comment do %>
+  <tr data-id="<%= comment.id %>">
+    <%= render "shared/tables/checkbox", object: comment %>
+    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, comment] %></td>
+    <td><%= render 'shared/attributes/belongs_to', attribute: :user %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, comment %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, comment], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, comment %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, comment], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(comment)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

@@ -1,0 +1,8 @@
+<% comment ||= @comment %>
+<% retreat ||= @retreat || comment&.retreat %>
+<%= render 'account/retreats/breadcrumbs', retreat: retreat %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, retreat, :comments] %>
+<% if comment&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: comment.label_string, url: [:account, comment] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'retreats/comments' %>

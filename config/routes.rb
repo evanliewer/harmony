@@ -76,7 +76,11 @@ Rails.application.routes.draw do
           end
         end
         resources :organizations
-        resources :retreats
+        resources :retreats do
+          scope module: 'retreats' do
+            resources :comments, only: collection_actions
+          end
+        end
         resources :reservations
         namespace :items do
           resources :tags
@@ -91,6 +95,10 @@ Rails.application.routes.draw do
 
         namespace :organizations do
           resources :contacts
+        end
+
+        namespace :retreats do
+          resources :comments, except: collection_actions
         end
       end
     end

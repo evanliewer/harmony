@@ -1,0 +1,103 @@
+en:
+  retreats/comments: &comments
+    label: &label Comments
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-puzzle-piece
+    buttons: &buttons
+      new: Add New Comment
+      create: Create Comment
+      edit: Edit Comment
+      update: Update Comment
+      destroy: Remove Comment
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{comment_name}? This will also remove any child resources and can't be undone.
+    comment:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Comment ID
+      retreat_id:
+        heading: Retreat ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      user_id: &user
+        _: &user_id User
+        label: *user_id
+        heading: *user_id
+        api_title: *user_id
+        api_description: *user_id
+        placeholder: None
+      user: *user
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Comments"
+      index: "List Comments"
+      create: "Add a New Comment"
+      member_actions: "Actions for an Individual Comment"
+      show: "Retrieve a Comment"
+      update: "Update a Comment"
+      destroy: "Delete a Comment"
+      fields: *fields
+    index:
+      section: "%{retreats_possessive} Comments"
+      contexts:
+        retreat:
+          header: Comments
+          description: Below is a list of Comments that have been added for %{retreat_name}.
+          description_empty: No Comments have been added for %{retreat_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{comment_name}"
+      header: Comment Details
+      description: Below are the details we have for %{comment_name}.
+      manage_description: You'll also find options for updating these details or removing %{comment_name} from %{retreat_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Comment for %{retreat_name}"
+      header: New Comment Details
+      description: Please provide the details of the new Comment you'd like to add to %{retreat_name}.
+      form: *form
+    edit:
+      section: "%{comment_name}"
+      header: Edit Comment Details
+      description: You can update the details or settings for %{comment_name} below.
+      form: *form
+    notifications:
+      created: Comment was successfully created.
+      updated: Comment was successfully updated.
+      destroyed: Comment was successfully destroyed.
+  account:
+    retreats:
+      comments: *comments
+  activerecord:
+    attributes:
+      retreats/comment:
+        name: *name
+        user_id: *user_id
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at
