@@ -16,7 +16,6 @@
     <td><%= render 'shared/attributes/number', attribute: :quantity %></td>
     <td><%= render 'shared/attributes/text', attribute: :notes %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
-    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">
       <% unless hide_actions %>
         <% if can? :edit, season %>

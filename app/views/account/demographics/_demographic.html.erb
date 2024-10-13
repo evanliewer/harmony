@@ -9,7 +9,6 @@
     <%= render "shared/tables/checkbox", object: demographic %>
     <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, demographic] %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
-    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">
       <% unless hide_actions %>
         <% if can? :edit, demographic %>

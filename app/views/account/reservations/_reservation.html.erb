@@ -10,16 +10,12 @@
     <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, reservation] %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :retreat %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :item %></td>
-    <td><%= render 'shared/attributes/belongs_to', attribute: :user %></td>
     <td><%= render 'shared/attributes/date_and_time', attribute: :start_time %></td>
     <td><%= render 'shared/attributes/date_and_time', attribute: :end_time %></td>
     <td><%= render 'shared/attributes/number', attribute: :quantity %></td>
     <td><%= render 'shared/attributes/text', attribute: :notes %></td>
-    <td class="text-center"><%= render 'shared/attributes/option', attribute: :seasonal_default %></td>
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :exclusive %></td>
-    <td class="text-center"><%= render 'shared/attributes/option', attribute: :active %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
-    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">
       <% unless hide_actions %>
         <% if can? :edit, reservation %>

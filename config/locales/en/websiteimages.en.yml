@@ -65,7 +65,7 @@ en:
       section: "%{teams_possessive} Website Image"
       contexts:
         team:
-          header: Websiteimages
+          header: Website Images
           description: Below is a list of Websiteimages that have been added for %{team_name}.
           description_empty: No Websiteimages have been added for %{team_name}.
       fields: *fields
