@@ -1,5 +1,6 @@
 class Account::TeamsController < Account::ApplicationController
   include Account::Teams::ControllerBase
+  filter_resource "Item", [:name, :description, :location], actions: :show
 
   private
 

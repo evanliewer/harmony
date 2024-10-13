@@ -11,14 +11,10 @@
     <td><%= render 'shared/attributes/text', attribute: :description %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :location %></td>
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :active %></td>
-    <td><%= render 'shared/attributes/number', attribute: :overlap_offset %></td>
-    <td><%= render 'shared/attributes/image', attribute: :image_tag %></td>
+
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :clean %></td>
-    <td><%= render 'shared/attributes/number', attribute: :flip_time %></td>
-    <td><%= render 'shared/attributes/number', attribute: :beds %></td>
-    <td><%= render 'shared/attributes/file', attribute: :layout %></td>
+
     <%# 🚅 super scaffolding will insert new fields above this line. %>
-    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">
       <% unless hide_actions %>
         <% if can? :edit, item %>

@@ -44,7 +44,11 @@ en:
         api_title: *location_id
         api_description: *location_id
         placeholder: None
-      location: *location
+      location:
+        options:
+          lakeview: "Lakeview"
+          creekside: "Creekside"
+        heading: Locations  
       active:
         _: &active Active
         label: *active

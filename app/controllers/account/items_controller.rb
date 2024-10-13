@@ -1,5 +1,6 @@
 class Account::ItemsController < Account::ApplicationController
   account_load_and_authorize_resource :item, through: :team, through_association: :items
+  filter_resource "Item", [:name, :description] #, :location]
 
   # GET /account/teams/:team_id/items
   # GET /account/teams/:team_id/items.json
