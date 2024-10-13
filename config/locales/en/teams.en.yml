@@ -2,9 +2,23 @@ en:
   teams:
     fields:
       _:
+      item_query:
+        _: &item_query Item Query
+        label: *item_query
+        heading: *item_query
+        api_title: *item_query
+        api_description: *item_query
+      circuitree_api:
+        _: &circuitree_api Circuitree Api
+        label: *circuitree_api
+        heading: *circuitree_api
+        api_title: *circuitree_api
+        api_description: *circuitree_api
       # 🚅 super scaffolding will insert new fields above this line.
   activerecord:
     attributes:
       team:
         _:
+        item_query: *item_query
+        circuitree_api: *circuitree_api
         # 🚅 super scaffolding will insert new activerecord attributes above this line.

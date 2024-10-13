@@ -8,6 +8,7 @@ require "pry"
 Bundler.require(*Rails.groups)
 
 require_relative "../lib/bullet_train_oauth_scaffolder_support"
+require_relative "../lib/circuitree"
 
 module Harmony
   class Application < Rails::Application

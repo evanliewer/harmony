@@ -115,7 +115,15 @@ rails g super_scaffold:field Item layout:file_field
 rails g super_scaffold Websiteimage Team name:text_field description:text_field image:image
 
 
+rails g migration add_item_query_to_team
 
+rails g super_scaffold:field Team item_query:text_field
+
+
+
+<%= render 'shared/fields/text_field', method: :ct_api %>
+<%= render 'shared/fields/text_field', method: :ct_query %>
+<%= render 'shared/fields/text_field', method: :ct_item_query %>
 
 
 
