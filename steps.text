@@ -118,15 +118,15 @@ rails g super_scaffold Websiteimage Team name:text_field description:text_field 
 rails g migration add_item_query_to_team
 
 rails g super_scaffold:field Team item_query:text_field
+rails g super_scaffold:field Team circuitree_api:text_field
+rails g super_scaffold:field Team groups_query:text_field
+rails g super_scaffold:field Team reservation_download:text_field
 
 
 
-<%= render 'shared/fields/text_field', method: :ct_api %>
-<%= render 'shared/fields/text_field', method: :ct_query %>
-<%= render 'shared/fields/text_field', method: :ct_item_query %>
-
-
-
+Powerpack
+bin/rails g bt_power_pack:filters:install
+bin/rails g super_scaffold:bt_power_pack:filter Item Team name:text_field description:text_field location:super_select
 
 
 

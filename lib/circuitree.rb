@@ -66,10 +66,9 @@ module Circuitree
       def self.circuitree_download(team = nil, itinerary = nil)
         require 'digest/md5'
         Team.all.each do |team|
-        puts "Begin CT Download"
+         puts "Begin CT Download for #{team.name}"
          start_date = Date.today
          end_date = Date.today + 365.days
-         current_team = Team.find(team)
 
          puts "CTquery method from CT library module"
          url = "https://api.circuitree.com/Exports/ExecuteQuery.json"
@@ -111,31 +110,24 @@ module Circuitree
           req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
           req.body = data.to_json
           res = http.request(req)
-          @ct_results = JSON.parse(res.body)
+          ct_results = JSON.parse(res.body)
 
           puts "Starting Itinerary Download"
           begin
-             @ct_results.each do |key,value|
+             ct_results.each do |key,value|
               if key == "Results"
                 JSON.parse(value).each do |val|
-                  puts "-------------------- " + val['GroupName'] + " ---------------------------"
+                  puts "--------------------~~~~~ " + val['GroupName'] + " ~~~~~---------------------------"
                   begin
                    puts "start itinerary search and save"
-                   retreat = Retreat.find_or_initialize_by(:team_id => current_team.id, :id => val['ItineraryID'].to_i)
+                   retreat = Retreat.find_or_initialize_by(:team_id => team.id, :id => val['ItineraryID'].to_i)
                    #unless retreat.import_lock == true
                    unless 1 == 2 
                      retreat.name = val['GroupName'].to_s
                      
                      if Rails.env.production?
-                     # puts "Production"
-                     # retreat.arrival = val['ArrivalDateTime'].to_datetime
-                     # retreat.departure = val['DepartureDateTime'].to_datetime
                       retreat.arrival = DateTime.parse(val['ArrivalDateTime'])
                       retreat.departure = DateTime.parse(val['DepartureDateTime'])
-                     # puts "Circuitree Arrival: " + val['ArrivalDateTime'].to_datetime.to_s
-                     # puts "Retreat Arrival: " + retreat.arrival.to_s
-                     # puts "Circuitree Departure: " + val['DepartureDateTime'].to_datetime.to_s
-                     # puts "Retreat Departure: " + retreat.departure.to_s
                      else 
                       puts "Development"
                       arrivalDateTime = val['ArrivalDateTime'].to_datetime
@@ -144,29 +136,20 @@ module Circuitree
                       departure = Time.now.in_time_zone("Pacific Time (US & Canada)")
                       retreat.arrival = arrival.change(:year => arrivalDateTime.year, :month => arrivalDateTime.month, :day => arrivalDateTime.day, :hour => arrivalDateTime.hour, :min => arrivalDateTime.min)
                       retreat.departure = departure.change(:year => departureDateTime.year, :month => departureDateTime.month, :day => departureDateTime.day, :hour => departureDateTime.hour, :min => departureDateTime.min)
-                      #puts "Circuitree Arrival: " + val['ArrivalDateTime'].to_datetime.to_s
-                      #puts "Retreat Arrival: " + retreat.arrival.to_s
-                      #puts "Circuitree Departure: " + val['DepartureDateTime'].to_datetime.to_s
-                      #puts "Retreat Departure: " + retreat.arrival.to_s
                      end 
                      
                      retreat.guest_count = val['ProgramCount'].to_i
-                     retreat.import_identifier = val['ItineraryID']
+                     #retreat.import_identifier = val['ItineraryID']
                      retreat.id = val['ItineraryID'].to_i
-                     retreat.import_lock = true
+                   #  retreat.import_lock = true
                      retreat.status = val['ItineraryStatus']
-                      ##ADD Save Contact
-                      ##Add Save event planner
-                      ##ADD housing
-                      ##Add Meeting Spaces
+
 
                      ##Save Organization 
-                     organization = Organization.find_or_create_by(:team_id => current_team.id, :name => val['GroupName'].to_s)       
+                     organization = Organization.find_or_create_by(:team_id => team.id, :name => val['GroupName'].to_s)       
                       organization.name = val['GroupName'].to_s
                      organization.save
-                    
                      retreat.organization_id = organization.id 
-
                      retreat.save(validate: false) 
                     # retreat.versions.last.update_attributes!(:whodunnit => 1) ##Havent tested
 
@@ -202,7 +185,7 @@ module Circuitree
                         end  
    
                       puts "Checking Membership for Host"
-                        membership = Membership.find_or_create_by(team_id: current_team.id, user_id: user.id, user_first_name: first, user_last_name: last) do |m|
+                        membership = Membership.find_or_create_by(team_id: team.id, user_id: user.id, user_first_name: first, user_last_name: last) do |m|
                           puts "Creating Membership"
                           m.user_email = first + "." + last + "@foresthome.org"
                           m.user_first_name = first
@@ -229,7 +212,7 @@ module Circuitree
                         end  
    
                       puts "Checking Membership for Planner"
-                        membership = Membership.find_or_create_by(team_id: current_team.id, user_id: user.id, user_first_name: first, user_last_name: last) do |m|
+                        membership = Membership.find_or_create_by(team_id: team.id, user_id: user.id, user_first_name: first, user_last_name: last) do |m|
                           puts "Creating Membership"
                           m.user_email = first + "." + last + "@foresthome.org"
                           m.user_first_name = first
@@ -247,7 +230,7 @@ module Circuitree
                      
 
                      ##Save Location
-                      location = Location.find_or_create_by(:team_id => current_team.id, :name => val['Location'].to_s) do |l|
+                      location = Location.find_or_create_by(:team_id => team.id, :name => val['Location'].to_s) do |l|
                         l.initials = val['Location'].to_s[0, 2].upcase
                         l.save
                       end
@@ -259,8 +242,8 @@ module Circuitree
                     ##Save Demographic
 
                     if val['Internal'] == "TRUE"
-                      puts "INTERNAL"
-                      internal = Demographic.find_or_create_by!(:team_id => current_team.id, :name => "Internal") do |d|
+                      puts "INTERNAL Group"
+                      internal = Demographic.find_or_create_by!(:team_id => team.id, :name => "Internal") do |d|
                           d.save 
                       end    
                       retreat_demographic = Retreats::DemographicTag.find_or_create_by(retreat_id: retreat.id, demographic_id: internal.id)
@@ -312,6 +295,106 @@ module Circuitree
    end #Group Download 
 
 
+def self.Reservations_download(itinerary)
+  begin
+    puts "CTquery method from CT library module"
+    url = "https://api.circuitree.com/Exports/ExecuteQuery.json"
+    retreat = Retreat.find(itinerary)
+
+    paramArray = []
+       param = {
+      'ParameterID' => 26,
+      'ParameterValue' => itinerary
+        }
+        paramArray << param
+    data = {
+      'ApiToken' => retreat.team.circuitree_api,
+      'ExportQueryID' => team.reservations_download,
+      'QueryParameters' => paramArray
+    }
+
+    uri = URI(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+    req.body = data.to_json
+    res = http.request(req)
+    ct_results = JSON.parse(res.body)
+  rescue => ex
+        puts "--------------- ERROR --------- ERROR ----------------  ERROR ---------------" 
+        puts ex.message     
+  end
+     
+      begin
+       ct_results.each do |key,value|
+        if key == "Results"
+          JSON.parse(value).each do |val|
+            reservation_count = Reservation.where(id: val['ReservationItemID'].to_i).count
+            if reservation_count == 0
+              begin
+                puts "************************************************"
+                puts "Reservation Info"
+                puts "Name: " + val['Name'].to_s
+                puts "ReservationID: " + val['ReservationItemID'].to_s
+                puts "ResourceID: " + val['ResourceID'].to_s
+                puts "ItineraryID: " + val['ItineraryID'].to_s
+                puts "Name: " + val['Name'].to_s
+                puts "ReservationStatus: " + val['ReservationStatusName'].to_s
+                puts "************************************************"
+
+                reservation = Reservation.find_or_create_by(:team_id => 1, :retreat_id => val['ItineraryID'].to_s, :item_id => val['ResourceID'].to_s)
+                 PaperTrail.request.whodunnit = 'Circuitree'
+                 arrivalDateTime = val['StartDateTime'].to_datetime
+                 departureDateTime = val['EndDateTime'].to_datetime
+                 start_time = Time.now
+                 end_time = Time.now 
+                 reservation.start_time = start_time.change(:year => arrivalDateTime.year, :month => arrivalDateTime.month, :day => arrivalDateTime.day, :hour => arrivalDateTime.hour, :min => arrivalDateTime.min)
+                 reservation.end_time = end_time.change(:year => departureDateTime.year, :month => departureDateTime.month, :day => departureDateTime.day, :hour => departureDateTime.hour, :min => departureDateTime.min)
+                 reservation.name = val['Name'].to_s
+
+                 unless reservation.notes.present?
+                   ##reservation.notes = val['comments'].to_s
+                 end  
+
+
+                 reservation.status = val['ReservationStatusName']
+                 reservation.resource_id = val['ResourceID'].to_s
+                 reservation.retreat_id = val['ItineraryID'].to_s
+                 reservation.quantity = val['Quantity'].to_s
+   
+                if reservation.save(validate: false) 
+                  puts reservation.name + ": save successful"
+                else
+                  puts "There were errors: "
+                  puts reservation.errors
+                end
+              rescue => ex
+                puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+                puts "FAILED TO SAVE RESERVATION"
+                puts "Name: " + val['Name'].to_s
+                puts "ReservationID: " + val['ReservationItemID'].to_s
+                puts "ResourceID: " + val['ResourceID'].to_s
+                puts "ItineraryID: " + val['ItineraryID'].to_s
+                puts "Name: " + val['Name'].to_s
+                puts "ReservationStatus: " + val['ReservationStatusName'].to_s
+                puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+                puts ex.message
+              end
+
+            else
+              #Not going to do anything if already exists
+
+            end 
+          end
+        end
+      end
+       puts "Successful Reservation Download"
+    rescue => ex
+      
+       puts ex.message
+       puts "Error in Reservation Download"
+    end
+  end  #Reservations Download
 
 
 

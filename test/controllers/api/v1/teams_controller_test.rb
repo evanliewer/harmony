@@ -23,6 +23,8 @@ class Api::V1::TeamsControllerTest < Api::Test
     assert_equal_or_nil team_data["locale"], team.locale
     assert_equal_or_nil team_data['item_query'], team.item_query
     assert_equal_or_nil team_data['circuitree_api'], team.circuitree_api
+    assert_equal_or_nil team_data['groups_query'], team.groups_query
+    assert_equal_or_nil team_data['reservation_download'], team.reservation_download
     # 🚅 super scaffolding will insert new fields above this line.
   end
 
@@ -65,6 +67,8 @@ class Api::V1::TeamsControllerTest < Api::Test
         locale: "Alternative String Value",
         item_query: 'Alternative String Value',
         circuitree_api: 'Alternative String Value',
+        groups_query: 'Alternative String Value',
+        reservation_download: 'Alternative String Value',
         # 🚅 super scaffolding will also insert new fields above this line.
       }
     }
@@ -81,6 +85,8 @@ class Api::V1::TeamsControllerTest < Api::Test
     assert_equal @team.locale, "Alternative String Value"
     assert_equal @team.item_query, 'Alternative String Value'
     assert_equal @team.circuitree_api, 'Alternative String Value'
+    assert_equal @team.groups_query, 'Alternative String Value'
+    assert_equal @team.reservation_download, 'Alternative String Value'
     # 🚅 super scaffolding will additionally insert new fields above this line.
 
     # Also ensure we can't do that same action as another user.

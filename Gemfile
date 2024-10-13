@@ -217,4 +217,5 @@ gem "pry"
 
 # 🚅 super scaffolding will insert new oauth providers above this line.
 gem "bullet_train-power_pack", github: "julianrubisch/bullet_train-power_pack"
+gem 'paper_trail'
 

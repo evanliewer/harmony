@@ -14,6 +14,18 @@ en:
         heading: *circuitree_api
         api_title: *circuitree_api
         api_description: *circuitree_api
+      groups_query:
+        _: &groups_query Groups Query
+        label: *groups_query
+        heading: *groups_query
+        api_title: *groups_query
+        api_description: *groups_query
+      reservation_download:
+        _: &reservation_download Reservation Download
+        label: *reservation_download
+        heading: *reservation_download
+        api_title: *reservation_download
+        api_description: *reservation_download
       # 🚅 super scaffolding will insert new fields above this line.
   activerecord:
     attributes:
@@ -21,4 +33,6 @@ en:
         _:
         item_query: *item_query
         circuitree_api: *circuitree_api
+        groups_query: *groups_query
+        reservation_download: *reservation_download
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
