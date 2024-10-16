@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_13_031459) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_13_032206) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -625,6 +625,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_13_031459) do
     t.index ["platform_agent_of_id"], name: "index_users_on_platform_agent_of_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "whodunnit"
+    t.datetime "created_at"
+    t.bigint "item_id", null: false
+    t.string "item_type", null: false
+    t.string "event", null: false
+    t.text "object"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   create_table "webhooks_incoming_bullet_train_webhooks", force: :cascade do |t|

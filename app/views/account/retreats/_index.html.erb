@@ -6,10 +6,234 @@
 <% hide_back ||= false %>
 
 <% pagy ||= nil %>
+
 <% pagy, retreats = pagy(retreats, page_param: :retreats_page) unless pagy %>
 
 <%= action_model_select_controller do %>
   <% cable_ready_updates_for context, collection do %>
+
+
+
+
+
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
+
+
+<!--- Card One --->
+<div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+  <div class="flex-auto p-4">
+    <div class="flex flex-row -mx-3">
+      <div class="flex-none w-2/3 max-w-full px-3">
+        <div>
+          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Groups Onsite</p>
+          <h5 class="mb-0 font-bold">7 Groups
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500">456 Guests</span>
+          </h5>
+        </div>
+      </div>
+      <div class="px-3 text-right basis-1/3">
+        <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
+        
+        <i class="fal fa-solid fa-church leading-none text-xl relative top-3.5 text-white"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------->
+<!--- Card Two --->
+<div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+  <div class="flex-auto p-4">
+    <div class="flex flex-row -mx-3">
+      <div class="flex-none w-2/3 max-w-full px-3">
+        <div>
+          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Onsite Internal</p>
+          <h5 class="mb-0 font-bold">7 Internal Groups
+            <% if false %><span class="leading-normal text-sm font-weight-bolder text-blue-500">+55%</span><% end %>
+          </h5>
+        </div>
+      </div>
+      <div class="px-3 text-right basis-1/3">
+        <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
+        
+        <i class="fal fa-solid fa-user-group leading-none text-xl relative top-3.5 text-white"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------->
+<!--- Card three --->
+<div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+  <div class="flex-auto p-4">
+    <div class="flex flex-row -mx-3">
+      <div class="flex-none w-2/3 max-w-full px-3">
+        <div>
+          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Upcoming in 7 days</p>
+          <h5 class="mb-0 font-bold">8 groups
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500">586 People</span>
+          </h5>
+        </div>
+      </div>
+      <div class="px-3 text-right basis-1/3">
+        <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
+        
+        <i class="fal fa-solid fa-church leading-none text-xl relative top-3.5 text-white"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------->
+<!--- Card Four --->
+<div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+  <div class="flex-auto p-4">
+    <div class="flex flex-row -mx-3">
+      <div class="flex-none w-2/3 max-w-full px-3">
+        <div>
+          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Stage Coach</p>
+          <h5 class="mb-0 font-bold text-green-500">OPEN
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500">+55%</span>
+          </h5>
+        </div>
+      </div>
+      <div class="px-3 text-right basis-1/3">
+        <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
+        
+        <i class="fal fa-solid fa-cup-togo leading-none text-xl relative top-3.5 text-white"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------->
+
+</div>
+
+
+
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
+<% @retreats.each do |retreat| %>
+
+
+<!-- Locations -->
+  <% locations = [] %>
+   <% @meetingspaces = Reservation.where(retreat_id: retreat.id).limit(3) %>
+      <% @meetingspaces.each do |meetingspace| %>
+        <%# if meetingspace.resources_option.present? %>
+        <% if false %>
+          <% location = meetingspace.name + ": " + meetingspace.resources_option.name %>
+        <% else %>
+          <% location = meetingspace.name %>
+        <% end %>  
+        <% locations << location  %>
+      <% end %>
+
+
+<!------- End Locations ---->
+
+
+
+
+
+
+   <div class="flex w-full p-4 w-full flex-col rounded-lg bg-white shadow-sm border border-slate-200">
+  <div class="flex items-center gap-4 text-slate-800">
+
+
+     <% retreat.locations.each do |location| %>
+                            <%= image_tag location_icon_url(location), class: 'relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center', alt: location&.name, style: "flex-shrink: 0;" %>
+                         <% end %>
+
+
+    <div class="flex w-full flex-col">
+      <div class="flex items-center justify-between">
+        <h5 class="text-xl font-semibold text-slate-800">
+          <%= link_to retreat.name, [:account, retreat] %>
+        </h5>
+
+<% randd = rand(1..2) %>
+
+
+<% if randd == 1%>
+        <div class=" text-right basis-1/3">
+          <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500"> 
+             <i class="leading-none text-xl relative top-1.5 text-white">88</i>
+             <i class="leading-none text-md relative top-1.5 text-white">days</i>
+          </div>
+      </div>
+<% else %>
+
+  <div class=" text-right basis-1/3">
+          <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400"> 
+             <i class="leading-none text-lg relative top-1.5 text-white">On</i>
+             <i class="leading-none text-md relative top-1.5 text-white">Site</i>
+          </div>
+      </div>
+
+
+<% end %>      
+
+      </div>
+      <p class="text-xs uppercase font-bold text-slate-500 mt-0.5">
+         <span class="inline-block py-0 px-2 text-[10px] text-blue-800 bg-blue-200 rounded-full whitespace-nowrap">35 Guests</span>
+        <% retreat.demographic_tags.each do |tag| %>
+         <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-blue-100 rounded-full whitespace-nowrap">
+          <%= tag.demographic&.name %>
+        </span>
+        <% end %> 
+        <% retreat.host_tags.each do |tag| %>
+          <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-purple-100 rounded-full whitespace-nowrap"><%= tag.host&.full_name %></span>
+
+        <% end %>
+        <% retreat.planner_tags.each do |tag| %>
+          <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-orange-100 rounded-full whitespace-nowrap"><%= tag.planner&.full_name %></span>
+        <% end %>  
+      </p>
+    </div>
+  </div>
+  <div class="mt-6">
+    <p class="text-base text-slate-600 font-light leading-normal">
+      <%= retreat.description %>
+    </p>
+  </div>
+
+<br/>
+
+  <div class="mt-auto border-t border-slate-200 pt-1 px-1">
+    <span class="text-sm text-slate-600 font-medium">
+      Meeting Spaces: <%= locations.to_sentence %>
+    </span>
+  </div>
+
+
+
+
+</div> 
+
+
+ 
+
+ <% end %>
+</div>
+
+
+<% if false # add housing here below %>
+<% items = Item.joins(:tags).where(tags: { name: ['Lodging', 'Meeting Spaces'] }) %>
+<div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+  <% items.each do |item| %>
+    <div class="bg-white p-4 rounded-lg shadow-md">
+
+      <% 10.times do %>
+        <p class="text-xs font-semibold mb-2 text-gray-800"><%= item.name %></p>
+      <% end %>
+
+    </div>
+  <% end %>
+</div>
+<% end %>
+
+<% if false ## Normal BT fields below %>
     <%= render 'account/shared/box', pagy: pagy do |box| %>
       <% box.title t(".contexts.#{context.class.name.underscore}.header") %>
       <% box.description do %>
@@ -17,31 +241,7 @@
         <%= render "shared/limits/index", model: retreats.model %>
       <% end %>
 
-      <% box.table do %>
-        <% if retreats.any? %>
-          <table class="table">
-            <thead>
-              <tr>
-                <%= render "shared/tables/select_all" %>
-                <th><%= t('.fields.name.heading') %></th>
-                <th><%= t('.fields.description.heading') %></th>
-                <th><%= t('.fields.arrival.heading') %></th>
-                <th><%= t('.fields.departure.heading') %></th>
-                <th><%= t('.fields.guest_count.heading') %></th>
-                <th><%= t('.fields.organization.heading') %></th>
-                <th  class="text-center"><%= t('.fields.internal.heading') %></th>
-                <th  class="text-center"><%= t('.fields.active.heading') %></th>
-                <th><%= t('.fields.jotform.heading') %></th>
-                <%# 🚅 super scaffolding will insert new field headers above this line. %>
-                <th class="text-right"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= render partial: 'account/retreats/retreat', collection: retreats %>
-            </tbody>
-          </table>
-        <% end %>
-      <% end %>
+
 
       <% box.actions do %>
         <% unless hide_actions %>
@@ -66,4 +266,5 @@
       <% end %>
     <% end %>
   <% end %>
+<% end %>
 <% end %>

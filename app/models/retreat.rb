@@ -46,12 +46,13 @@ class Retreat < ApplicationRecord
   end
 
   def valid_planners
-    team.memberships.where("memberships.role_ids @> ?", '["planner"]')
+    #team.memberships.where("memberships.role_ids @> ?", '["planner"]')
     team.memberships.current_and_invited
   end
 
   def valid_hosts
-    team.memberships.where("memberships.role_ids @> ?", '["host"]')
+  #  team.memberships.where("memberships.role_ids @> ?", '["host"]')
+    team.memberships.current_and_invited
   end
 
   def valid_contacts

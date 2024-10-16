@@ -4,6 +4,7 @@ class Account::RetreatsController < Account::ApplicationController
   # GET /account/teams/:team_id/retreats
   # GET /account/teams/:team_id/retreats.json
   def index
+    @retreats = Retreat.all.order(:name).limit(9)
     delegate_json_to_api
   end
 

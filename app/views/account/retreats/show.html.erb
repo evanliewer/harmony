@@ -1,13 +1,88 @@
-<%= render 'account/shared/page' do |page| %>
-  <% page.title t('.section') %>
-  <% page.body do %>
+
     <%= cable_ready_updates_for @retreat do %>
+
+
+<% with_attribute_settings object: @retreat do %>
+    <div class="w-full bg-white p-4 rounded-lg shadow-md flex flex-col lg:flex-row gap-4">
+  <!-- Left Box (Details Section) -->
+  <div class="flex-1">
+    <h1 class="text-3xl font-bold text-blue-600">
+      <%= render 'shared/attributes/text', attribute: :name %>
+    </h1>
+    <p class="text-gray-600 mt-2">
+      <%= render 'shared/attributes/text', attribute: :description %>
+    </p>
+
+    <p class="mt-4">
+      <strong>Itinerary:</strong> <%= @retreat.id %>
+    </p>
+    <p>
+      <strong>Arriving:</strong> <%= @retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.arrival.day.ordinalize} %-l:%M%P") %>
+    </p>
+    <p>
+      <strong>Departing:</strong> <%= @retreat.departure.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.departure.day.ordinalize} %-l:%M%P") %>
+    </p>
+    <p>
+      <strong>Details:</strong> <%= @retreat.demographics.map { |d| d.name }.to_sentence %> <%= pluralize((@retreat.departure&.to_date - @retreat.arrival&.to_date).to_i, "Night") %>, <%# pluralize(@meals.count, "Meal") %>  ADD MEAL COUNT
+    </p>
+
+    <p class="mt-4">
+      <strong>Meeting Spaces:</strong> Chipmunk Corner and Hornel Hall: Auditorium (0.0% Clean)
+    </p>
+    <p>
+      <strong>Lodging:</strong> 12-A, 12-B, 16-A, 16-B, 17-A, 17-B, 46-A, 46-B, 47-A, 47-B, 48-A, 48-B, 49-B, 53-A, 53-B, 80- A, 80- B, 81- A, 81- B, 82- B, 83- A, 83- B, 84- B, 85- A, 85-B, and Biltmore Cabin (17.95% Clean)
+    </p>
+  </div>
+  <!-- Location icons aligned at the bottom -->
+  <p class="flex -space-x-4">
+    <% @retreat.locations.each do |location| %>
+      <%= image_tag location_icon_url(location), class: 'inline-block h-10 w-10 rounded-full ring-2 ring-white self-end', alt: location&.name %>
+    <% end %>
+  </p>
+<% end ### with attributes settting %>  
+
+  <!-- Right Box (Guests Info and Buttons Section) -->
+  <div class="flex flex-col gap-4">
+    
+    <div class="bg-gray-100 p-4 rounded-lg">
+        
+      <h2 class="text-2xl font-bold text-gray-800">91 Guests</h2>
+     
+      <p><strong>Group Leaders: </strong><%= @retreat.contacts.present? ? @retreat.contacts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
+      <p><strong>Event Planners: </strong><%= @retreat.planners.present? ? @retreat.planners.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p></p>
+      <p><strong>Hosts: </strong><%= @retreat.hosts.present? ? @retreat.hosts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p></p>
+    </div>
+
+    <!-- Buttons Section -->
+    <div class="flex flex-col gap-2">
+      <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600">
+        Add New Reservation
+      </button>
+      <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600">
+        Group Page
+      </button>
+      <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600">
+        Remove Seasonal Defaults
+      </button>
+      <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600">
+        Weekend Schedule Printable
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<br/>
+<% if false ##Origainal Code %>
       <%= render 'account/shared/box', divider: true do |box| %>
         <% box.title t('.header') %>
         <% box.description do %>
           <%= t('.description') %>
           <%= t('.manage_description') if can? :manage, @retreat %>
         <% end %>
+
+
 
         <% box.body do %>
           <% with_attribute_settings object: @retreat, strategy: :label do %>
@@ -28,6 +103,8 @@
             <%# 🚅 super scaffolding will insert new fields above this line. %>
           <% end %>
         <% end %>
+      
+
 
         <% box.actions do %>
           <%= link_to t('.buttons.edit'), [:edit, :account, @retreat], class: first_button_primary if can? :edit, @retreat %>
@@ -41,8 +118,8 @@
         <% end %>
       <% end %>
     <% end %>
+<% end ## orignal BT code %>  
 
     <%= render 'account/retreats/comments/index', comments: @retreat.comments, hide_back: true %>
     <%# 🚅 super scaffolding will insert new children above this line. %>
-  <% end %>
-<% end %>
+

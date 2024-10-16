@@ -21,7 +21,7 @@ class Retreats::PlannerTag < ApplicationRecord
   # 🚅 add delegations above.
 
   def valid_planners
-    retreat.valid_memberships
+    retreat.team.memberships.current_and_invited
   end
 
   # 🚅 add methods above.

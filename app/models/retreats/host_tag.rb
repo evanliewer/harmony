@@ -21,7 +21,7 @@ class Retreats::HostTag < ApplicationRecord
   # 🚅 add delegations above.
 
   def valid_hosts
-    retreat.valid_memberships
+    retreat.team.memberships.current_and_invited
   end
 
   # 🚅 add methods above.
