@@ -60,6 +60,20 @@ class Account::FlightsController < Account::ApplicationController
     end
   end
 
+  def toggle_flightcheck
+   checklist_item = Flights::Check.where(id: params[:flightcheck_id]).first
+   #checklist_item = Flights::Check.find(params[:flightcheck_id])
+   if checklist_item.completed_at.nil?
+     Flights::Check.where(id: params[:flightcheck_id]).update_all(completed_at: Time.now)
+     Flights::Check.where(id: params[:flightcheck_id]).update_all(user_id: current_user.id)
+   else
+     Flights::Check.where(id: params[:flightcheck_id]).update_all(completed_at: nil)
+     Flights::Check.where(id: params[:flightcheck_id]).update_all(user_id: current_user.id)
+   end
+   retreat = Retreat.find(Flights::Check.where(id: params[:flightcheck_id]).first.retreat_id)
+   redirect_to [:account, retreat]
+  end
+
   private
 
   if defined?(Api::V1::ApplicationController)

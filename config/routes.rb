@@ -67,6 +67,8 @@ Rails.application.routes.draw do
           # 🚅 super scaffolding will insert new integration installations above this line.
         end
 
+        put 'toggle_flightcheck', to: 'flights#toggle_flightcheck', as: :toggle_flightcheck
+
         resources :demographics, concerns: [:sortable]
         resources :departments, concerns: [:sortable]
         resources :locations, concerns: [:sortable]

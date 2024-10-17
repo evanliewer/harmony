@@ -1,6 +1,7 @@
 class Account::LocationsController < Account::ApplicationController
   include SortableActions
   account_load_and_authorize_resource :location, through: :team, through_association: :locations
+  enable_inline_edit_for :location
 
   # GET /account/teams/:team_id/locations
   # GET /account/teams/:team_id/locations.json

@@ -129,8 +129,12 @@ bin/rails g bt_power_pack:filters:install
 bin/rails g super_scaffold:bt_power_pack:filter Item Team name:text_field description:text_field location:super_select
 
 
+rails g super_scaffold Retreats::Request retreat_id{class_name=Retreat} department_id{class_name=Department} notes:text_field
 
 
-
+Retreat Requests
+team
+department
+details
 
 

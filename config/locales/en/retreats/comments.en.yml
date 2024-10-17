@@ -62,8 +62,8 @@ en:
       contexts:
         retreat:
           header: Comments
-          description: Below is a list of Comments that have been added for %{retreat_name}.
-          description_empty: No Comments have been added for %{retreat_name}.
+          description: Below is a list of Comments that have been added for %{retreat_name}.  Remember, only Event Planners and Admins can see comments.
+          description_empty: No Comments have been added for %{retreat_name}.  Remember, only Event Planners and Admins can see comments.
       fields: *fields
       buttons: *buttons
     show:

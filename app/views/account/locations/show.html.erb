@@ -10,7 +10,7 @@
         <% end %>
 
         <% box.body do %>
-          <% with_attribute_settings object: @location, strategy: :label do %>
+          <% with_attribute_settings object: @location, strategy: :inline_edit do %>
             <%= render 'shared/attributes/text', attribute: :name %>
             <%= render 'shared/attributes/text', attribute: :initials %>
             <%= render 'shared/attributes/number', attribute: :capacity %>

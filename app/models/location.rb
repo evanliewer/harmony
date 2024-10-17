@@ -1,5 +1,6 @@
 class Location < ApplicationRecord
   include Sortable
+  has_inline_edit_on name: :text_field, capacity: :text_field
   # 🚅 add concerns above.
 
   # 🚅 add attribute accessors above.

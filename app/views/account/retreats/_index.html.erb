@@ -16,6 +16,7 @@
 
 
 
+
 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
 
 
@@ -112,110 +113,86 @@
 
 
 
-<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
-<% @retreats.each do |retreat| %>
-
-
-<!-- Locations -->
-  <% locations = [] %>
-   <% @meetingspaces = Reservation.where(retreat_id: retreat.id).limit(3) %>
-      <% @meetingspaces.each do |meetingspace| %>
-        <%# if meetingspace.resources_option.present? %>
-        <% if false %>
-          <% location = meetingspace.name + ": " + meetingspace.resources_option.name %>
-        <% else %>
-          <% location = meetingspace.name %>
-        <% end %>  
-        <% locations << location  %>
-      <% end %>
-
-
-<!------- End Locations ---->
 
 
 
 
 
 
-   <div class="flex w-full p-4 w-full flex-col rounded-lg bg-white shadow-sm border border-slate-200">
-  <div class="flex items-center gap-4 text-slate-800">
-
-
-     <% retreat.locations.each do |location| %>
-                            <%= image_tag location_icon_url(location), class: 'relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center', alt: location&.name, style: "flex-shrink: 0;" %>
-                         <% end %>
-
-
-    <div class="flex w-full flex-col">
-      <div class="flex items-center justify-between">
-        <h5 class="text-xl font-semibold text-slate-800">
-          <%= link_to retreat.name, [:account, retreat] %>
-        </h5>
-
-<% randd = rand(1..2) %>
-
-
-<% if randd == 1%>
-        <div class=" text-right basis-1/3">
-          <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500"> 
-             <i class="leading-none text-xl relative top-1.5 text-white">88</i>
-             <i class="leading-none text-md relative top-1.5 text-white">days</i>
-          </div>
-      </div>
-<% else %>
-
-  <div class=" text-right basis-1/3">
-          <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400"> 
-             <i class="leading-none text-lg relative top-1.5 text-white">On</i>
-             <i class="leading-none text-md relative top-1.5 text-white">Site</i>
-          </div>
-      </div>
-
-
-<% end %>      
-
-      </div>
-      <p class="text-xs uppercase font-bold text-slate-500 mt-0.5">
-         <span class="inline-block py-0 px-2 text-[10px] text-blue-800 bg-blue-200 rounded-full whitespace-nowrap">35 Guests</span>
-        <% retreat.demographic_tags.each do |tag| %>
-         <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-blue-100 rounded-full whitespace-nowrap">
-          <%= tag.demographic&.name %>
-        </span>
-        <% end %> 
-        <% retreat.host_tags.each do |tag| %>
-          <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-purple-100 rounded-full whitespace-nowrap"><%= tag.host&.full_name %></span>
-
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
+  <% Retreat.all.limit(9).each do |retreat| %>
+    <!-- Box for each retreat -->
+    <div class="flex w-full p-4 flex-col rounded-lg bg-white shadow-sm border border-slate-200">
+      <div class="flex items-center gap-4 text-slate-800">
+        <!-- Retreat Locations -->
+        <% retreat.locations.each do |location| %>
+          <%= image_tag location_icon_url(location), class: 'relative inline-block h-[58px] w-[58px] !rounded-full object-cover object-center', alt: location&.name, style: "flex-shrink: 0;" %>
         <% end %>
-        <% retreat.planner_tags.each do |tag| %>
-          <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-orange-100 rounded-full whitespace-nowrap"><%= tag.planner&.full_name %></span>
-        <% end %>  
-      </p>
+        
+        <!-- Retreat Details -->
+        <div class="flex w-full flex-col">
+          <div class="flex items-center justify-between">
+            <h5 class="text-xl font-semibold text-slate-800">
+              <%= link_to retreat.name, [:account, retreat] %>
+            </h5>
+            
+            <!-- ONSITE / DAYS STATUS -->
+            <% randd = rand(1..2) %>
+            <% if randd == 1 %>
+              <div class="text-right basis-1/3">
+                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500"> 
+                  <i class="leading-none text-xl relative top-1.5 text-white">88</i>
+                  <i class="leading-none text-md relative top-1.5 text-white">days</i>
+                </div>
+              </div>
+            <% else %>
+              <div class="text-right basis-1/3">
+                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400"> 
+                  <i class="leading-none text-lg relative top-1.5 text-white">On</i>
+                  <i class="leading-none text-md relative top-1.5 text-white">Site</i>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          
+          <!-- Guest Info and Tags -->
+          <p class="text-xs uppercase font-bold text-slate-500 mt-0.5">
+            <span class="inline-block py-0 px-2 text-[10px] text-blue-800 bg-blue-200 rounded-full whitespace-nowrap">35 Guests</span>
+            <% retreat.demographic_tags.each do |tag| %>
+              <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-blue-100 rounded-full whitespace-nowrap">
+                <%= tag.demographic&.name %>
+              </span>
+            <% end %>
+            <% retreat.host_tags.each do |tag| %>
+              <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-purple-100 rounded-full whitespace-nowrap"><%= tag.host&.full_name %></span>
+            <% end %>
+            <% retreat.planner_tags.each do |tag| %>
+              <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-orange-100 rounded-full whitespace-nowrap"><%= tag.planner&.full_name %></span>
+            <% end %>
+          </p>
+        </div>
+      </div>
+      
+      <!-- Retreat Description -->
+      <div class="mt-6">
+        <p class="text-base text-slate-600 font-light leading-normal">
+          <%= retreat.description %>
+        </p>
+      </div>
+
+      <!-- Meeting Spaces -->
+      <div class="mt-auto border-t border-slate-200 pt-1 px-1">
+        <span class="text-sm text-slate-600 font-medium">
+          Meeting Spaces: <%= retreat.locations.map { |p| p.name }.to_sentence %>
+        </span>
+      </div>
     </div>
-  </div>
-  <div class="mt-6">
-    <p class="text-base text-slate-600 font-light leading-normal">
-      <%= retreat.description %>
-    </p>
-  </div>
-
-<br/>
-
-  <div class="mt-auto border-t border-slate-200 pt-1 px-1">
-    <span class="text-sm text-slate-600 font-medium">
-      Meeting Spaces: <%= locations.to_sentence %>
-    </span>
-  </div>
-
-
-
-
-</div> 
-
-
- 
-
- <% end %>
+  <% end %>
 </div>
+
+
+
+
 
 
 <% if false # add housing here below %>

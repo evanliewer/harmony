@@ -1,0 +1,53 @@
+<% begin %>
+  <% if checks.any? %>
+   <%= form_tag(account_team_toggle_flightcheck_path(current_team), method: :put)  do %>  
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th class="w-0">Flight</th> <!-- Minimal width for first column -->
+          <th class="text-right pr-6">Details</th> <!-- Add padding-right to the second column heading -->
+        </tr>
+      </thead>
+      <tbody>
+        <% checks.each do |flightcheck| %>
+          <tr data-id="<%= flightcheck.id %>">
+            <% if flightcheck.completed_at.present? %>
+             <td class="line-through"><%= check_box_tag 'flightcheck_id[]', flightcheck.id %> <%= flightcheck&.flight.name %></td>
+            <% else %>
+              <td><%= check_box_tag 'flightcheck_id[]', flightcheck.id %> <%= flightcheck&.flight.name %></td>
+            <% end %> 
+<!-- Minimal width for first column -->
+            <td class="text-right pr-6">
+
+                      <% if flightcheck.completed_at.present? %>
+                        <%= flightcheck.user&.full_name %> completed on <%= flightcheck.completed_at.strftime("%B #{flightcheck.completed_at.day.ordinalize}") %>
+                      <% else %>
+                        <% time_until_warning = (@retreat.arrival.to_date - Time.now.to_date).to_i - flightcheck.flight.warning.to_i %>
+                        <% if time_until_warning > 0 %>
+                         <%= pluralize(time_until_warning,'day') %>
+                        <% else %>
+                          <div class="text-red-500"><%= pluralize(time_until_warning.abs(),'day') %> overdue</div>
+                        <% end %> 
+                      <% end %> 
+                   
+            </td> <!-- Add padding-right to the second column -->
+          </tr>  
+        <% end %>
+      </tbody>
+    </table>
+     <!-- Button at the bottom -->
+  <div class="mt-auto">
+   <% if checks.where.not(completed_at: nil).any? %>
+       <%= submit_tag "Mark as Incompleted", class: 'bg-blue-500 text-white px-4 py-2 rounded-lg w-full' %>
+     <% else %>
+       <%= submit_tag "Mark as Completed", class: 'bg-blue-500 text-white px-4 py-2 rounded-lg w-full' %>
+     <% end %> 
+  </div>
+
+     
+  <% end %>
+ <% end %> 
+<% rescue => ex %>
+  ERRORS
+  <%= ex.message %>
+<% end %>  
