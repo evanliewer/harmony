@@ -32,15 +32,17 @@
                    
             </td> <!-- Add padding-right to the second column -->
           </tr>  
+ 
+
         <% end %>
       </tbody>
     </table>
      <!-- Button at the bottom -->
   <div class="mt-auto">
    <% if checks.where.not(completed_at: nil).any? %>
-       <%= submit_tag "Mark as Incompleted", class: 'bg-blue-500 text-white px-4 py-2 rounded-lg w-full' %>
+       <%= submit_tag "Mark as Incompleted", class: 'bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600' %>
      <% else %>
-       <%= submit_tag "Mark as Completed", class: 'bg-blue-500 text-white px-4 py-2 rounded-lg w-full' %>
+       <%= submit_tag "Mark as Completed", class: 'bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600' %>
      <% end %> 
   </div>
 

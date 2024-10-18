@@ -63,6 +63,7 @@ shallow do
 
       namespace :retreats do
         resources :comments, except: collection_actions
+        resources :requests
       end
 
       resources :notifications

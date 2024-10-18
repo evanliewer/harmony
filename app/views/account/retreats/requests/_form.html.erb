@@ -1,0 +1,25 @@
+<% cancel_path ||= request.persisted? ? [:account, request] : [:account, @team, :retreats_requests] %>
+
+<%= form_with model: request, url: (request.persisted? ? [:account, request] : [:account, @team, :retreats_requests]), local: true, class: 'form' do |form| %>
+  <%= render "shared/limits/form", form: form, cancel_path: cancel_path do %>
+    <%= render 'account/shared/forms/errors', form: form %>
+
+    <% with_field_settings form: form do %>
+      <% if params[:retreat_id].present? %>
+        <%= render 'shared/fields/super_select', method: :retreat_id, options: {}, html_options: {},
+        choices: @request.valid_retreats.map { |retreat| [retreat.label_string, retreat.id] } %>
+      <% else %>
+        <%= form.hidden_field :retreat_id, value: params[:retreat_id] %>
+      <% end %>    
+      <%= render 'shared/fields/super_select', method: :department_id, options: {autofocus: true}, html_options: {autofocus: true},
+        choices: @request.valid_departments.map { |department| [department.label_string, department.id] } %>
+      <%= render 'shared/fields/text_field', method: :notes %>
+      <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <% end %>
+
+    <div class="buttons">
+      <%= form.submit (form.object.persisted? ? t('.buttons.update') : t('.buttons.create')), class: "button" %>
+      <%= link_to t('global.buttons.cancel'), cancel_path, class: "button-secondary" %>
+    </div>
+  <% end %>
+<% end %>

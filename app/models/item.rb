@@ -15,7 +15,8 @@ class Item < ApplicationRecord
 
   has_one_attached :layout
   # 🚅 add has_one associations above.
-
+  scope :active, -> { where(active: true) }
+  scope :schedulable, -> { joins(:tags).where(tags: { schedulable: true }).distinct }
   # 🚅 add scopes above.
 
   validates :name, presence: true
@@ -41,6 +42,30 @@ class Item < ApplicationRecord
 
   def remove_layout
     layout.purge
+  end
+
+    def ticketable?
+    tags.where(ticketable: true).any?
+  end
+
+  def schedulable?
+    tags.where(schedulable: true).any?
+  end
+
+  def optionable?
+    tags.where(optionable: true).any?
+  end
+
+  def exclusivable?
+    tags.where(exclusivable: true).any?
+  end
+
+  def cleanable?
+    tags.where(cleanable: true).any?
+  end
+
+  def publicable?
+    tags.where(publicable: true).any?
   end
 
   # 🚅 add methods above.

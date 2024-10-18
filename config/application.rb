@@ -29,7 +29,7 @@ module Harmony
     config.i18n.default_locale = config.i18n.available_locales.first
     config.i18n.fallbacks = [:en]
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
-
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone]
     BulletTrain::Api.set_configuration(self)
   end
 end

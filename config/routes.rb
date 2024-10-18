@@ -68,6 +68,10 @@ Rails.application.routes.draw do
         end
 
         put 'toggle_flightcheck', to: 'flights#toggle_flightcheck', as: :toggle_flightcheck
+        get 'create_seasonal_reservations' => 'reservations#create_seasonal_reservations', as: 'create_seasonal_reservations'
+        get 'remove_seasonal_reservations' => 'reservations#remove_seasonal_reservations', as: 'remove_seasonal_reservations'
+        patch 'fullcalendar_update/', to: 'reservations#fullcalendar_update', as: :fullcalendar_update
+        patch '/account/:team_id/fullcalendar_update', to: 'account/teams#update_fullcalendar_event', as: 'account_team_fullcalendar_update'
 
         resources :demographics, concerns: [:sortable]
         resources :departments, concerns: [:sortable]
@@ -101,6 +105,7 @@ Rails.application.routes.draw do
 
         namespace :retreats do
           resources :comments, except: collection_actions
+          resources :requests
         end
 
         resources :notifications

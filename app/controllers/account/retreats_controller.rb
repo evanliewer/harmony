@@ -1,5 +1,6 @@
 class Account::RetreatsController < Account::ApplicationController
   account_load_and_authorize_resource :retreat, through: :team, through_association: :retreats
+  before_action :set_paper_trail_whodunnit
 
   # GET /account/teams/:team_id/retreats
   # GET /account/teams/:team_id/retreats.json
@@ -11,6 +12,7 @@ class Account::RetreatsController < Account::ApplicationController
   # GET /account/retreats/:id
   # GET /account/retreats/:id.json
   def show
+    create_flights
     delegate_json_to_api
   end
 
@@ -59,6 +61,15 @@ class Account::RetreatsController < Account::ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def create_flights
+     flights = Flights::Check.includes([:flight]).where(retreat_id: @retreat.id).where(team_id: current_team.id)
+    unless flights.any?
+      Flight.where(team_id: current_team.id).each do |flight|
+        Flights::Check.create!(flight_id: flight.id, retreat_id: @retreat.id, team_id: current_team.id, name: @retreat.name + " " + flight.name)
+      end
+    end 
+  end  
 
   private
 

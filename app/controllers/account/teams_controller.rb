@@ -2,6 +2,18 @@ class Account::TeamsController < Account::ApplicationController
   include Account::Teams::ControllerBase
   filter_resource "Item", [:name, :description, :location], actions: :show
 
+  def update_fullcalendar_event
+  # Find the reservation by ID
+  reservation = Reservation.find(params[:id])
+
+  # Update the start and end times
+  if reservation.update(start_time: params[:start], end_time: params[:end])
+    render json: { success: true }
+  else
+    render json: { success: false, errors: reservation.errors.full_messages }, status: :unprocessable_entity
+  end
+end
+
   private
 
   def permitted_fields

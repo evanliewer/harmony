@@ -1,5 +1,6 @@
 default:
   models:
+    Retreats::Request: read
     Websiteimage: read
     Question: read
     Season: read
@@ -52,6 +53,7 @@ planner:
     Retreat: manage
     Reservation: manage
     Season: manage
+    Retreats::Request: manage
     
 
 resource_editor:
@@ -73,6 +75,7 @@ admin:
     - resource_editor
     - host
   models:
+    Retreats::Request: manage
     Websiteimage: manage
     Question: manage
     Season: manage

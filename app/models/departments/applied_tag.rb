@@ -21,7 +21,7 @@ class Departments::AppliedTag < ApplicationRecord
   # 🚅 add delegations above.
 
   def valid_tags
-    department.valid_items_tags
+    department.valid_tags
   end
 
   # 🚅 add methods above.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_13_032206) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_17_231455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -512,6 +512,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_13_032206) do
     t.index ["retreat_id"], name: "index_retreats_planner_tags_on_retreat_id"
   end
 
+  create_table "retreats_requests", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "retreat_id", null: false
+    t.bigint "department_id"
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_retreats_requests_on_department_id"
+    t.index ["retreat_id"], name: "index_retreats_requests_on_retreat_id"
+    t.index ["team_id"], name: "index_retreats_requests_on_team_id"
+  end
+
   create_table "scaffolding_absolutely_abstract_creative_concepts", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.string "name"
@@ -634,6 +646,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_13_032206) do
     t.string "item_type", null: false
     t.string "event", null: false
     t.text "object"
+    t.text "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
@@ -780,6 +793,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_13_032206) do
   add_foreign_key "retreats_location_tags", "retreats"
   add_foreign_key "retreats_planner_tags", "memberships", column: "planner_id"
   add_foreign_key "retreats_planner_tags", "retreats"
+  add_foreign_key "retreats_requests", "departments"
+  add_foreign_key "retreats_requests", "retreats"
+  add_foreign_key "retreats_requests", "teams"
   add_foreign_key "scaffolding_absolutely_abstract_creative_concepts", "teams"
   add_foreign_key "scaffolding_completely_concrete_tangible_things", "scaffolding_absolutely_abstract_creative_concepts", column: "absolutely_abstract_creative_concept_id"
   add_foreign_key "scaffolding_completely_concrete_tangible_things_assignments", "memberships"

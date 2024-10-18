@@ -1,4 +1,5 @@
 class Retreat < ApplicationRecord
+  has_paper_trail
   # 🚅 add concerns above.
 
   # 🚅 add attribute accessors above.
@@ -17,8 +18,10 @@ class Retreat < ApplicationRecord
   has_many :hosts, through: :host_tags, class_name: "Membership"
   has_many :assigned_contacts, class_name: "Retreats::AssignedContact", dependent: :destroy
   has_many :contacts, through: :assigned_contacts, class_name: "Organizations::Contact"
-
+  has_many :reservations, dependent: :destroy
   has_many :comments, class_name: "Retreats::Comment", dependent: :destroy
+  has_many :requests, class_name: "Retreats::Request", dependent: :destroy
+  has_many :flights_checks, class_name: "Flights::Check", dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.

@@ -19,6 +19,7 @@ class Reservation < ApplicationRecord
   validates :retreat, scope: true
   validates :item, scope: true
   validates :user, scope: true
+  before_validation :set_defaults
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.
@@ -36,6 +37,28 @@ class Reservation < ApplicationRecord
   def valid_users
     team.memberships.current_and_invited
   end
+
+  def set_defaults
+    puts "set_defaults"
+    self.name ||= self.retreat.name + " " + self.item.name
+    self.quantity ||= 1
+    self.active ||= true
+  end 
+
+def valid_items_no_rooms_or_meetings_old
+  team.items
+    .joins(:tags)
+    .where.not(
+      id: team.items.joins(:tags).where(tags: { name: ["Lodging", "Meeting Space"] }).pluck(:id)
+    )
+    .order(:name)
+    .distinct
+end
+
+def valid_items_no_rooms_or_meetings
+  team.items.schedulable.order(:name)
+end
+
 
   # 🚅 add methods above.
 end

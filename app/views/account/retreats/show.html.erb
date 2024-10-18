@@ -80,9 +80,7 @@
 
     <!-- Buttons Section -->
     <div class="flex flex-col gap-2">
-      <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600">
-        Add New Reservation
-      </button>
+      <%= link_to "Add New Reservation", [:new, :account, current_team, :reservation, { retreat_id: @retreat.id }], class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600" %>
       <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600">
         Group Page
       </button>
@@ -102,7 +100,7 @@
 
 <div class="bg-white p-6 rounded-lg shadow-md w-full mb-4">
   <h2 class="text-xl font-bold text-gray-700 mb-4">Calendar</h2>
-  
+    <%= render 'account/retreats/schedule' %> 
 </div>
 
 
@@ -177,6 +175,8 @@
     <% end %>
 <% end ## orignal BT code %>  
 
+<%= render 'account/retreats/requests/index', requests: @retreat.requests, hide_back: true %>
+<br/>
   <% if can? :edit, @retreat %>
     <%= render 'account/retreats/comments/index', comments: @retreat.comments, hide_back: true %>
     <%# 🚅 super scaffolding will insert new children above this line. %>
@@ -184,6 +184,7 @@
 
       <div class="bg-white p-6 rounded-lg shadow-md w-full mt-4">
         <h2 class="text-xl font-bold text-gray-700 mb-4">Papertrail</h2>
+        <%= render 'account/retreats/papertrail' %>
       </div>
   <% end %>
 
