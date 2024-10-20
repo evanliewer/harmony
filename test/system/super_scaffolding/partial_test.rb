@@ -19,9 +19,9 @@ class SuperScaffoldingSystemTest < ApplicationSystemTestCase
   #   rails test test/system/super_scaffolding/
   #
   # after the test you can tear down what we've done here in the db:
-  #   rake db:migrate VERSION=`ls db/migrate | sort | tail -n 9 | head -n 1`
-  #   git checkout .
-  #   git clean -d -f
+  #   rake db:migrate VERSION=`ls db/migrate | sort | tail -n 21 | head -n 1`
+  #   git checkout app config
+  #   git clean -d -f app config db test
 
   # force autoload.
   [
@@ -35,10 +35,7 @@ class SuperScaffoldingSystemTest < ApplicationSystemTestCase
   end
 
   if defined?(TestFile)
-    test "developers can Super Scaffold a file partial and perform crud actions on the record" do
-      display_details = @@test_devices[:macbook_pro_15_inch]
-      resize_for(display_details)
-
+    device_test "developers can Super Scaffold a file partial and perform crud actions on the record" do
       login_as(@jane, scope: :user)
       visit account_team_path(@jane.current_team)
 
@@ -46,7 +43,7 @@ class SuperScaffoldingSystemTest < ApplicationSystemTestCase
       click_on "Add New Test File"
 
       fill_in "Name", with: "Test File Name"
-      assert_text("Upload New Document")
+      assert_text("Upload New File")
       fill_in "Name", with: "Foo"
       attach_file("Foo", "test/support/foo.txt", make_visible: true)
       attach_file("Bars", ["test/support/foo.txt", "test/support/foo-two.txt"], make_visible: true)
@@ -58,9 +55,9 @@ class SuperScaffoldingSystemTest < ApplicationSystemTestCase
 
       click_on "Edit"
 
-      assert_text("Remove Current Document")
+      assert_text("Remove Current File")
       within "[data-fields--file-item-id-value='#{TestFile.first.foo.id}']" do
-        find("span", text: "Remove Current Document").click
+        find("span", text: "Remove Current File").click
       end
       click_on "Update Test File"
 
@@ -68,9 +65,9 @@ class SuperScaffoldingSystemTest < ApplicationSystemTestCase
       assert TestFile.first.foo.blank?
 
       click_on "Edit"
-      assert_text("Remove Current Document")
+      assert_text("Remove Current File")
       within "[data-fields--file-item-id-value='#{TestFile.first.bars.first.id}']" do
-        find("span", text: "Remove Current Document").click
+        find("span", text: "Remove Current File").click
       end
       click_on "Update Test File"
 
@@ -85,10 +82,7 @@ class SuperScaffoldingSystemTest < ApplicationSystemTestCase
   end
 
   if defined?(ColorPicker)
-    test "super scaffolded color pickers function properly" do
-      display_details = @@test_devices[:macbook_pro_15_inch]
-      resize_for(display_details)
-
+    device_test "super scaffolded color pickers function properly" do
       login_as(@jane, scope: :user)
       visit account_team_path(@jane.current_team)
 
@@ -111,10 +105,7 @@ class SuperScaffoldingSystemTest < ApplicationSystemTestCase
   end
 
   if defined?(PartialTest)
-    test "super scaffolded partials function properly" do
-      display_details = @@test_devices[:macbook_pro_15_inch]
-      resize_for(display_details)
-
+    device_test "super scaffolded partials function properly" do
       login_as(@jane, scope: :user)
       visit account_team_path(@jane.current_team)
 

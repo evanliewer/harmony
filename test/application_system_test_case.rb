@@ -45,6 +45,11 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
   delegate :use_cuprite?, to: :class
 
+  def self.deprecator
+    @deprecator ||= ActiveSupport::Deprecation.new("2.0", "BulletTrain")
+  end
+  delegate :deprecator, to: :class
+
   if use_cuprite?
     driven_by :bt_cuprite
   else
@@ -139,7 +144,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def resize_for(display_details)
-    ActiveSupport::Deprecation.warn <<~END_OF_MESSAGE
+    deprecator.warn <<~END_OF_MESSAGE
       `resize_for` is deprecated.
       Please run the following command to update your tests:
       ./bin/updates/system_tests/use_device_test
@@ -296,7 +301,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     field = find("label", text: /\A#{label}\z/)
     field.click
     "#{string}\n".chars.each do |digit|
-      within(field.find(:xpath, "..")) do
+      within(field.find(:xpath, "../..")) do
         find(".select2-search__field").send_keys(digit)
       end
     end
@@ -347,11 +352,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def find_stimulus_controller_for_label(label, stimulus_controller, wrapper = false)
+    label_element = find("label", text: /\A#{label}\z/)
+
     if wrapper
-      wrapper_el = find("label", text: /\A#{label}\z/).first(:xpath, ".//..//..")
-      wrapper_el if wrapper_el["data-controller"].split(" ").include?(stimulus_controller)
+      label_element.ancestor("[data-controller~='#{stimulus_controller}']")
     else
-      find("label", text: /\A#{label}\z/).first(:xpath, ".//..").first('[data-controller~="' + stimulus_controller + '"]')
+      label_element.first(:xpath, ".//../..").first("[data-controller~='#{stimulus_controller}']")
     end
   end
 

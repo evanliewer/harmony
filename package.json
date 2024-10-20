@@ -2,9 +2,9 @@
   "name": "app",
   "private": true,
   "dependencies": {
-    "@bullet-train/bullet-train": "1.7.22",
-    "@bullet-train/bullet-train-sortable": "1.7.22",
-    "@bullet-train/fields": "1.7.22",
+    "@bullet-train/bullet-train": "1.8.0",
+    "@bullet-train/bullet-train-sortable": "1.8.0",
+    "@bullet-train/fields": "1.8.0",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@fortawesome/fontawesome-pro": "^6.6.0",
     "@fullcalendar/core": "^6.1.15",

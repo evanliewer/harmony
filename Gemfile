@@ -9,7 +9,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby(File.read(File.expand_path(".ruby-version", __dir__)))
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.2"
+gem "rails", "~> 7.2.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -115,7 +115,7 @@ gem "pagy", "< 7"
 
 # We use a constant here so that we can ensure that all of the bullet_train-*
 # packages are on the same version.
-BULLET_TRAIN_VERSION = "1.7.22"
+BULLET_TRAIN_VERSION = "1.8.0"
 
 # Core packages.
 gem "bullet_train", BULLET_TRAIN_VERSION
