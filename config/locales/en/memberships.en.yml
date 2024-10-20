@@ -48,6 +48,12 @@ en:
           planner:
             label: Event Planner
             description: Can plan retreats and reserve any resources, but cannot create new ones.
+          group_leader:
+            label: Group Leader
+            description: Can plan their retreats and reserve any resources, but cannot create new ones.
+          default_staff:
+            label: Default Staff
+            description: Typical stuff   
           editor:
             label: Editor
             description: Can create all resources and areas.  Deep access over multiple areas

@@ -1,20 +1,5 @@
 default:
   models:
-    Retreats::Request: read
-    Websiteimage: read
-    Question: read
-    Season: read
-    Notifications::Request: read
-    Notifications::Flag: read
-    Notification: read
-    Organizations::Contact: read
-    Items::Option: read
-    Flights::Check: read
-    Flights::Timeframe: read
-    Flight: read
-    Items::Tag: read
-    Reservation: read
-    Retreat: read
     Organization: read
     Item: read
     Location: read
@@ -34,26 +19,52 @@ default:
       - create
       - destroy
 
-editor:
+group_leader:
+  includes:
+    - default
   models:
-    Scaffolding::CompletelyConcrete::TangibleThing: manage
-    Scaffolding::AbsolutelyAbstract::CreativeConcept:
-      - read
-      - update
+    Retreat: read
+    Reservation: manage
+    Items: read
+    Items::Option: read
+
+default_staff:
+  includes:
+    - default
+  models:
+    Retreat: read
+    Reservation: read
+    Items: read
+    Items::Option: read
+    Notification: manage
+    Notifications::Request: manage
+
+managers:
+  includes:
+    - default
+  models:
+    Retreat: read
+    Reservation: read
+    Items: read
+    Items::Option: read
+    Flights::Check: read
+    Notification: manage
+    Notifications::Request: manage
 
 host:
   includes:
-    - default
+    - group_leader
 
 planner:
   includes:
-    - default
+    - group_leader
   models:
     Retreats::Comment: manage
     Retreat: manage
     Reservation: manage
     Season: manage
     Retreats::Request: manage
+    Flights::Check: manage
     
 
 resource_editor:
@@ -63,7 +74,11 @@ resource_editor:
       - read
       - update
     Items::Option: manage
-    Items::Tag: manage      
+    Items::Tag: manage   
+    Flights::Check: manage
+    Flights::Timeframe: manage
+    Flight: manage  
+    Notification: manage 
 
 admin:
   includes:
@@ -74,6 +89,9 @@ admin:
     - planner
     - resource_editor
     - host
+    - group_leader
+    - default_staff
+    
   models:
     Retreats::Request: manage
     Websiteimage: manage
