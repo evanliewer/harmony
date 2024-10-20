@@ -1,3 +1,1092 @@
+
+<% if @retreat.present? %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<% flag = false %>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Camp Dashboard</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+<%# javascript_include_tag "application", 'data-turbolinks-track': 'reload' %>
+
+    <!-- Default Fonts (IMPORTANT: Delete these if you are using a different body style!) -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,600,500,700,800,900' rel='stylesheet' type='text/css'>
+
+    <!-- Modern Style Fonts (IMPORTANT: Delete these unless you are using body.modern!) -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
+
+    <!-- Vintage Style Fonts (IMPORTANT: Delete these unless you are using body.vintage!) -->
+    <link href='https://fonts.googleapis.com/css?family=Sanchez:400italic,400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css">
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/owl-carousel/owl.theme.css" rel="stylesheet" type="text/css">
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/owl-carousel/owl.transitions.css" rel="stylesheet" type="text/css">
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/formstone/background.css" rel="stylesheet" type="text/css">
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/animate.css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="https://www.foresthome.org/files/guestgroups/vendor/device-mockups/device-mockups.min.css" rel="stylesheet" type="text/css">
+    <%= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css", :media => "all" %>
+    <!-- Vitality Theme CSS -->
+    <!-- INSTRUCTIONS: Uncomment the color scheme you want to use. Red is chosen by default. -->
+    <!-- <link href="css/vitality-red.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="css/vitality-aqua.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="css/vitality-blue.css" rel="stylesheet" type="text/css"> -->
+     <link href="https://www.foresthome.org/files/guestgroups/css/vitality-green.css" rel="stylesheet" type="text/css">
+    <!-- <link href="css/vitality-orange.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="css/vitality-pink.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="css/vitality-purple.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="css/vitality-tan.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="css/vitality-turquoise.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="css/vitality-yellow.css" rel="stylesheet" type="text/css"> -->
+
+    <!-- IE8 support for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<!-- NOTE: Use the .modern or .vintage class to the body element below to see different font pairings! -->
+
+<body id="page-top">
+
+
+    <!-- Navigation -->
+    <!-- Note: navbar-default and navbar-inverse are both supported with this theme. -->
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-expanded">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i> Menu
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <%= @retreat.team.name %>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about"><%= t('group_show.about') %></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#groupdetails"><%= t('group_show.event_detail') %></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#schedule"><%= t('group_show.schedule_short') %></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#snacks"><%= t('group_show.snacks') %></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#cabin"><%= t('group_show.cabins') %></a>
+                    </li>
+                    <% begin %>
+                        <% if current_user.memberships.where(team_id: current_team.id).first.role_ids.include?("admin") %>
+                             <li>
+                                <%= link_to "Back End", [:account, @retreat] %>
+                            </li>
+                        <% end %>
+                    <% rescue => ex %>
+                        <% puts ex.message %>
+                    <% end %>        
+
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= t('group_show.language') %></a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul>
+
+                       <p><a class="dropdown-item" href="<%# group_show_path(id: @retreat.obfuscated_id, language: "en") %>">English</a></p>
+                       <p><a class="dropdown-item" href="<%# group_show_path(id: @retreat.obfuscated_id, language: "sp") %>">Spanish</a></p>
+                       <p><a class="dropdown-item" href="<%# group_show_path(id: @retreat.obfuscated_id, language: "kr") %>">Korean</a></p>
+                       <p><a class="dropdown-item" href="<%# group_show_path(id: @retreat.obfuscated_id, language: "fr") %>">French</a></p>
+                       <p><a class="dropdown-item" href="<%# group_show_path(id: @retreat.obfuscated_id, language: "kj") %>">KJV</a></p>
+
+                    </ul>
+                      </div>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+  
+
+
+
+    <!-- Header -->
+
+        <!--<header style="background-image: url('https://www.foresthome.org/files/guestgroups/img/creative/backgrounds/bg-header.jpg');">-->
+        <header style='background-image: url("https://res.cloudinary.com/du9u6ypp9/image/upload/nlvpllnbqzeixwwbhfq0");'>
+      
+        <div class="intro-content">
+            <img src="https://www.foresthome.org/files/guestgroups/img/creative/logo_small.png" class="img-responsive img-centered" alt="">
+            <div class="brand-name"><%= t('group_show.welcome') %></div>
+            <hr class="colored">
+            <div class="brand-name-subtext"><%= @retreat&.organization&.name %></div>
+        </div>
+        <div class="scroll-down">
+            <a class="btn page-scroll" href="#about"><i class="fa fa-angle-down fa-fw"></i></a>
+        </div>
+    </header>
+
+    <!-- LOgged in section -->
+
+<!-- End logged in section -->
+
+
+
+
+    <!-- About Section -->
+    <% if @planner.present? %>
+    <section id="about">
+        <div class="container wow fadeIn">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <% begin %>
+                    
+                       <% if @planner.profile_photo_id.present? %>
+                          <%= cl_image_tag(@planner.profile_photo_id, class: "img-responsive") %>
+                           <%# cl_image_tag(@planner.profile_photo_id, :secure=>true, :transformation=>[
+                            {:width=>50, :height=>50, :gravity=>"face", :crop=>"thumb"},
+                            {:radius=>10},
+                            {:angle=>0}
+                            ]) %>
+
+                       <% else %>
+                       
+                          <%= image_tag "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYrvUHSS0bl8yz4f3S1FI1aDA7QT1_PL-Ksg&usqp=CAU", class: "img-responsive" %>
+                       <% end %>   
+                     <% rescue => ex %>
+                        <% puts "Image processing error" %>
+                        <% puts ex.message %>
+                    <% end %>    
+                </div>
+                <div class="col-md-6 text-center">
+                    <% if (@retreat.arrival.to_datetime - Date.today).to_i >= 0 %>
+                        <h1><%= t('group_show.my_name') %> <%= @planner&.full_name %>. </h1> <br/>
+                        <h3><%= t('group_show.retreat_is_in') %> <%= pluralize((@retreat.arrival.to_datetime - Date.today).to_i, 'days') %></h3><br/>
+                    <% else %>
+                        <h3><%= t('group_show.retreat_over') %></h3> 
+                    <% end %>    
+                       
+
+          <hr class=" colored">           
+     
+    </div>
+    </section>
+    <% end %>
+    <!---  End About Section  -->
+      
+
+      <!-- Services Section -->
+    <section id="groupdetails" class="bg-gray">
+        <div class="container-fluid">
+
+            <div class="row text-center">
+                <div class="col-lg-12 wow fadeIn">
+
+                    <h1><%= t('group_show.major_group_details') %></h1>
+                    
+                    <p><%= t('group_show.partner_with') %></p> 
+                    <hr class="colored">
+                </div>
+            </div>
+            <div class="row text-center content-row">
+                <div class="col-md-3 col-sm-6 wow fadeIn" data-wow-delay=".2s">
+                    <div class="about-content">
+                        <i class="fa fa-calendar fa-4x"></i>
+                        <h3><%= t('group_show.arrival_and_departure') %></h3>
+                        <p><strong>Arrival:</strong> <%= @retreat.arrival.present? ? @retreat.arrival.to_datetime&.strftime("%A %B #{@retreat.arrival.to_datetime&.day.ordinalize}, %-l:%M%P") : "TBD" %></br> <!-- USed to be UTC, removed it -->
+                           <strong>Departure:</strong> <%= @retreat.departure.present? ? @retreat.departure.to_datetime&.strftime("%A %B #{@retreat.departure.to_datetime&.day.ordinalize}, %-l:%M%P") : "TBD" %><br/>
+<!--  ADD Check if Weather is within a week -->
+  
+
+                        <% if @retreat.team_id == 1 %>
+                           <a href='http://forecast.weather.gov/MapClick.php?lon=-116.9200462646484&lat=34.090186689324824#.WHBizXeZMk8'>Weather Forecast</a>
+                        <% else %>
+                            <a href='https://forecast.weather.gov/MapClick.php?lat=34.3967&lon=-119.2996'>Weather Forecast</a>
+                        <% end %>   
+
+
+                                                 </p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 wow fadeIn" data-wow-delay=".4s">
+                    <div class="about-content">
+                        <i class="fa fa-user fa-4x"></i>
+                        <% begin %>
+                        <h3><%= t('group_show.event_planner') %></h3>
+                          <p><%= @planner.first_name + ' ' + @planner.last_name %></br>
+                            <a href="mailto:<%= @planner.email %>"><%= @planner.email %></a>
+                                </br>
+                           Contact Number: <%= @planner.phone.present? ? @planner.phone : "909-389-4404" %></p>
+                        <% rescue => ex %>
+                          <% puts "Error: 35443" %>
+                          <% puts ex.message %> 
+                        <% end %>    
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 wow fadeIn" data-wow-delay=".6s">
+                    <div class="about-content">
+                        <i class="fa fa-map-marker fa-4x"></i>
+                        <h3><%= t('group_show.event_details') %></h3>
+                         <p>Camp Center: <%= @retreat.locations.map { |l| l.name }.to_sentence %></br>
+                           Group Size: <%= @retreat.guest_count %></br>  
+                           Demographic: <%= @retreat.demographics.map { |d| d.name }.to_sentence %><br/>
+                         </p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 wow fadeIn" data-wow-delay=".8s">
+                    <div class="about-content">
+                        <i class="fa fa-users fa-4x"></i>
+                        <h3><%= t('group_show.attendees') %></h3>
+                        
+                        <% begin %>  
+                             <% if @medforms.present? %>
+                                  <%= puts "You have" %> <%= pluralize(@medforms['content'].count, 'guests') %> registered <br/>
+                             <% end %>     
+                               Special Diets Requested: <%= @diets %><br/>
+                               <%= link_to 'Unique Registration Link', "https://form.jotform.com/#{@retreat.jotform_id}?itinerary=#{@retreat.id}" %> 
+                      
+                        <% rescue => ex %>
+                        <%= ex.message %>
+                           <p>Online Registrations not enabled for individuals </p>
+                         
+                        <% end %>        
+
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- Quote Call to Action -->
+
+        <aside class="cta-quote" style='background-image: url("https://res.cloudinary.com/du9u6ypp9/image/upload/b1savbzgvipkytw6lzmo");'>
+
+    
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 wow fadeIn">
+                    <span class="quote"><!--You will be staying at our
+                        <span class="text-primary">Lakeview</span> facility. Follow the below link for more information on this location such as housing, maps, and forms. -->
+                     
+                        
+                        Forest Home Ministries will partner with the Church to create a revolutionary Christ-centered experience in which people of all ages <span class="text-primary">hear</span> the Gospel of Jesus Christ, <span class="text-primary">explore</span> the Word of God, <span class="text-primary">pursue</span> God’s call for their life, <span class="text-primary">engage</span> in Christ-centered relationships, and <span class="text-primary">connect</span> with God through His creation.
+                    
+
+
+
+
+                   </span>
+                    <hr class=" colored">
+
+
+
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </aside>
+  <!-- end vision statement  -->
+
+  <% if true %> <!-- NEED TO ADD CHECKLISTS -->
+
+    <section class="page-section pricing" id="timeline" style='background-image: url("https://res.cloudinary.com/du9u6ypp9/image/upload/b1savbzgvipkytw6lzmo");'>
+
+      <div class="container wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+        <div class="text-center">
+         
+         <h2><%= t('group_show.timeline') %></h2>
+          <hr class="colored">
+          <p><%= t('group_show.check_timeline') %></p>
+        </div>
+        <div class="row">
+          <!-- Pricing Table 1 -->
+
+           <% Flights::Timeframe.where(team_id: @retreat.team_id).each do |time_frame| %>
+              <div class="col-md-4">
+            <div class="pricing-item">
+              <h3><%= time_frame.name %></h3>
+              <hr class="colored">
+              <ul class="list-group">
+
+                <% @timeline.where(:flights => { :flights_timeframe_id => time_frame.id }).each do |timeline| %> 
+                 
+                <li class="list-group-item">
+         
+                  <div class="w-100">
+                      <div class="pull-left">
+                        <% if timeline.completed_at.present? %>
+                            <i class="fa fa-check"></i>
+                        <% else %>  
+                            <i class="fa fa-square-o"></i> 
+                        <% end %>     
+                        </div>
+                    <strong><%= timeline.flight.name %></strong>
+                  </div>
+                  <div class="w-100">
+                    <em><%= timeline.flight.description %></em>
+                  </div>
+                </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+
+             <% end %>   
+        </div>
+      </div>
+    </section>
+
+<% end %>
+
+
+
+
+
+<!--Agenda -->
+<section id="schedule" class="services">
+        <div class="container">
+
+ <div class="row text-center">
+                <div class="col-lg-12 wow fadeIn">
+                    <h2><%= t('group_show.schedule') %></h2>
+                    <h4><%= t('group_show.meals_and_more') %></h4>
+                    <hr class="colored">
+             
+                </div>
+            </div>
+            <div class="row content-row">
+              
+
+<!-- start Schedule -->
+
+
+<div class="container-fluid">
+ <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="sheet sheet-condensed">
+        <div class="sheet-inner">
+
+
+          <% number_days = (@retreat.departure.to_date - @retreat.arrival.to_date).to_i  + 1 %>
+          <%# calendar start_date: @retreat.arrival.in_time_zone(@retreat.team.time_zone), number_of_days: number_days, events: @schedule do |date, reservations| %>
+          <%= calendar start_date: @retreat.arrival, number_of_days: number_days, events: @schedule do |date, reservations| %>
+  
+              <% starting = "" %>
+              <% ending  = "" %>
+              <% reservation_name  = "" %>    
+                  
+             <% if @schedule.any? %>   
+
+
+             <% if false %>
+               <% @schedule.each do |s| %>
+                    <%= s.name %>: <%= s.start_time.strftime("%-l%P") %><br/>
+               <% end %>  
+            <% end %>
+
+
+              <% @schedule.order(:start_time).each do |reservation| %>
+                 <% if reservation.start_time.present? %>
+                  <% if date.to_date == reservation.start_time.in_time_zone(@retreat.team.time_zone).to_date %>
+                    <div>
+                      <% if starting != reservation.start_time.in_time_zone(@retreat.team.time_zone) %>
+                       <% begin %>
+                        <small>
+                          <strong><%= reservation.start_time.in_time_zone(@retreat.team.time_zone).strftime("%-l:%M%P") %> - <%= reservation.end_time.in_time_zone(@retreat.team.time_zone).strftime("%-l:%M%P") %></strong>
+                        </small>
+                       <% rescue => ex %>
+                        <% puts ex.message %>
+                       <% end %>  
+ 
+                      <br/>
+                     <% end %> 
+                          <small>&nbsp;&nbsp;&nbsp;<%= link_to reservation&.resource&.name, public_reservation_path(retreat_id: @retreat.id, reservation_id: reservation.id), class: "", :title => reservation.notes %> 
+                            <%# if user_signed_in? || reservation.user_created == true %>
+                            <% if user_signed_in? || reservation.user_id.nil? %>
+                             (<%= link_to 'x', '#', "data-toggle"=>"modal", "data-target" => "#delete-#{reservation.id}",:class=>'' %>)
+                                    <div class="modal fade" id="delete-<%= reservation.id %>" role="dialog">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="">
+                                           
+                                          </div>
+                                          <div class="modal-body">
+                                            <p>Are you sure to delete this reservation?</p>
+                                          </div>
+                                          <div class="">
+                                            <div class="modal-footer">
+                                              <%= link_to 'Delete', destroy_reservation_path(reservation_id: reservation.id), method: :delete, :class => 'btn btn-danger' %>
+                                                <a href="#" data-dismiss="modal" class="btn btn-warning">Cancel</a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                   </div>
+                            <% end %> 
+                          </small>
+                      
+                       <%# end %>
+                    <% begin %>   
+                    <% starting = reservation.start_time.in_time_zone(@retreat.team.time_zone) %>
+                    <% ending = reservation.end_time.in_time_zone(@retreat.team.time_zone) %>
+                    <% reservation_name = reservation.name %>
+
+                    <% rescue => ex %>
+                        <% puts "Couldnt save this reservation update thingy" %>
+                        <% puts "Retreat Time Zone: " + @retreat.team.time_zone.to_s %>
+                        <% puts "Reservation ID: " + reservation.id.to_s %>
+                        <% puts "Reservation Start: " + reservation.start_time.to_s %>
+                        <% puts "Reservation End: " + reservation.end_time.to_s %>
+                        <% puts "Reservation Resource: " + reservation.resource&.name %>
+                        <% puts ex.message %>
+                    <% end %>
+                    </div>
+                <% end %>
+                <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+
+                <%= link_to "LOGIN PATH TO ADD", root_path, class: "btn btn-large btn-primary pull-right" %>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="col-lg-12 wow fadeIn">
+      <div class="row text-center">
+                    <h2><%= t('group_show.meeting_spaces') %></h2>
+                    <h4><%= t('group_show.plan_meeting_space') %></h4>
+                    <hr class="colored">
+             </div>
+           </div>
+<table class="table">
+                                <thead>
+                                  <tr>
+                                    <th><%= t('group_show.meeting_space') %></th>
+                                    <th><%= t('group_show.av_info') %></th>
+                                    <th><%= t('group_show.additional_notes') %></th>
+                                    <th></th>       
+                                  </tr>
+                              </thead>
+                              <% if @meetingspaces.any? %>
+                                <tbody>
+                                   <% @meetingspaces.each do |meetingspace| %>
+                                      <tr>
+                                        <td><%= meetingspace&.resource&.name %><%= ": " + meetingspace&.resources_option&.name if meetingspace.resources_option.present? %></td>
+                                        <td>
+                                         <%# link_to meetingspace&.resource&.name, cl_image_path(meetingspace.resource.image_tag) if meetingspace.resource.image_tag.present? %>
+                                         <%= link_to meetingspace&.resource&.name, meetingspace.resource.layout.url, download:true if meetingspace.resource.layout.present? %>
+                                        </td>  
+                                        <td><%= meetingspace.notes %></td> 
+                                        <td><%= link_to t('group_show.edit'), public_reservation_path(retreat_id: @retreat.id, meeting: true, reservation_id: meetingspace.id), class: "" %></td>
+                                     </tr>
+                                 <% end %>
+                              </tbody>
+                            <% end %>
+                          </table>
+
+  </div>
+</section>
+
+
+
+<!-- Start Snack -->
+
+<section id="snacks">
+<div class="container">
+ <div class="row text-center">
+                <div class="col-lg-12 wow fadeIn">
+               <!--     <p>Here is an overview of how we approach each new project.</p>  -->
+                </div>
+            </div>
+            <div class="row content-row">
+                <!-- Service Item 1 --><div class="row text-center">
+                 <div class="col-lg-12 wow fadeIn">
+                    <h2><%= t('group_show.snacks') %></h2>
+                    <h4><%= t('group_show.snack_cost') %></h4>
+                    <hr class="colored">
+             </div>
+                </div>
+
+                <div class="col-md-12 wow fadeIn" data-wow-delay=".2s">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="fa fa-cutlery"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading"><%= t('group_show.snack_requests') %></h3>
+
+                               <table class="table">
+            <thead>
+              
+              <tr>
+                <th><%= t('group_show.quantity') %></th>
+                <th><%= t('group_show.snack_description') %></th>
+                <th><%= t('group_show.snack_details') %></th>
+                <th><%= t('group_show.delivery_time') %></th>
+                <th></th> 
+                <th></th>          
+              </tr>
+              
+          </thead>
+          <% days_until = (@retreat.arrival.to_date - Date.today).to_i %>
+          <% if @snacks.any? %>
+
+            <tbody>
+               <% @snacks.each do |snack| %>
+                  <tr>
+                    <td><%= snack.quantity %></td>
+                    <td><%= snack&.resource&.name %></td>
+                    <td><%= snack.notes %></td>
+                    <td><%= snack.start_time.in_time_zone(@retreat.team.time_zone).strftime("%B #{snack.start_time.in_time_zone(@retreat.team.time_zone).day.ordinalize} %-l:%M%P") if snack.start_time.present? %></td>
+                    <td>
+                        <% if days_until > 14 %>
+                           <%= link_to "edit", public_reservation_path(retreat_id: @retreat.id, snack: true, reservation_id: snack.id), class: ""  %>
+                        <% end %>   
+                        </td>
+                    <td><%= link_to "remove", destroy_reservation_path(reservation_id: snack.id), class: "" %></td>
+                 </tr>
+             <% end %>
+          </tbody>
+        <% end %>
+      </table>
+        <% begin %>
+        
+        <% if days_until > 14 %>
+          <%= link_to t('group_show.snack_request'), public_reservation_path(retreat_id: @retreat.id, snack: true), class: "btn btn-large btn-primary pull-right" %>
+        <% else %>
+          You are past the ordering deadline. Please call or email your Event Planner if you have any last minute requests.  
+        <% end %>  
+        <% rescue => ex %>
+            <% puts ex.message %>
+         <% end %>   
+                        </div>
+                    </div>
+                </div>
+
+
+
+</div>
+
+
+</section>
+
+
+    <!-- end snack -->
+
+    <% if user_signed_in? %>
+<% @all_reservations = Reservation.includes(:resource).where(itinerary_id: @retreat.id) %>
+
+
+<% if false %>
+<section>
+<div class="container">
+ <div class="row text-center">
+                <div class="col-lg-12 wow fadeIn">
+               <!--     <p>Here is an overview of how we approach each new project.</p>  -->
+                </div>
+            </div>
+            <div class="row content-row">
+                <!-- Service Item 1 --><div class="row text-center">
+                 <div class="col-lg-12 wow fadeIn">
+                    <h2>Temporary All</h2>
+                    <h4>This section is only viewable if you are a logged in Forest Home employee. Guests do not see this.</h4>
+                    <hr class="colored">
+             </div>
+                </div>
+
+                <div class="col-md-12 wow fadeIn" data-wow-delay=".2s">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="fa fa-cutlery"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">All Reservations for Group</h3>
+          <% if @all_reservations.any? %>
+                               <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Notes</th>
+                         
+              </tr>
+          </thead>
+          <tbody>
+            <% @all_reservations.each do |reservation| %>
+            <tr>
+              <td><%= reservation.resource.name %></td>
+              <td><%= reservation.quantity %></td>
+              <td><%= reservation.start_time.strftime("%B #{reservation.start_time.day.ordinalize} %-l:%M%P") if reservation.start_time.present? %></td> 
+              <td><%= reservation.end_time.strftime("%B #{reservation.end_time.day.ordinalize} %-l:%M%P") if reservation.end_time.present? %></td>
+              <td><%= reservation.notes %></td>
+           </tr>
+           <% end %>
+        </tbody>
+      </table>
+<% end %>
+      
+                        </div>
+                    </div>
+                </div>
+
+
+
+</div>
+
+
+<!--- Row Two  -->
+
+</section>
+<% end %>
+<% end %>
+
+
+
+<!--- Cabin  -->
+
+<% if true %>
+<section id="cabin">
+
+
+ <div style="text-align: center"><h2><%= t('group_show.your_cabin_spaces') %></h2></div>
+<% begin %>
+ <div style="text-align: center"><p><%= t('group_show.you_have') %> <%= pluralize(@cabins.count, 'Cabin') %> <%= t('group_show.reserved') %>. <br/>
+    <%= link_to t('group_show.download_housing'), group_show_path(format: 'csv'), class:"btn btn-large btn-primary" %>
+<% rescue => ex %>
+    <% puts ex.message %>
+    <% puts "Error on Cabin Download" %>
+ <% end %>  
+
+
+  <% begin %>
+    <% if current_user.present? && current_user.developer? %>
+    <%= link_to t('group_show.download_housing_layouts'), cabin_download_path(retreat: @retreat.obfuscated_id, format: 'pdf', disposition: "attachment"), class: "btn btn-large btn-primary" %>
+    <% end %>
+ <% rescue => ex %>
+    <% puts ex.message %>
+ <% end %>      
+
+
+</p></div>
+ 
+    <div id="housing-wrap" class="container">
+      <div class="row">
+      
+<table class="table table-lightborder">
+  <thead>
+    
+  </thead>
+  <tbody> 
+     
+    <% @cabins.order(:name).each_slice(5) do |group| %>
+
+
+   
+<tr>
+  <% group.each do |g| %>
+  <td>
+        
+          <% if g.item.layout.present? %>
+            <% if g.item.beds.present? %>
+             <%= link_to g&.item&.name + " (" + g.item.beds.to_s + ")", url_for(g.item.layout) %>
+            <% else %>
+             <%= link_to g&.item&.name, url_for(g.item.layout) %> 
+            <% end %> 
+          <% else %>
+             <% if g.item.beds.present? %>
+                <%= g&.item&.name + " (" + g.item.beds.to_s + ")" %> 
+             <% else %>
+                <%= g&.item&.name %>  
+             <% end %>   
+          <% end %>
+        </td>
+
+  <% end %>
+</tr>
+<% end %>
+</tbody>
+</table>
+
+
+        
+        </div>
+                
+        
+    </div>  
+    <!--</div>-->   
+  </section>
+
+<% end %>
+
+<!-- end cabin -->
+
+<% if false %>
+<!--- Medical  -->
+<% if @retreat.jotform_id.present? %>
+<section id="medforms">
+    <div style="text-align: center"><h2>Your Currently Registered Guests</h2></div><br/>
+        <% begin %> 
+
+
+  <% puts "start med forms::" %>
+ <div style="text-align: center"><p>You have <%= pluralize(@medforms['content'].count, 'guests') %> registered. <%= link_to 'Click Here', "https://form.jotform.com/#{@retreat.jotform_id}?itinerary=#{@retreat.id}" %> for your customized registration link that all guests must fill out.</p></div>
+<% puts "after med form call::" %>
+
+
+
+
+<%# @medforms %>
+ 
+    <div id="housing-wrap" class="container">
+      <div class="row">
+            <table class="table table-lightborder">
+              <thead>
+                
+              </thead>
+              
+
+              <tbody> 
+                <% puts "Starting look on alpha medforms" %>
+                <% @alpha_medforms.each_slice(4) do |group| %>
+               
+            <tr>
+              <% group.each do |guest| %>
+
+              <% begin %>
+              <% puts guest %>
+              <td><%= guest[0] %></td>
+              <% end %>
+              <% rescue %>
+                Error
+              <% end %>
+
+            </tr>
+            <% end %>
+            </tbody>
+
+
+            </table>
+
+        
+        
+        </div>
+                
+        
+  </div> 
+
+<% rescue => ex %>
+  <%= puts ex.message %>
+<% end %>  
+
+  </section>
+<% end %>
+<!-- end medical -->
+<% end %>
+
+<!---- FAQ  -->
+<% if @questions.any? %>
+<section id="faq">
+<div class="container py-3">
+
+<style>
+    .accordion-container {
+    position: relative;
+    width: 100%;
+    border: 1px solid #0079c1;
+    border-top: none;
+    outline: 0;
+    cursor: pointer
+}
+
+.accordion-container .article-title {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0.625em 0.625em 0.625em 2em;
+    border-top: 1px solid #0079c1;
+    font-size: 1.25em;
+    font-weight: normal;
+    color: #0079c1;
+    cursor: pointer;
+}
+
+.accordion-container .article-title:hover,
+.accordion-container .article-title:active,
+.accordion-container .content-entry.open .article-title {
+    background-color: #00aaa7;
+    color: white;
+}
+
+.accordion-container .article-title:hover i:before,
+.accordion-container .article-title:hover i:active,
+.accordion-container .content-entry.open i {
+    color: white;
+}
+
+.accordion-container .content-entry i {
+    position: absolute;
+    top: 3px;
+    left: 12px;
+    font-style: normal;
+    font-size: 1.625em;
+    sans-serif;
+    color: #0079c1;
+}
+
+.accordion-container .content-entry i:before {
+    content: "+ ";
+}
+
+.accordion-container .content-entry.open i:before {
+    content: "- ";
+}
+
+.accordion-content {
+    display: none;
+    padding-left: 2.3125em;
+}
+/* This stuff is just for the Codepen demo */
+
+#content {
+    width: 100%;
+}
+
+.accordion-container,
+#description {
+    width: 90%;
+    margin: 1.875em auto;
+}
+
+#description p {
+    line-height: 1.5;
+}
+
+#description h2 {
+    text-align: center;
+}
+
+@media all and (min-width: 860px) {
+    #content {
+        width: 70%;
+        margin: 0 auto;
+    }
+}
+</style>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+    $(function() {
+    var Accordion = function(el, multiple) {
+        this.el = el || {};
+        this.multiple = multiple || false;
+
+        var links = this.el.find('.article-title');
+        links.on('click', {
+            el: this.el,
+            multiple: this.multiple
+        }, this.dropdown)
+    }
+
+    Accordion.prototype.dropdown = function(e) {
+        var $el = e.data.el;
+        $this = $(this),
+            $next = $this.next();
+
+        $next.slideToggle();
+        $this.parent().toggleClass('open'); 
+
+        if (!e.data.multiple) {
+            $el.find('.accordion-content').not($next).slideUp().parent().removeClass('open');
+        };
+    }
+    var accordion = new Accordion($('.accordion-container'), false);
+});
+</script>
+
+  <div id="description">
+        <h2>Frequently Asked Questions</h2>
+
+    </div>
+
+    <div id="accordion" class="accordion-container">
+
+
+    
+        <% @questions.each do |question| %>
+        <article class="content-entry">
+            <h4 class="article-title"><i></i><%= question.name %></h4>
+            <div class="accordion-content " style="display: none;">
+                <p></p>
+               <%= question.description %>
+               <p></p>
+            </div>
+            <!--/.accordion-content-->
+        </article>
+        <% end %>
+
+  
+
+    
+
+     
+
+    </div>
+    <!--/#accordion-->
+
+  
+
+
+
+
+
+</div>
+
+</section>
+
+<% end %>
+
+<!-- End FAQ  -->
+
+
+    <!-- Quote Call to Action -->
+
+     <aside class="cta-quotesmall" style='background-image: url("https://res.cloudinary.com/du9u6ypp9/image/upload/nosrhhz0tktwwqkwhijq");'>
+
+      <!--   <div class="container wow fadeIn">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <span class="quote">Fashion design is more than just making clothes. It's about <span class="text-primary">pushing boundaries</span> and creating something unique and exciting.</span>
+                    <hr class=" colored">
+                    <a class="btn btn-outline-light page-scroll" href="#process">Learn More</a>
+                </div>
+            </div>
+        </div> -->
+    </aside>
+
+
+
+
+
+
+    <!-- Block Button Call to Action -->
+    <a href="sdsdsdsdsds" class="btn btn-block btn-full-width">WOORDS</a>
+
+    <!-- Footer -->
+
+      <footer class="footer" style='background-image: url("https://res.cloudinary.com/du9u6ypp9/image/upload/bam3hjxl95wcjemux7d1");'>
+
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-4 contact-details">
+                    <h4><i class="fa fa-phone"></i> Call</h4>
+                    <p><%# @website_customization.find_by(name: "Phone").description %>234-234-2345</p>
+                </div>
+               
+                    <div class="col-md-4 contact-details">
+                    <h4><i class="fa fa-map-marker"></i> Visit</h4>
+                    <p><%# @website_customization.find_by(name: "Address").description.split('|').first %>top part
+                    <br><%# @website_customization.find_by(name: "Address").description.split('|').second %>bottom part
+
+                        </p>
+                </div>   
+
+                <div class="col-md-4 contact-details">
+                    <h4><i class="fa fa-envelope"></i> Email</h4>
+                    <p><a href="mailto:<%# @website_customization.find_by(name: "Email").description %>">email<%# @website_customization.find_by(name: "Email").description %>Emai 2</a>
+                    </p>
+                </div>
+            </div>
+        <!--    <div class="row social">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li><a href="#"><i class="fa fa-facebook fa-fw fa-2x"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-twitter fa-fw fa-2x"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin fa-fw fa-2x"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>  -->
+            <div class="row copyright">
+                <div class="col-lg-12">
+                    <p class="small">&copy; 2025 Camp Dashboard</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+
+        <!-- Core Scripts -->
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/jquery/jquery.min.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/js/classie.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/js/cbpAnimatedHeader.js"></script>
+
+    <!-- Plugin Scripts -->
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/owl-carousel/owl.carousel.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/formstone/core.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/formstone/transition.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/formstone/background.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/mixitup/jquery.mixitup.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/vendor/wow/wow.min.js"></script>
+
+    <!-- Contact Form Scripts -->
+    <script src="https://www.foresthome.org/files/guestgroups/js/contact_me.js"></script>
+    <script src="https://www.foresthome.org/files/guestgroups/js/jqBootstrapValidation.js"></script>
+
+    <!-- Vitality Theme Scripts -->
+    <script src="https://www.foresthome.org/files/guestgroups/js/vitality.js"></script>
+      
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+<% if false %>
 <div class="background-fade-container">
   <div class="background-fade large-fade"></div>
 </div>
@@ -22,7 +1111,7 @@
             </div>
 
             <p class="text-slate-600 text-lg text-left p-5">
-              Welcome to Bullet Train! Please read the <%= link_to "documentation", "/docs", target: '_blank' %> to get started.
+              Welcome to Bullet Train! Please read the <%= link_to "documentation", "/docs", target: '_blank' %> to get started. Retreat ID is <%= @retreat %> and <%= @pizza %>
             </p>
 
             <div class="py-2 text-center">
@@ -34,3 +1123,45 @@
     </div>
   </div>
 </div>
+
+<% end %>
+
+
+<% else %>
+<div class="background-fade-container">
+  <div class="background-fade large-fade"></div>
+</div>
+
+<div class="h-screen w-full flex items-center justify-center">
+  <div class="h-2/3 py-10">
+    <div data-controller="scroll-reveal">
+      <div class="grid grid-cols-1">
+        <%= link_to "https://bullettrain.co/", class: "col-span-1", target: '_blank' do %>
+          <%= image_tag image_path("logo/logo.png"), class: 'reveal reveal-from-left h-40 w-auto mx-auto', "data-scroll-reveal-target": "item" %>
+        <% end %>
+
+        <div class="col-span-1 reveal py-2 mt-10 mx-auto rounded-md shadow bg-slate-100" data-scroll-reveal-target="item" data-delay="400ms">
+          <div class="p-2 m-3 shadow rounded-md bg-white">
+            <div class="py-2 text-center">
+              <%= link_to "Camp Dashboard", "https://www.campdashboard.org", class: 'mx-5 mt-3 text-slate-800 text-4xl font-bold hover:text-primary-600 hover:no-underline', target: '_blank' %>
+              <p><%= "v#{BulletTrain::VERSION}" %></p>
+            </div>
+
+            <div class="w-5/6 mx-auto">
+              <%= render 'shared/line' %>
+            </div>
+
+            <p class="text-slate-600 text-lg text-left p-5">
+              Welcome to Camp dashboard!
+            </p>
+
+            <div class="py-2 text-center">
+              <%= link_to t('global.buttons.sign_in'), new_user_session_path, class: first_button_primary %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
