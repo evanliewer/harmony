@@ -72,6 +72,7 @@ Rails.application.routes.draw do
         get 'remove_seasonal_reservations' => 'reservations#remove_seasonal_reservations', as: 'remove_seasonal_reservations'
         patch 'fullcalendar_update/', to: 'reservations#fullcalendar_update', as: :fullcalendar_update
         patch '/account/:team_id/fullcalendar_update', to: 'account/teams#update_fullcalendar_event', as: 'account_team_fullcalendar_update'
+        get 'print_retreat' => 'retreats#print', as: 'print_retreat'
 
         resources :demographics, concerns: [:sortable]
         resources :departments, concerns: [:sortable]

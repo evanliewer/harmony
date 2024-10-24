@@ -71,6 +71,11 @@ class Account::RetreatsController < Account::ApplicationController
     end 
   end  
 
+  def print
+    @retreat = Retreat.find(params[:retreat_id])
+    render layout: false
+  end
+
   private
 
   if defined?(Api::V1::ApplicationController)

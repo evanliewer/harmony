@@ -10,7 +10,7 @@
     <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, item] %></td>
 
     <td><%= render 'shared/attributes/belongs_to', attribute: :location %></td>
-    <td><%= item.tags.map{|tag| tag.name} %></td>
+    <td><%= item.tags.map{|tag| tag.name}.to_sentence %></td>
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :active %></td>
 
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :clean %></td>

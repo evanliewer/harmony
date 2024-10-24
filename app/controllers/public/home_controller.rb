@@ -3,8 +3,7 @@ class Public::HomeController < Public::ApplicationController
   # If you'd like to customize the action for `/`, you can remove this and define `def index ... end ` below.
  
    def index
-    @retreat = Retreat.last
-    @pizza = params[:pizza]
+    @retreat = Retreat.find(params[:retreat_id])
       if @retreat.present?
         @planner = User.first
         @schedule = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.schedulable.ids }).where(items: { active: true})

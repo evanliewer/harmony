@@ -5,10 +5,25 @@
     <%= render 'account/shared/forms/errors', form: form %>
 
     <% with_field_settings form: form do %>
-      <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
-      <%= render 'shared/fields/number_field', method: :capacity %>
-      <%= render 'shared/fields/image', method: :image_tag %>
-      <%= render 'shared/fields/text_field', method: :description %>
+
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="lg:col-span-3">
+       <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
+      </div>
+      <div class="lg:col-span-1">
+        <%= render 'shared/fields/number_field', method: :capacity %>
+      </div>
+     </div> 
+
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="lg:col-span-3">
+       <%= render 'shared/fields/text_field', method: :description %>
+      </div>
+      <div class="lg:col-span-1">
+        <%= render 'shared/fields/image', method: :image_tag %>
+      </div>
+     </div>   
+      
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

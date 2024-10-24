@@ -492,7 +492,7 @@
                     <hr class="colored">
              </div>
            </div>
-<table class="table">
+            <table class="table">
                                 <thead>
                                   <tr>
                                     <th><%= t('group_show.meeting_space') %></th>
@@ -505,13 +505,13 @@
                                 <tbody>
                                    <% @meetingspaces.each do |meetingspace| %>
                                       <tr>
-                                        <td><%= meetingspace&.resource&.name %><%= ": " + meetingspace&.resources_option&.name if meetingspace.resources_option.present? %></td>
+                                        <td><%= meetingspace&.item&.name %><%# ": " + meetingspace&.items_option&.name if meetingspace.items_option.present? %></td>
                                         <td>
                                          <%# link_to meetingspace&.resource&.name, cl_image_path(meetingspace.resource.image_tag) if meetingspace.resource.image_tag.present? %>
-                                         <%= link_to meetingspace&.resource&.name, meetingspace.resource.layout.url, download:true if meetingspace.resource.layout.present? %>
+                                         <%= link_to meetingspace&.item&.name, meetingspace.item.layout.url, download:true if meetingspace.item.layout.present? %>
                                         </td>  
                                         <td><%= meetingspace.notes %></td> 
-                                        <td><%= link_to t('group_show.edit'), public_reservation_path(retreat_id: @retreat.id, meeting: true, reservation_id: meetingspace.id), class: "" %></td>
+                                        <td><%# link_to t('group_show.edit'), public_reservation_path(retreat_id: @retreat.id, meeting: true, reservation_id: meetingspace.id), class: "" %></td>
                                      </tr>
                                  <% end %>
                               </tbody>
@@ -983,28 +983,13 @@
 <!-- End FAQ  -->
 
 
-    <!-- Quote Call to Action -->
-
-     <aside class="cta-quotesmall" style='background-image: url("https://res.cloudinary.com/du9u6ypp9/image/upload/nosrhhz0tktwwqkwhijq");'>
-
-      <!--   <div class="container wow fadeIn">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <span class="quote">Fashion design is more than just making clothes. It's about <span class="text-primary">pushing boundaries</span> and creating something unique and exciting.</span>
-                    <hr class=" colored">
-                    <a class="btn btn-outline-light page-scroll" href="#process">Learn More</a>
-                </div>
-            </div>
-        </div> -->
-    </aside>
-
 
 
 
 
 
     <!-- Block Button Call to Action -->
-    <a href="sdsdsdsdsds" class="btn btn-block btn-full-width">WOORDS</a>
+    <a href="http://www.foresthome.org" class="btn btn-block btn-full-width">www.ForestHome.org</a>
 
     <!-- Footer -->
 
@@ -1079,52 +1064,6 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-<% if false %>
-<div class="background-fade-container">
-  <div class="background-fade large-fade"></div>
-</div>
-
-<div class="h-screen w-full flex items-center justify-center">
-  <div class="h-2/3 py-10">
-    <div data-controller="scroll-reveal">
-      <div class="grid grid-cols-1">
-        <%= link_to "https://bullettrain.co/", class: "col-span-1", target: '_blank' do %>
-          <%= image_tag image_path("logo/logo.png"), class: 'reveal reveal-from-left h-40 w-auto mx-auto', "data-scroll-reveal-target": "item" %>
-        <% end %>
-
-        <div class="col-span-1 reveal py-2 mt-10 mx-auto rounded-md shadow bg-slate-100" data-scroll-reveal-target="item" data-delay="400ms">
-          <div class="p-2 m-3 shadow rounded-md bg-white">
-            <div class="py-2 text-center">
-              <%= link_to t('bullet_train.name'), "https://bullettrain.co/", class: 'mx-5 mt-3 text-slate-800 text-4xl font-bold hover:text-primary-600 hover:no-underline', target: '_blank' %>
-              <p><%= "v#{BulletTrain::VERSION}" %></p>
-            </div>
-
-            <div class="w-5/6 mx-auto">
-              <%= render 'shared/line' %>
-            </div>
-
-            <p class="text-slate-600 text-lg text-left p-5">
-              Welcome to Bullet Train! Please read the <%= link_to "documentation", "/docs", target: '_blank' %> to get started. Retreat ID is <%= @retreat %> and <%= @pizza %>
-            </p>
-
-            <div class="py-2 text-center">
-              <%= link_to t('global.buttons.sign_in'), new_user_session_path, class: first_button_primary %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<% end %>
 
 
 <% else %>

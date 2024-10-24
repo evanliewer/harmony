@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complex Printable Document</title>
+
+  <style>
+    /* Ensure page size is 8.5 x 11 inches */
+    @page {
+      size: 8.5in 11in;
+      margin: 0.5in;
+    }
+
+    /* General body styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 8.5in;
+      height: 11in;
+      color: #333;
+    }
+
+    /* Common container for print sections */
+    .print-area {
+      width: 100%;
+      margin: 0.5in;
+    }
+
+    /* Title section */
+    .title-section {
+      text-align: center;
+      padding-bottom: 0.1in;
+    }
+
+    .title-section h1 {
+      font-size: 24pt;
+      margin-bottom: 0.1in;
+    }
+
+    .title-section h2 {
+      font-size: 18pt;
+      color: #666;
+      margin-bottom: 0.1in;
+    }
+
+    /* Header table (client details, date, etc.) */
+    .header-table {
+      width: 100%;
+      margin-bottom: 0.1in;
+    }
+
+    .header-table td {
+      padding: 0.0in;
+      vertical-align: top;
+    }
+
+    /* Multiple tables for content */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0.1in;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #000;
+      padding: 0.03in;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #f0f0f0;
+    }
+
+    /* Two-column layout */
+    .two-column {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .column {
+      width: 48%;
+    }
+
+    /* Footer section */
+    .footer {
+      position: fixed;
+      bottom: 0.5in;
+      left: 0.5in;
+      right: 0.5in;
+      text-align: center;
+      font-size: 10pt;
+      color: #666;
+    }
+
+    /* Print styling */
+    @media print {
+      .no-print {
+        display: none;
+      }
+
+      /* Ensure fixed elements stay in place */
+      .footer {
+        position: fixed;
+        bottom: 0.5in;
+      }
+    }
+
+    /* Section breaks */
+    .section-title {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 0.2in 0;
+    }
+
+    .highlight {
+      background-color: #f5f5f5;
+      padding: 0.2in;
+      border-radius: 4px;
+    }
+
+    /* Page break after complex sections */
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Main Print Area -->
+  <div class="print-area">
+
+    <!-- Title Section -->
+    <div class="title-section">
+      <h1><%= @retreat.name %></h1>
+      <p><%= @retreat.arrival %></p>
+    </div>
+
+    <!-- Header Table (Client and Report Details) -->
+    <table class="header-table">
+      <tr>
+        <td><strong>Printed At:</strong> <%= Time.zone.now %></td>
+        <td><strong>Date:</strong> October 20, 2024</td>
+        <td><strong>Report ID:</strong> 12345</td>
+      </tr>
+      <tr>
+        <td><strong>Client ID:</strong> C-9876</td>
+        <td><strong>Project:</strong> Annual Analysis</td>
+        <td><strong>Status:</strong> Completed</td>
+      </tr>
+    </table>
+
+     <!-- Another Section (Full Width) -->
+    <h3 class="section-title">Detailed Breakdown</h3>
+ 
+
+    <!-- Table for Detailed Breakdown -->
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Group Name</th>
+          <th>Contact</th>
+          <th>Size</th>
+          <th>Demographics</th>
+          <th>Arrival</th>
+          <th>Departure</th>
+          <th>Host</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pizza Hut</td>
+          <td>Evan Liewer</td>
+          <td>34 guests</td>
+          <td>Family</td>
+          <td>Friday 4pm</td>
+          <td>Sunday 11am</td>
+          <td>Sam Elliot</td>
+        </tr>
+        <tr>
+          <td>Dominos</td>
+          <td>April Liewer</td>
+          <td>88 guests</td>
+          <td>Womens Groups</td>
+          <td>Friday 2pm</td>
+          <td>Sunday 9pm</td>
+          <td>t-Rex</td>
+        </tr>
+        <tr>
+          <td>Pizza Hut</td>
+          <td>Evan Liewer</td>
+          <td>34 guests</td>
+          <td>Family</td>
+          <td>Friday 4pm</td>
+          <td>Sunday 11am</td>
+          <td>Master K</td>
+        </tr>
+        <tr>
+          <td>Dominos</td>
+          <td>April Liewer</td>
+          <td>88 guests</td>
+          <td>Womens Groups</td>
+          <td>Friday 2pm</td>
+          <td>Sunday 9pm</td>
+          <td>Pizza the Hut</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+    <!-- Two-Column Layout -->
+    <div class="two-column">
+      <div class="column">
+        <!-- First Column: General Info -->
+        <h3 class="section-title">Deliveries</h3>
+        <p>This report provides a detailed breakdown of the client's activities over the past year, including financial data, project milestones, and future goals. Please review the details below.</p>
+        <!--   <p class="highlight">Details of Groups</p>-->
+
+        <!-- Example Table 1: Financial Overview -->
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Revenue</th>
+              <th>Expenses</th>
+              <th>Profit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023</td>
+              <td>$500,000</td>
+              <td>$400,000</td>
+              <td>$100,000</td>
+            </tr>
+            <tr>
+              <td>2024</td>
+              <td>$550,000</td>
+              <td>$420,000</td>
+              <td>$130,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="column">
+        <!-- Second Column: Project Milestones -->
+        <h3 class="section-title">Meeting Spaces</h3>
+        <ul>
+          <li><strong>January:</strong> Project Kickoff</li>
+          <li><strong>April:</strong> Phase 1 Completed</li>
+          <li><strong>July:</strong> Phase 2 Testing</li>
+          <li><strong>October:</strong> Final Delivery</li>
+        </ul>
+
+        <!-- Example Table 2: Resource Allocation -->
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Resource</th>
+              <th>Hours Allocated</th>
+              <th>Hours Used</th>
+              <th>Remaining Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Development</td>
+              <td>200</td>
+              <td>180</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>Design</td>
+              <td>150</td>
+              <td>140</td>
+              <td>10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Another Section (Full Width) -->
+    <h3 class="section-title">Detailed Breakdown</h3>
+ 
+
+    <!-- Table for Detailed Breakdown -->
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Group Name</th>
+          <th>Contact</th>
+          <th>Size</th>
+          <th>Demographics</th>
+          <th>Arrival</th>
+          <th>Departure</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pizza Hut</td>
+          <td>Evan Liewer</td>
+          <td>34 guests</td>
+          <td>Family</td>
+          <td>Friday 4pm</td>
+          <td>Sunday 11am</td>
+        </tr>
+        <tr>
+          <td>Dominos</td>
+          <td>April Liewer</td>
+          <td>88 guests</td>
+          <td>Womens Groups</td>
+          <td>Friday 2pm</td>
+          <td>Sunday 9pm</td>
+        </tr>
+        <tr>
+          <td>Pizza Hut</td>
+          <td>Evan Liewer</td>
+          <td>34 guests</td>
+          <td>Family</td>
+          <td>Friday 4pm</td>
+          <td>Sunday 11am</td>
+        </tr>
+        <tr>
+          <td>Dominos</td>
+          <td>April Liewer</td>
+          <td>88 guests</td>
+          <td>Womens Groups</td>
+          <td>Friday 2pm</td>
+          <td>Sunday 9pm</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Page Break for Next Section -->
+    <div class="page-break"></div>
+
+    <!-- Another Section with a Table -->
+    <h3 class="section-title">Yearly Performance</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Revenue</th>
+          <th>Profit</th>
+          <th>Growth</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2022</td>
+          <td>$450,000</td>
+          <td>$90,000</td>
+          <td>15%</td>
+        </tr>
+        <tr>
+          <td>2023</td>
+          <td>$500,000</td>
+          <td>$100,000</td>
+          <td>12%</td>
+        </tr>
+        <tr>
+          <td>2024</td>
+          <td>$550,000</td>
+          <td>$130,000</td>
+          <td>18%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer 
+  <div class="footer">
+    Prepared for John Doe | Confidential Report | Page 1 of 1
+  </div> -->
+</body>
+</html>

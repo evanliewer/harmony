@@ -8,11 +8,9 @@
   <tr data-id="<%= option.id %>">
     <%= render "shared/tables/checkbox", object: option %>
     <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, option] %></td>
-    <td><%= render 'shared/attributes/number', attribute: :capacity %></td>
-    <td><%= render 'shared/attributes/image', attribute: :image_tag %></td>
     <td><%= render 'shared/attributes/text', attribute: :description %></td>
+    <td><%= render 'shared/attributes/number', attribute: :capacity %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
-    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">
       <% unless hide_actions %>
         <% if can? :edit, option %>

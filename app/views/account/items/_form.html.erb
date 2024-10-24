@@ -5,19 +5,55 @@
     <%= render 'account/shared/forms/errors', form: form %>
 
     <% with_field_settings form: form do %>
-      <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
-      <%= render 'shared/fields/text_field', method: :description %>
-      <%= render 'shared/fields/super_select', method: :location_id, options: {}, html_options: {},
-        choices: @item.valid_locations.map { |location| [location.label_string, location.id] } %>
-      <%= render 'shared/fields/options', method: :active %>
-      <%= render 'shared/fields/number_field', method: :overlap_offset %>
-      <%= render 'shared/fields/image', method: :image_tag %>
-      <%= render 'shared/fields/options', method: :clean %>
-      <%= render 'shared/fields/number_field', method: :flip_time %>
-      <%= render 'shared/fields/number_field', method: :beds %>
-      <%= render 'shared/fields/super_select', method: :tag_ids, html_options: {multiple: true},
+    <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="lg:col-span-2">
+        <%= render 'shared/fields/super_select', method: :tag_ids, html_options: {multiple: true},
         choices: @item.valid_tags.map { |tag| [tag.label_string, tag.id] } %>
-      <%= render 'shared/fields/file_field', method: :layout %>
+      </div>
+      <div class="lg:col-span-2">
+        <%= render 'shared/fields/text_field', method: :description %>
+      </div>
+    </div>  
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-6 gap-6">
+      <div class="lg:col-span-3">      
+         <%= render 'shared/fields/super_select', method: :location_id, options: {}, html_options: {},
+        choices: @item.valid_locations.map { |location| [location.label_string, location.id] } %>
+      </div>
+      <div class="lg:col-span-1">
+         <%= render 'shared/fields/text_field', method: :active %>
+      </div>
+      <div class="lg:col-span-2">
+        <%= render 'shared/fields/text_field', method: :overlap_offset %>
+      </div>
+    </div>    
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="lg:col-span-2">
+        <%= render 'shared/fields/image', method: :image_tag %>
+      </div>
+     <div class="lg:col-span-2">
+        <%= render 'shared/fields/file_field', method: :layout %>
+      </div>
+    </div>   
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+     <div class="lg:col-span-2">
+        <%= render 'shared/fields/number_field', method: :flip_time %>
+     </div>
+     <div class="lg:col-span-2">
+        <%= render 'shared/fields/number_field', method: :beds %>
+     </div>
+    </div>  
+            
+ 
+      
+      
+      
+      
+      
+      
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 
