@@ -1,0 +1,103 @@
+en:
+  items/areas: &areas
+    label: &label Areas
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-buildings
+    buttons: &buttons
+      new: Add New Area
+      create: Create Area
+      edit: Edit Area
+      update: Update Area
+      destroy: Remove Area
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{area_name}? This will also remove any child resources and can't be undone.
+    area:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Area ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      location_id: &location
+        _: &location_id Location
+        label: *location_id
+        heading: *location_id
+        api_title: *location_id
+        api_description: *location_id
+        placeholder: None
+      location: *location
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Areas"
+      index: "List Areas"
+      create: "Add a New Area"
+      member_actions: "Actions for an Individual Area"
+      show: "Retrieve a Area"
+      update: "Update a Area"
+      destroy: "Delete a Area"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Areas"
+      contexts:
+        team:
+          header: Areas
+          description: Below is a list of Areas that have been added for %{team_name}.
+          description_empty: No Areas have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{area_name}"
+      header: Area Details
+      description: Below are the details we have for %{area_name}.
+      manage_description: You'll also find options for updating these details or removing %{area_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Area for %{team_name}"
+      header: New Area Details
+      description: Please provide the details of the new Area you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{area_name}"
+      header: Edit Area Details
+      description: You can update the details or settings for %{area_name} below.
+      form: *form
+    notifications:
+      created: Area was successfully created.
+      updated: Area was successfully updated.
+      destroyed: Area was successfully destroyed.
+  account:
+    items:
+      areas: *areas
+  activerecord:
+    attributes:
+      items/area:
+        name: *name
+        location_id: *location_id
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

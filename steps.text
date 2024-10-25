@@ -142,6 +142,6 @@ Phone
 
 rails g super_scaffold Retreats::Form Team retreat_id:super_select{class_name=Retreat} first_name:text_field last_name:text_field phone:text_field dietary_restriction:text_field
 
-rails g super_scaffold Items:Group Team item_id:super_select{class_name=Item} name:text_field
-railg g super_scaffold:field Items:Group items_group_id:super_select{class_name=Items:Group}
+rails g super_scaffold Items::Area Team name:text_field location_id:super_select{class_name=Location} --sortable
+railg g super_scaffold:field Items items_area_id:super_select{class_name=Items::Area}
 

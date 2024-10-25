@@ -1,0 +1,8 @@
+<% area ||= @area %>
+<% team ||= @team || area&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :items_areas] %>
+<% if area&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: area.label_string, url: [:account, area] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'items/areas' %>

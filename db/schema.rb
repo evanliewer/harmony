@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_18_172307) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_25_015441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -197,6 +197,27 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_18_172307) do
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_items_applied_tags_on_item_id"
     t.index ["tag_id"], name: "index_items_applied_tags_on_tag_id"
+  end
+
+  create_table "items_areas", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.integer "sort_order"
+    t.string "name"
+    t.bigint "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_items_areas_on_location_id"
+    t.index ["team_id"], name: "index_items_areas_on_team_id"
+  end
+
+  create_table "items_groups", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "item_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_items_groups_on_item_id"
+    t.index ["team_id"], name: "index_items_groups_on_team_id"
   end
 
   create_table "items_options", force: :cascade do |t|
@@ -747,6 +768,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_18_172307) do
   add_foreign_key "items", "teams"
   add_foreign_key "items_applied_tags", "items"
   add_foreign_key "items_applied_tags", "items_tags", column: "tag_id"
+  add_foreign_key "items_areas", "locations"
+  add_foreign_key "items_areas", "teams"
+  add_foreign_key "items_groups", "items"
+  add_foreign_key "items_groups", "teams"
   add_foreign_key "items_options", "items"
   add_foreign_key "items_tags", "teams"
   add_foreign_key "locations", "teams"

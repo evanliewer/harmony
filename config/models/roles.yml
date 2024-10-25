@@ -1,5 +1,6 @@
 default:
   models:
+    Items::Area: read
     Organization: read
     Item: read
     Location: read
@@ -93,6 +94,7 @@ admin:
     - default_staff
     
   models:
+    Items::Area: manage
     Retreats::Request: manage
     Websiteimage: manage
     Question: manage
