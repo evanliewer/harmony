@@ -15,6 +15,7 @@ class Item < ApplicationRecord
 
   has_one_attached :layout
   # 🚅 add has_one associations above.
+  default_scope { where(active: true) }
   scope :active, -> { where(active: true) }
   scope :schedulable, -> { joins(:tags).where(tags: { schedulable: true }).distinct }
   # 🚅 add scopes above.

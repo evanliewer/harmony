@@ -132,3 +132,16 @@ bin/rails g super_scaffold:bt_power_pack:filter Item Team name:text_field descri
 rails g super_scaffold Retreats::Request Team retreat_id:super_select{class_name=Retreat} department_id:super_select{class_name=Department} notes:text_field
 
 
+
+JotForm
+Retreat ID
+First Name
+Last Name
+Dietary Restriction
+Phone
+
+rails g super_scaffold Retreats::Form Team retreat_id:super_select{class_name=Retreat} first_name:text_field last_name:text_field phone:text_field dietary_restriction:text_field
+
+rails g super_scaffold Items:Group Team item_id:super_select{class_name=Item} name:text_field
+railg g super_scaffold:field Items:Group items_group_id:super_select{class_name=Items:Group}
+

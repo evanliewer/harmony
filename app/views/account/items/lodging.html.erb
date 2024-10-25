@@ -1,0 +1,20 @@
+<%= render 'account/shared/page' do |page| %>
+  <% page.title "Lodging" %>
+ <% reservations = Reservation.all.limit(20) %>
+<% team = @team %>
+<% context ||= team %>
+<% collection ||= :reservations %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+<% end %>
+
+
+
+
+Lodging
+
+<ul>
+<% @lodging.each do |lodge| %>
+	<li><%= lodge.name %></li>
+<% end %>
+</ul>

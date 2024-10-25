@@ -124,6 +124,7 @@ class Account::ReservationsController < Account::ApplicationController
     head :ok
   end
 
+
   private
 
   if defined?(Api::V1::ApplicationController)

@@ -22,7 +22,7 @@
         choices: @item.valid_locations.map { |location| [location.label_string, location.id] } %>
       </div>
       <div class="lg:col-span-1">
-         <%= render 'shared/fields/text_field', method: :active %>
+         <%= render 'shared/fields/buttons', method: :active %>
       </div>
       <div class="lg:col-span-2">
         <%= render 'shared/fields/text_field', method: :overlap_offset %>

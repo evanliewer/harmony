@@ -14,9 +14,6 @@
 
 
 
-
-
-
 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
 
 
@@ -27,8 +24,8 @@
       <div class="flex-none w-2/3 max-w-full px-3">
         <div>
           <p class="mb-0 font-sans font-semibold leading-normal text-lg">Groups Onsite</p>
-          <h5 class="mb-0 font-bold">7 Groups
-            <span class="leading-normal text-sm font-weight-bolder text-blue-500">456 Guests</span>
+          <h5 class="mb-0 font-bold"><%= pluralize(@onsite_retreats.count, "Group") %>
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500"><%= pluralize(@onsite_retreats.sum(:guest_count), "Guest") %></span>
           </h5>
         </div>
       </div>
@@ -49,7 +46,7 @@
       <div class="flex-none w-2/3 max-w-full px-3">
         <div>
           <p class="mb-0 font-sans font-semibold leading-normal text-lg">Onsite Internal</p>
-          <h5 class="mb-0 font-bold">7 Internal Groups
+          <h5 class="mb-0 font-bold">XXX Internal Groups
             <% if false %><span class="leading-normal text-sm font-weight-bolder text-blue-500">+55%</span><% end %>
           </h5>
         </div>
@@ -71,8 +68,8 @@
       <div class="flex-none w-2/3 max-w-full px-3">
         <div>
           <p class="mb-0 font-sans font-semibold leading-normal text-lg">Upcoming in 7 days</p>
-          <h5 class="mb-0 font-bold">8 groups
-            <span class="leading-normal text-sm font-weight-bolder text-blue-500">586 People</span>
+          <h5 class="mb-0 font-bold">XXXXX groups
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500">XXXXX People</span>
           </h5>
         </div>
       </div>
@@ -94,7 +91,7 @@
         <div>
           <p class="mb-0 font-sans font-semibold leading-normal text-lg">Stage Coach</p>
           <h5 class="mb-0 font-bold text-green-500">OPEN
-            <span class="leading-normal text-sm font-weight-bolder text-blue-500">+55%</span>
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500">+XXXX%</span>
           </h5>
         </div>
       </div>
@@ -137,22 +134,28 @@
             </h5>
             
             <!-- ONSITE / DAYS STATUS -->
-            <% randd = rand(1..2) %>
-            <% if randd == 1 %>
-              <div class="text-right basis-1/3">
-                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500"> 
-                  <i class="leading-none text-xl relative top-1.5 text-white">88</i>
-                  <i class="leading-none text-md relative top-1.5 text-white">days</i>
+           <div class="text-right basis-1/3">
+              <% if Time.zone.now < retreat.arrival %>
+                <!-- If the current time is before the arrival time -->
+                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400">
+                  <i class="leading-none text-xl relative top-1.5 text-white">
+                    <%= (retreat.arrival.to_date - Time.zone.now.to_date).to_i %>
+                  </i>
+                  <i class="leading-none text-md relative top-1.5 text-white">Days</i>
                 </div>
-              </div>
-            <% else %>
-              <div class="text-right basis-1/3">
-                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400"> 
+              <% elsif Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure %>
+                <!-- If the current time is between the arrival and departure times -->
+                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
                   <i class="leading-none text-lg relative top-1.5 text-white">On</i>
                   <i class="leading-none text-md relative top-1.5 text-white">Site</i>
                 </div>
-              </div>
-            <% end %>
+              <% else %>
+                <!-- If the current time is after the departure time -->
+                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-red-700 to-red-500">
+                  <i class="leading-none text-sm relative top-1.5 text-white">Done</i>
+                </div>
+              <% end %>
+            </div>
           </div>
           
           <!-- Guest Info and Tags -->
@@ -183,7 +186,8 @@
       <!-- Meeting Spaces -->
       <div class="mt-auto border-t border-slate-200 pt-1 px-1">
         <span class="text-sm text-slate-600 font-medium">
-          Meeting Spaces: <%= retreat.locations.map { |p| p.name }.to_sentence %>
+          <% @meetingspaces = Reservation.includes([:item]).where(retreat_id: retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false) %>
+          Meeting Spaces: <%= @meetingspaces.any? ? @meetingspaces.map { |p| p.name }.to_sentence : "None" %>
         </span>
       </div>
     </div>

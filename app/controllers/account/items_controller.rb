@@ -41,8 +41,13 @@ class Account::ItemsController < Account::ApplicationController
   def update
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to [:account, @item], notice: I18n.t("items.notifications.updated") }
-        format.json { render :show, status: :ok, location: [:account, @item] }
+        if @item.active
+          format.html { redirect_to [:account, @item], notice: I18n.t("items.notifications.updated") }
+          format.json { render :show, status: :ok, location: [:account, @item] }
+        else
+          format.html { redirect_to [:account, @team, :items], notice: I18n.t("items.notifications.updated") }
+          format.json { render :show, status: :ok, location: [:account, @team, :items] }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -58,6 +63,13 @@ class Account::ItemsController < Account::ApplicationController
       format.html { redirect_to [:account, @team, :items], notice: I18n.t("items.notifications.destroyed") }
       format.json { head :no_content }
     end
+  end
+
+
+  def lodging
+    @team = current_team
+    @item = Item.last
+    @lodging = Item.joins(:tags).where(tags: { name: 'Lodging' })
   end
 
   private

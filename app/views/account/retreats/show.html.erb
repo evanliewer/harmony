@@ -90,6 +90,7 @@
           <% end %> 
        <% end %>
       <%= link_to "Printable schedule", account_team_print_retreat_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
+      <%= link_to "Lodging", account_team_lodging_path(team_id: @retreat.team_id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
     </div>
   </div>
 
