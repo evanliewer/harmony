@@ -105,6 +105,14 @@ en:
         heading: *layout
         api_title: *layout
         api_description: *layout
+      items_area_id: &items_area
+        _: &items_area_id Items Area
+        label: *items_area_id
+        heading: *items_area_id
+        api_title: *items_area_id
+        api_description: *items_area_id
+        placeholder: None
+      items_area: *items_area
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -171,6 +179,7 @@ en:
         beds: *beds
         tag_ids: *tag_ids
         layout: *layout
+        items_area_id: *items_area_id
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

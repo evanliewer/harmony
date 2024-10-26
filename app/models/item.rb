@@ -6,11 +6,13 @@ class Item < ApplicationRecord
 
   belongs_to :team
   belongs_to :location, optional: true
+  belongs_to :items_area, class_name: "Items::Area", optional: true
   # 🚅 add belongs_to associations above.
 
   has_many :applied_tags, class_name: "Items::AppliedTag", dependent: :destroy
   has_many :tags, through: :applied_tags, class_name: "Items::Tag"
   has_many :options, class_name: "Items::Option", dependent: :destroy
+  has_many :reservations
   # 🚅 add has_many associations above.
 
   has_one_attached :layout
@@ -22,6 +24,7 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
   validates :location, scope: true
+  validates :items_area, scope: true
   # 🚅 add validations above.
 
   after_validation :remove_layout, if: :layout_removal?
@@ -67,6 +70,10 @@ class Item < ApplicationRecord
 
   def publicable?
     tags.where(publicable: true).any?
+  end
+
+  def valid_items_areas
+    team.items_areas
   end
 
   # 🚅 add methods above.

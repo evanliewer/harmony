@@ -10,11 +10,50 @@
 
 
 
+<% Location.all.each do |location| %>
 
-Lodging
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full mt-4">
+<% areas = Items::Area.where(location_id: location.id) %>
+	<% areas.each do |area| %>
+	 <% reservations = @reservations.joins(:item).where(items: { items_area_id: area.id }) %>
+	 <div class="flex w-full p-4 flex-col rounded-lg bg-white shadow-sm border border-slate-200">
+	 	<h1><%= area.name %></h1>
+      <div class="flex items-center gap-4 text-slate-800">
+      	<style>
+				  table tr:nth-child(even) {
+				    background-color: #f2f2f2; /* Light grey background */
+				  }
+				</style>
+				      	
+      	<table style="width: 100%; border-collapse: collapse;">
+					<thead>
+						<th>Room</th>
+						<th></th>
+					</thead>	
+				<% reservations.sort_by { |r| r.item.name.downcase }.each do |r| %>
+					<% onsite = Time.zone.now.between?(r.start_time, r.end_time) ? "In Use" : "#{(r.start_time.to_date - Date.today).to_i} days" %>
+					<tr>
+						<td>
+							<p><strong><%= r.item.name %>:<%= r.item&.items_area.name %></strong></p>
+							<p><%= r&.retreat.name.truncate(30) %></p>
 
-<ul>
-<% @lodging.each do |lodge| %>
-	<li><%= lodge.name %></li>
-<% end %>
-</ul>
+						</td>
+						
+					  <td>
+					  	<% if can?(:create, Reservation.new(team: current_team)) && (onsite != "In Use") %>
+					  		<%= link_to onsite, [:new, :account, @team, :reservation] %>
+					   <% else %>
+					   		<%= onsite %>
+					  <% end %>
+					  </td>  
+					</tr>     
+				<% end %>
+				</table>
+			</div>
+		</div>
+	<% end %>
+ </div>
+<% end %> 				
+
+
+

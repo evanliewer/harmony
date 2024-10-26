@@ -54,6 +54,8 @@
       
       
       
+      <%= render 'shared/fields/super_select', method: :items_area_id, options: {include_blank: "None"}, html_options: {},
+        choices: @item.valid_items_areas.map { |area| [area.label_string, area.id] } %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

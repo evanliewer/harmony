@@ -44,6 +44,7 @@ class Api::V1::ItemsControllerTest < Api::Test
     assert_equal_or_nil item_data['beds'], item.beds
     assert_equal_or_nil item_data['tag_ids'], item.tag_ids
     assert_equal item_data['layout'], rails_blob_path(@item.layout) unless controller.action_name == 'create'
+    assert_equal_or_nil item_data['items_area_id'], item.items_area_id
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal item_data["team_id"], item.team_id

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_25_015441) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_25_034602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -186,6 +186,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_25_015441) do
     t.integer "beds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "items_area_id"
+    t.index ["items_area_id"], name: "index_items_on_items_area_id"
     t.index ["location_id"], name: "index_items_on_location_id"
     t.index ["team_id"], name: "index_items_on_team_id"
   end
@@ -764,6 +766,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_25_015441) do
   add_foreign_key "integrations_stripe_installations", "teams"
   add_foreign_key "invitations", "account_onboarding_invitation_lists", column: "invitation_list_id"
   add_foreign_key "invitations", "teams"
+  add_foreign_key "items", "items_areas"
   add_foreign_key "items", "locations"
   add_foreign_key "items", "teams"
   add_foreign_key "items_applied_tags", "items"

@@ -55,6 +55,7 @@ if defined?(Api::V1::ApplicationController)
           :beds,
           :layout,
           :layout_removal,
+          :items_area_id,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
           tag_ids: [],
