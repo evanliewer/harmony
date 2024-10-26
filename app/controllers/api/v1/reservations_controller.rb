@@ -55,6 +55,7 @@ if defined?(Api::V1::ApplicationController)
           :seasonal_default,
           :exclusive,
           :active,
+          :items_option_id,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
           # 🚅 super scaffolding will insert new arrays above this line.

@@ -42,6 +42,7 @@ class Api::V1::ReservationsControllerTest < Api::Test
     assert_equal_or_nil reservation_data['seasonal_default'], reservation.seasonal_default
     assert_equal_or_nil reservation_data['exclusive'], reservation.exclusive
     assert_equal_or_nil reservation_data['active'], reservation.active
+    assert_equal_or_nil reservation_data['items_option_id'], reservation.items_option_id
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal reservation_data["team_id"], reservation.team_id

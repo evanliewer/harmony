@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_25_034602) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_26_230057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -440,7 +440,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_25_034602) do
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "items_option_id"
     t.index ["item_id"], name: "index_reservations_on_item_id"
+    t.index ["items_option_id"], name: "index_reservations_on_items_option_id"
     t.index ["retreat_id"], name: "index_reservations_on_retreat_id"
     t.index ["team_id"], name: "index_reservations_on_team_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
@@ -802,6 +804,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_25_034602) do
   add_foreign_key "questions_location_tags", "locations"
   add_foreign_key "questions_location_tags", "questions"
   add_foreign_key "reservations", "items"
+  add_foreign_key "reservations", "items_options"
   add_foreign_key "reservations", "memberships", column: "user_id"
   add_foreign_key "reservations", "retreats"
   add_foreign_key "reservations", "teams"

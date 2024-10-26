@@ -17,7 +17,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
           <div class="col-span-1 md:col-span-5"><%= render 'shared/fields/super_select', method: :item_id, options: {}, other_options: {search: true}, html_options: {},
-        choices: @reservation.valid_items_no_rooms_or_meetings.map { |item| [item.label_string, item.id] } %> </div>
+        choices: @reservation.valid_items.map { |item| [item.label_string, item.id] } %> </div>
           <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/text_field', method: :quantity %></div>
         </div>
 
@@ -61,6 +61,8 @@
       <%# render 'shared/fields/options', method: :seasonal_default %>
       
       <%# render 'shared/fields/options', method: :active %>
+      <%= render 'shared/fields/super_select', method: :items_option_id, options: {include_blank: "None"}, html_options: {},
+        choices: @reservation.item.item_options.map { |option| [option.label_string, option.id] } %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

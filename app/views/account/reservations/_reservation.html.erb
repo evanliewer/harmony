@@ -15,6 +15,7 @@
     <td><%= render 'shared/attributes/number', attribute: :quantity %></td>
     <td><%= render 'shared/attributes/text', attribute: :notes %></td>
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :exclusive %></td>
+    <td><%= render 'shared/attributes/belongs_to', attribute: :items_option %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
     <td class="buttons">
       <% unless hide_actions %>
