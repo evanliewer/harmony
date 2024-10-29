@@ -23,3 +23,13 @@ let themeConfig = require(themeConfigFile)
 // themeConfig.plugins.push(require('additional-tailwind-plugin'))
 
 module.exports = themeConfig
+module.exports = {
+  safelist: [
+    'bg-red-500',
+    'bg-blue-500',
+    'bg-yellow-500',
+    'bg-green-500',
+    'bg-green-800'
+  ],
+  // other Tailwind config...
+};

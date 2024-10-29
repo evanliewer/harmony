@@ -1,0 +1,60 @@
+
+
+
+<% case @color %>
+  <% when "red" %>
+    <div class="bg-red-500 h-screen flex items-center justify-center">
+  <% when "blue" %>
+    <div class="bg-blue-500 h-screen flex items-center justify-center">
+  <% when "yellow" %>
+    <div class="bg-yellow-500 h-screen flex items-center justify-center">
+  <% when "green" %>
+    <div class="bg-green-500 h-screen flex items-center justify-center">
+  <% else %>
+    <div class="bg-gray-500 h-screen flex items-center justify-center">
+<% end %>
+
+
+
+
+
+	    <span class="text-white text-[300px] font-bold">
+<%= render 'account/shared/page' do |page| %>
+
+  <% page.body do %>
+     
+    <%= cable_ready_updates_for @location do %>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+		  const element = document.querySelector('.border-b.border-slate-200.pb-4.dark\\:border-slate-600');
+		  if (element) {
+		    element.remove();  // Remove the div
+		  }
+		});
+
+		</script>
+
+	  <% with_attribute_settings object: @location, strategy: :none do %>
+	    <%= render 'shared/attributes/number', attribute: :capacity %>
+	  <% end %>
+
+  </span>
+ </div>  
+   
+    <% end %>
+
+    <%# 🚅 super scaffolding will insert new children above this line. %>
+  <% end %>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
