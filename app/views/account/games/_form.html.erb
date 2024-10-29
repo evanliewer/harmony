@@ -1,0 +1,51 @@
+<% cancel_path ||= game.persisted? ? [:account, game] : [:account, @team, :games] %>
+
+<%= form_with model: game, url: (game.persisted? ? [:account, game] : [:account, @team, :games]), local: true, class: 'form', id: 'game-form' do |form| %>
+  <%= render "shared/limits/form", form: form, cancel_path: cancel_path do %>
+    <%= render 'account/shared/forms/errors', form: form %>
+
+    <% with_field_settings form: form do %>
+      <%= render 'shared/fields/text_field', method: :red_score, options: {autofocus: false, onblur: 'submitForm()'} %>
+      <%= render 'shared/fields/text_field', method: :blue_score, options: {onblur: 'submitForm()'} %>
+      <%= render 'shared/fields/text_field', method: :yellow_score, options: {onblur: 'submitForm()'} %>
+      <%= render 'shared/fields/text_field', method: :green_score, options: {onblur: 'submitForm()'} %>
+    <% end %>
+
+    <div class="buttons">
+      <%= form.submit (form.object.persisted? ? t('.buttons.update') : t('.buttons.create')), class: "button" %>
+      <%= link_to t('global.buttons.cancel'), cancel_path, class: "button-secondary" %>
+    </div>
+  <% end %>
+<% end %>
+
+<script>
+  function submitForm() {
+    document.getElementById('game-form').submit();
+  }
+</script>
+
+
+
+
+<% if false %>
+<% cancel_path ||= game.persisted? ? [:account, game] : [:account, @team, :games] %>
+
+<%= form_with model: game, url: (game.persisted? ? [:account, game] : [:account, @team, :games]), local: true, class: 'form' do |form| %>
+  <%= render "shared/limits/form", form: form, cancel_path: cancel_path do %>
+    <%= render 'account/shared/forms/errors', form: form %>
+
+    <% with_field_settings form: form do %>
+      <%= render 'shared/fields/text_field', method: :red_score, options: {autofocus: true} %>
+      <%= render 'shared/fields/text_field', method: :blue_score %>
+      <%= render 'shared/fields/text_field', method: :yellow_score %>
+      <%= render 'shared/fields/text_field', method: :green_score %>
+      <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <% end %>
+
+    <div class="buttons">
+      <%= form.submit (form.object.persisted? ? t('.buttons.update') : t('.buttons.create')), class: "button" %>
+      <%= link_to t('global.buttons.cancel'), cancel_path, class: "button-secondary" %>
+    </div>
+  <% end %>
+<% end %>
+<% end %>

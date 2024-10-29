@@ -76,6 +76,7 @@ shallow do
       resources :seasons
       resources :questions, concerns: [:sortable]
       resources :websiteimages
+      resources :games
     end
   end
 end

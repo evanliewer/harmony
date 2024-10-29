@@ -22,8 +22,18 @@ class Public::HomeController < Public::ApplicationController
 
   def game_show
     #action made to have screens show scores for gameshow
-    @location = Location.first
+    @score = Game.first
     @color = params[:color]
+    case params[:color]
+      when "red"
+        
+      when "blue"
+
+      when "yellow"
+
+      when "green"
+
+    end
     #render layout: false
   end
 

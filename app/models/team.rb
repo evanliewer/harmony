@@ -23,8 +23,9 @@ class Team < ApplicationRecord
   has_many :seasons, dependent: :destroy, enable_cable_ready_updates: true
   has_many :questions, dependent: :destroy, enable_cable_ready_updates: true
   has_many :websiteimages, dependent: :destroy, enable_cable_ready_updates: true
-  has_many :retreats_requests, class_name: "Retreats::Request", dependent: :destroy
-  has_many :items_areas, class_name: "Items::Area", dependent: :destroy
+  has_many :retreats_requests, class_name: "Retreats::Request", dependent: :destroy, enable_cable_ready_updates: true
+  has_many :items_areas, class_name: "Items::Area", dependent: :destroy, enable_cable_ready_updates: true
+  has_many :games, dependent: :destroy, enable_cable_ready_updates: true
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.

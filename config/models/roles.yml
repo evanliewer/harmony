@@ -1,5 +1,6 @@
 default:
   models:
+    Game: read
     Items::Area: read
     Organization: read
     Item: read
@@ -94,6 +95,7 @@ admin:
     - default_staff
     
   models:
+    Game: manage
     Items::Area: manage
     Retreats::Request: manage
     Websiteimage: manage

@@ -23,7 +23,7 @@
 
   <% page.body do %>
      
-    <%= cable_ready_updates_for @location do %>
+    <%= cable_ready_updates_for @score do %>
 		<script>
 			document.addEventListener("DOMContentLoaded", function() {
 		  const element = document.querySelector('.border-b.border-slate-200.pb-4.dark\\:border-slate-600');
@@ -34,8 +34,21 @@
 
 		</script>
 
-	  <% with_attribute_settings object: @location, strategy: :none do %>
-	    <%= render 'shared/attributes/number', attribute: :capacity %>
+	  <% with_attribute_settings object: @score, strategy: :none do %>
+
+	  	<% case @color %>
+		  <% when "red" %>
+		    <%= render 'shared/attributes/number', attribute: :red_score %>
+		  <% when "blue" %>
+		    <%= render 'shared/attributes/number', attribute: :blue_score %>
+		  <% when "yellow" %>
+		    <%= render 'shared/attributes/number', attribute: :yellow_score %>
+		  <% when "green" %>
+		   <%= render 'shared/attributes/number', attribute: :green_score %>
+		  <% else %>
+		    <%= render 'shared/attributes/number', attribute: :red_score %>
+		<% end %>
+	    
 	  <% end %>
 
   </span>
