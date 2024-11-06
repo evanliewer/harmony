@@ -5,7 +5,7 @@
     <%= render 'account/teams/menu_item' %>
     <%= render 'account/scaffolding/absolutely_abstract/creative_concepts/menu_item' unless scaffolding_things_disabled? %>
     <% # added by super scaffolding. %>
-    <%= render 'account/games/menu_item' %>
+    
     <%= render 'account/items/areas/menu_item' %>
     <%= render 'account/retreats/menu_item' %>
     <%= render 'account/reservations/menu_item' %>
@@ -34,6 +34,7 @@
       <%= render 'account/demographics/menu_item' %>
       <%= render 'account/websiteimages/menu_item' %>
       <%= render 'account/questions/menu_item' %>
+      <%= render 'account/games/menu_item' %>
     <% end %>
 
     <%= render 'account/shared/menu/section', title: "Event Planning" do %>
