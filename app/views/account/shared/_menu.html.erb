@@ -5,8 +5,9 @@
     <%= render 'account/teams/menu_item' %>
     <%= render 'account/scaffolding/absolutely_abstract/creative_concepts/menu_item' unless scaffolding_things_disabled? %>
     <% # added by super scaffolding. %>
+   
     
-    <%= render 'account/items/areas/menu_item' %>
+    
     <%= render 'account/retreats/menu_item' %>
     <%= render 'account/reservations/menu_item' %>
     <%= render 'account/items/menu_item' %>
@@ -28,6 +29,7 @@
     
   
     <%= render 'account/shared/menu/section', title: "Settings" do %>
+    <%= render 'account/items/areas/menu_item' %>
       <%= render 'account/items/tags/menu_item' %>
       <%= render 'account/locations/menu_item' %>
       <%= render 'account/departments/menu_item' %>
@@ -41,6 +43,7 @@
      <%= render 'account/seasons/menu_item' %>
      <%= render 'account/organizations/menu_item' %>
      <%= render 'account/organizations/contacts/menu_item' %>
+      <%= render 'account/medforms/menu_item' %>
     <% end %>
  
    

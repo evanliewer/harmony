@@ -1,0 +1,8 @@
+<% medform ||= @medform %>
+<% team ||= @team || medform&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :medforms] %>
+<% if medform&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: medform.label_string, url: [:account, medform] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'medforms' %>

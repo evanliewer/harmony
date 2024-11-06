@@ -122,6 +122,7 @@ Rails.application.routes.draw do
         resources :questions, concerns: [:sortable]
         resources :websiteimages
         resources :games
+        resources :medforms
       end
     end
   end

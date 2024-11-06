@@ -1,0 +1,123 @@
+en:
+  medforms: &medforms
+    label: &label Medforms
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-file-medical
+    buttons: &buttons
+      new: Add New Medform
+      create: Create Medform
+      edit: Edit Medform
+      update: Update Medform
+      destroy: Remove Medform
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{medform_name}? This will also remove any child resources and can't be undone.
+    medform:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Medform ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      retreat_id: &retreat
+        _: &retreat_id Retreat
+        label: *retreat_id
+        heading: *retreat_id
+        api_title: *retreat_id
+        api_description: *retreat_id
+        placeholder: None
+      retreat: *retreat
+      phone:
+        _: &phone Phone
+        label: *phone
+        heading: *phone
+        api_title: *phone
+        api_description: *phone
+      email:
+        _: &email Email
+        label: *email
+        heading: *email
+        api_title: *email
+        api_description: *email
+      dietary:
+        _: &dietary Dietary
+        label: *dietary
+        heading: *dietary
+        api_title: *dietary
+        api_description: *dietary
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Medforms"
+      index: "List Medforms"
+      create: "Add a New Medform"
+      member_actions: "Actions for an Individual Medform"
+      show: "Retrieve a Medform"
+      update: "Update a Medform"
+      destroy: "Delete a Medform"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Medforms"
+      contexts:
+        team:
+          header: Medforms
+          description: Below is a list of Medforms that have been added for %{team_name}.
+          description_empty: No Medforms have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{medform_name}"
+      header: Medform Details
+      description: Below are the details we have for %{medform_name}.
+      manage_description: You'll also find options for updating these details or removing %{medform_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Medform for %{team_name}"
+      header: New Medform Details
+      description: Please provide the details of the new Medform you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{medform_name}"
+      header: Edit Medform Details
+      description: You can update the details or settings for %{medform_name} below.
+      form: *form
+    notifications:
+      created: Medform was successfully created.
+      updated: Medform was successfully updated.
+      destroyed: Medform was successfully destroyed.
+  account:
+    medforms: *medforms
+  activerecord:
+    attributes:
+      medform:
+        name: *name
+        retreat_id: *retreat_id
+        phone: *phone
+        email: *email
+        dietary: *dietary
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

@@ -1,0 +1,29 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :medforms %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: medform do %>
+  <tr data-id="<%= medform.id %>">
+    <%= render "shared/tables/checkbox", object: medform %>
+    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, medform] %></td>
+    <td><%= render 'shared/attributes/belongs_to', attribute: :retreat %></td>
+    <td><%= render 'shared/attributes/text', attribute: :phone %></td>
+    <td><%= render 'shared/attributes/text', attribute: :email %></td>
+    <td><%= render 'shared/attributes/text', attribute: :dietary %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, medform %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, medform], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, medform %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, medform], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(medform)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

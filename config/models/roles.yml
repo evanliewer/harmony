@@ -1,5 +1,6 @@
 default:
   models:
+    Medform: read
     Game: read
     Items::Area: read
     Organization: read
@@ -95,6 +96,7 @@ admin:
     - default_staff
     
   models:
+    Medform: manage
     Game: manage
     Items::Area: manage
     Retreats::Request: manage
