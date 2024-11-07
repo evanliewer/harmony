@@ -24,8 +24,8 @@
       <div class="flex-none w-2/3 max-w-full px-3">
         <div>
           <p class="mb-0 font-sans font-semibold leading-normal text-lg">Groups Onsite</p>
-          <h5 class="mb-0 font-bold"><%= pluralize(@onsite_retreats.count, "Group") %>
-            <span class="leading-normal text-sm font-weight-bolder text-blue-500"><%= pluralize(@onsite_retreats.sum(:guest_count), "Guest") %></span>
+          <h5 class="mb-0 font-bold"><%= @onsite_retreats.nil? ? "No Groups" : pluralize(@onsite_retreats.count, "Group") %>
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500"><%= @onsite_retreats.nil? ? "No Guests" : pluralize(@onsite_retreats.sum(:guest_count), "Guest") %></span>
           </h5>
         </div>
       </div>

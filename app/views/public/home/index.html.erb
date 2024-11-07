@@ -569,15 +569,15 @@
                <% @snacks.each do |snack| %>
                   <tr>
                     <td><%= snack.quantity %></td>
-                    <td><%= snack&.resource&.name %></td>
+                    <td><%= snack&.item&.name %></td>
                     <td><%= snack.notes %></td>
                     <td><%= snack.start_time.in_time_zone(@retreat.team.time_zone).strftime("%B #{snack.start_time.in_time_zone(@retreat.team.time_zone).day.ordinalize} %-l:%M%P") if snack.start_time.present? %></td>
                     <td>
                         <% if days_until > 14 %>
-                           <%= link_to "edit", public_reservation_path(retreat_id: @retreat.id, snack: true, reservation_id: snack.id), class: ""  %>
+                           <%# link_to "edit", public_reservation_path(retreat_id: @retreat.id, snack: true, reservation_id: snack.id), class: ""  %>
                         <% end %>   
                         </td>
-                    <td><%= link_to "remove", destroy_reservation_path(reservation_id: snack.id), class: "" %></td>
+                    <td><%# link_to "remove", destroy_reservation_path(reservation_id: snack.id), class: "" %></td>
                  </tr>
              <% end %>
           </tbody>

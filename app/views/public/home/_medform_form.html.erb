@@ -1,0 +1,39 @@
+
+
+    Team: <%= @team.name %><br/>
+    Retreat: <%= @retreat.name %>
+
+    <%# cancel_path ||= medform.persisted? ? [:account, @team, medform] : [:account, @team, :medforms] %>
+
+    <%# form_with model: medform, url: (medform.persisted? ? [:account, medform] : [:account, @team, :medforms]), local: true, class: 'form' do |form| %>
+    <%= form_with model: @medform, url: create_public_waiver_path, local: true, data: { turbo: false } do |form| %>
+
+
+        <% render 'account/shared/forms/errors', form: form %>
+
+
+        <% with_field_settings form: form do %>
+          <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
+          <%# render 'shared/fields/super_select', method: :retreat_id, options: {}, html_options: {},
+            choices: Retreat.all.limit(10).map { |retreat| [retreat.label_string, retreat.id] } %>
+          <%= form.hidden_field :team_id, value: @retreat.team.id %>
+          <%= form.hidden_field :retreat_id, value: @retreat.id %>  
+          
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div class="col-span-1"><%= render 'shared/fields/text_field', method: :phone %></div>
+            <div class="col-span-1"><%= render 'shared/fields/text_field', method: :email %></div>
+          </div> 
+          <%= render 'shared/fields/text_field', method: :dietary %>
+          <%# 🚅 super scaffolding will insert new fields above this line. %>
+        <% end %>
+
+        <div class="buttons" style="display: flex; justify-content: space-between; margin-top: 15px;">
+          <%= form.submit (form.object.persisted? ? "Update" : "Create"), class: "button" %>
+          <%# link_to "Cancel", cancel_path, class: "button-secondary" %>
+        </div>
+
+    <% end %>
+
+  </div>
+</div>

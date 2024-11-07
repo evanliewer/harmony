@@ -1,6 +1,7 @@
 class Public::HomeController < Public::ApplicationController
   # Redirect `/` to either `ENV["MARKETING_SITE_URL"]` or the sign-in page.
   # If you'd like to customize the action for `/`, you can remove this and define `def index ... end ` below.
+
  
    def index
     
@@ -18,6 +19,41 @@ class Public::HomeController < Public::ApplicationController
       @questions = Question.joins([:locations]).where(locations: { id: @retreat.location_ids }).order(:sort_order)
       render layout: false
       
+  end
+
+  def waiver
+    @retreat = Retreat.first
+    @team = @retreat.team
+    @medform = Medform.new
+    100.times do  
+      puts "waiver method"
+    end  
+  end
+
+  def create_public_waiver
+    100.times do  
+      puts "create_public_waiver"
+    end
+    @retreat = Retreat.first
+    @team = @retreat.team
+    @medform = Medform.new(medform_params)
+    if @medform.save
+      redirect_to thank_you_path, notice: 'Thank you for completing the form!'
+    else
+      50.times do 
+        puts @medform.errors.full_messages if @medform.errors.any?
+      end
+      @evan = @medform.errors.full_messages
+       100.times do  
+          puts "validation fail"
+        end
+      # If validation fails, render the public form with errors
+      render :waiver, layout: "public"
+    end
+  end
+
+  def medform_params
+    params.require(:medform).permit(:team_id, :name, :phone, :email, :dietary, :retreat_id)
   end
 
   def game_show

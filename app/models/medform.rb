@@ -22,7 +22,8 @@ class Medform < ApplicationRecord
   # 🚅 add delegations above.
 
   def valid_retreats
-    team.retreats
+    #team.retreats
+    Retreat.all.limit(9)
   end
 
   # 🚅 add methods above.

@@ -19,10 +19,18 @@ Rails.application.routes.draw do
     # To keep things organized, we put non-authenticated controllers in the `Public::` namespace.
     # The root `/` path is routed to `Public::HomeController#index` by default.
     get '/game_show/:color' => 'home#game_show', as: 'game_show'
+    get '/waiver' => 'home#waiver', as: 'waiver'
+    post 'waiver/create_public_waiver', to: 'home#create_public_waiver', as: 'create_public_waiver'
+    get 'thank_you' => 'home#thank_you', as: 'thank_you'
+    # Standalone routes for public medform actions
+  #get 'medform/new', to: 'medform#new_public', as: :new_public_medform
+
+
   end
 
   namespace :webhooks do
     namespace :incoming do
+      resources :jotform_webhooks
       namespace :oauth do
         # 🚅 super scaffolding will insert new oauth provider webhooks above this line.
       end

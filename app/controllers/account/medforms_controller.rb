@@ -21,12 +21,14 @@ class Account::MedformsController < Account::ApplicationController
   def edit
   end
 
+
   # POST /account/teams/:team_id/medforms
   # POST /account/teams/:team_id/medforms.json
   def create
     respond_to do |format|
       if @medform.save
-        format.html { redirect_to [:account, @medform], notice: I18n.t("medforms.notifications.created") }
+        #format.html { redirect_to [:account, @medform], notice: I18n.t("medforms.notifications.created") }
+        format.html { redirect_to thank_you_path, notice: I18n.t("medforms.notifications.created") }
         format.json { render :show, status: :created, location: [:account, @medform] }
       else
         format.html { render :new, status: :unprocessable_entity }
