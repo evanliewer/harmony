@@ -22,9 +22,8 @@
           </div> 
 
           <div class="mt-2">
-           <%= render 'shared/fields/text_field', method: :dietary %>
-           <%# render 'shared/fields/super_select', method: :dietary, options: {}, html_options: {},
-            choices: Retreat.all.limit(10).map { |retreat| [retreat.label_string, retreat.id] } %>
+           <%= render 'shared/fields/super_select', method: :diet_id, options: {include_blank: "None"}, html_options: {},
+              choices: Diet.where(team_id: @retreat.team.id).map { |diet| [diet.label_string, diet.id] } %>
           </div>
         <% end %>
 

@@ -36,6 +36,7 @@ class Api::V1::MedformsControllerTest < Api::Test
     assert_equal_or_nil medform_data['phone'], medform.phone
     assert_equal_or_nil medform_data['email'], medform.email
     assert_equal_or_nil medform_data['dietary'], medform.dietary
+    assert_equal_or_nil medform_data['diet_id'], medform.diet_id
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal medform_data["team_id"], medform.team_id

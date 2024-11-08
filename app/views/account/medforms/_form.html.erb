@@ -11,6 +11,8 @@
       <%= render 'shared/fields/text_field', method: :phone %>
       <%= render 'shared/fields/text_field', method: :email %>
       <%= render 'shared/fields/text_field', method: :dietary %>
+      <%= render 'shared/fields/super_select', method: :diet_id, options: {include_blank: "None"}, html_options: {},
+        choices: @medform.valid_diets.map { |diet| [diet.label_string, diet.id] } %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

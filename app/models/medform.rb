@@ -5,6 +5,7 @@ class Medform < ApplicationRecord
 
   belongs_to :team
   belongs_to :retreat, optional: true
+  belongs_to :diet, optional: true
   # 🚅 add belongs_to associations above.
 
   # 🚅 add has_many associations above.
@@ -15,6 +16,7 @@ class Medform < ApplicationRecord
 
   validates :name, presence: true
   validates :retreat, scope: true
+  validates :diet, scope: true
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.
@@ -23,8 +25,14 @@ class Medform < ApplicationRecord
 
   def valid_retreats
     #team.retreats
-    Retreat.all.limit(9)
+    Retreat.all
   end
+
+  def valid_diets
+    #Not used as team is not passed to model
+    team.diets
+  end
+
 
   # 🚅 add methods above.
 end

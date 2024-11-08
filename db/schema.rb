@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_08_170027) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_08_170845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -290,6 +290,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_170027) do
     t.string "dietary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "diet_id"
+    t.index ["diet_id"], name: "index_medforms_on_diet_id"
     t.index ["retreat_id"], name: "index_medforms_on_retreat_id"
     t.index ["team_id"], name: "index_medforms_on_team_id"
   end
@@ -823,6 +825,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_170027) do
   add_foreign_key "items_options", "items"
   add_foreign_key "items_tags", "teams"
   add_foreign_key "locations", "teams"
+  add_foreign_key "medforms", "diets"
   add_foreign_key "medforms", "retreats"
   add_foreign_key "medforms", "teams"
   add_foreign_key "memberships", "invitations"

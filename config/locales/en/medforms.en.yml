@@ -57,6 +57,14 @@ en:
         heading: *dietary
         api_title: *dietary
         api_description: *dietary
+      diet_id: &diet
+        _: &diet_id Diet
+        label: *diet_id
+        heading: *diet_id
+        api_title: *diet_id
+        api_description: *diet_id
+        placeholder: None
+      diet: *diet
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -118,6 +126,7 @@ en:
         phone: *phone
         email: *email
         dietary: *dietary
+        diet_id: *diet_id
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

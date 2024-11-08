@@ -10,13 +10,14 @@
   <!-- Centering and compacting the form with styling -->
   <div style="position: relative; z-index: 1; max-width: 800px; width: 100%; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); margin: 20px;">
 
-<p>Forest Home Release Form</p>
-
-
-
 
 <%= render 'account/shared/page' do |page| %>
-  <% page.body.render 'account/shared/box', divider: true do |box| %>
+<% page.title "Forest Home Release Form" %>
+  <% page.actions do %>
+    <%= link_to "Spanish", root_url, class: "border-2 p-2 rounded-full border-indigo-300" %>
+    <%= link_to "Korean", root_url, class: "border-2 p-2 rounded-full border-indigo-300" %>
+  <% end %>
+  <% page.body.render 'account/shared/box', divider: false, no_background: true do |box| %>
     <% box.body do %>
        <div class="flex justify-center">
         <img src="https://www.foresthome.org/wp-content/uploads/2020/10/FH_LOGO_2014.png" alt="Centered Image" class="w-48 max-w-full h-auto">

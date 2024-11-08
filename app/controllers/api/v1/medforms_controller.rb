@@ -49,6 +49,7 @@ if defined?(Api::V1::ApplicationController)
           :phone,
           :email,
           :dietary,
+          :diet_id,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
           # 🚅 super scaffolding will insert new arrays above this line.
