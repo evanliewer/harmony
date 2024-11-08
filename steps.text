@@ -150,3 +150,5 @@ rails g super_scaffold:field reseravtion items_option_id:super_select(class_name
 
 rails g super_scaffold Diet Team name:text_field --sortable
 rails g super_scaffold:field Medform diet_id:super_select{class_name=Diet}
+
+rails g super_scaffold:field Retreat actual_group_size:interger

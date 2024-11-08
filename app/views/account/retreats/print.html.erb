@@ -133,21 +133,21 @@
 
     <!-- Title Section -->
     <div class="title-section">
-      <h1><%= @retreat.name %></h1>
-      <p><%= @retreat.arrival %></p>
+      <h1>Gold Sheet</h1>
+
     </div>
 
     <!-- Header Table (Client and Report Details) -->
     <table class="header-table">
       <tr>
-        <td><strong>Printed At:</strong> <%= Time.zone.now %></td>
-        <td><strong>Date:</strong> October 20, 2024</td>
-        <td><strong>Report ID:</strong> 12345</td>
+        <td><strong>Arrival Date:</strong> <%= @retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.arrival.in_time_zone("America/Los_Angeles").day.ordinalize}") %></td>
+        <td><strong>Depature Date:</strong> <%= @retreat.departure.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.departure.in_time_zone("America/Los_Angeles").day.ordinalize}") %></td>
+        
       </tr>
       <tr>
-        <td><strong>Client ID:</strong> C-9876</td>
-        <td><strong>Project:</strong> Annual Analysis</td>
-        <td><strong>Status:</strong> Completed</td>
+        <td><strong>Printed At:</strong> <%= Time.zone.now.strftime("%A %B #{Time.zone.now.day.ordinalize} %-l:%M%P") %></td>
+        <td><strong></strong> </td>
+        <td><strong></strong> </td>
       </tr>
     </table>
 
