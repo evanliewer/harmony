@@ -18,13 +18,29 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background-color: #ffffff;
+      background-image: url('https://wallpapers.com/images/high/new-zealand-1920-x-1200-background-i7g1261wjsfn7hi7.webp'); /* Replace with your image URL */
+      background-size: cover;
+      background-position: center;
       font-family: Arial, sans-serif;
       color: #333333;
     }
 
+    /* Overlay for a slight darkening effect */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+      z-index: 0;
+    }
+
     /* Centered thank you message box */
     .thank-you-container {
+      position: relative;
+      z-index: 1;
       text-align: center;
       background-color: #0076ff; /* Blue background for the box */
       color: #ffffff; /* White text */
@@ -70,7 +86,8 @@
   <div class="thank-you-container">
     <h1>Thank You!</h1>
     <p>Your form has been successfully submitted. We appreciate your time and effort in filling it out.</p>
-    <a href="/" class="back-home-button">Back to Home</a>
+    <%= link_to "Submit Again", waiver_path(retreat: params[:retreat]), class: 'back-home-button' %>
+ 
   </div>
 
 </body>

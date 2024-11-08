@@ -22,31 +22,17 @@ class Public::HomeController < Public::ApplicationController
   end
 
   def waiver
-    @retreat = Retreat.first
+    @retreat = Retreat.find_by_obfuscated_id(params[:retreat])
     @team = @retreat.team
     @medform = Medform.new
-    100.times do  
-      puts "waiver method"
-    end  
   end
 
   def create_public_waiver
-    100.times do  
-      puts "create_public_waiver"
-    end
     @retreat = Retreat.first
-    @team = @retreat.team
     @medform = Medform.new(medform_params)
     if @medform.save
-      redirect_to thank_you_path, notice: 'Thank you for completing the form!'
+      redirect_to thank_you_path(retreat: @medform.retreat.obfuscated_id), notice: 'Thank you for completing the form!'
     else
-      50.times do 
-        puts @medform.errors.full_messages if @medform.errors.any?
-      end
-      @evan = @medform.errors.full_messages
-       100.times do  
-          puts "validation fail"
-        end
       # If validation fails, render the public form with errors
       render :waiver, layout: "public"
     end

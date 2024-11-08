@@ -1,22 +1,33 @@
 <!-- Full page background styling -->
+
+
+
 <div style="background-image: url('https://wallpapers.com/images/high/new-zealand-1920-x-1200-background-i7g1261wjsfn7hi7.webp'); background-size: cover; background-position: center; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
 
   <!-- Overlay to darken the background slightly for readability -->
-  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2);"></div>
 
   <!-- Centering and compacting the form with styling -->
   <div style="position: relative; z-index: 1; max-width: 800px; width: 100%; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); margin: 20px;">
 
-<h1>Forest Home Medical Form</h1>
+<p>Forest Home Release Form</p>
+
+
 
 
 <%= render 'account/shared/page' do |page| %>
-
   <% page.body.render 'account/shared/box', divider: true do |box| %>
-    <%# box.t :description, title: "Header" %>
-    <%# box.body.render 'account/medforms/form', medform: @medform %>
-    <% box.body.render 'medform_form', medform: @medform %>
+    <% box.body do %>
+       <div class="flex justify-center">
+        <img src="https://www.foresthome.org/wp-content/uploads/2020/10/FH_LOGO_2014.png" alt="Centered Image" class="w-48 max-w-full h-auto">
+      </div>  
+      <div class="text-center font-bold text-xl">
+        <%= @retreat.name %>
+      </div>
+        <div class="text-center">
+        We are excited for your retreat and other things
+      </div>
+    <% end %>
+      <% box.body.render 'medform_form', medform: @medform %>
   <% end %>
-
-
 <% end %>
