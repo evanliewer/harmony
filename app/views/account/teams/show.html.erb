@@ -24,6 +24,7 @@
     <%= render 'account/items/areas/index', areas: @team.items_areas, hide_back: true %>
     <%= render 'account/games/index', games: @team.games, hide_back: true %>
     <%= render 'account/medforms/index', medforms: @team.medforms, hide_back: true %>
+    <%= render 'account/diets/index', diets: @team.diets, hide_back: true %>
     <%# 🚅 super scaffolding will insert new children above this line. %>
     
     <%= render 'account/scaffolding/absolutely_abstract/creative_concepts/index', creative_concepts: @team.scaffolding_absolutely_abstract_creative_concepts, hide_back: true unless scaffolding_things_disabled? %>

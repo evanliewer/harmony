@@ -131,6 +131,7 @@ Rails.application.routes.draw do
         resources :websiteimages
         resources :games
         resources :medforms
+        resources :diets, concerns: [:sortable]
       end
     end
   end

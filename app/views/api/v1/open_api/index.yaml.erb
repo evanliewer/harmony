@@ -46,6 +46,7 @@ components:
     <%= automatic_components_for Items::Area %>
     <%= automatic_components_for Game %>
     <%= automatic_components_for Medform %>
+    <%= automatic_components_for Diet %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -104,4 +105,5 @@ paths:
   <%= automatic_paths_for Items::Area, Team %>
   <%= automatic_paths_for Game, Team %>
   <%= automatic_paths_for Medform, Team %>
+  <%= automatic_paths_for Diet, Team %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>

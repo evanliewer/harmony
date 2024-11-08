@@ -1,5 +1,6 @@
 default:
   models:
+    Diet: read
     Medform: read
     Game: read
     Items::Area: read
@@ -96,6 +97,7 @@ admin:
     - default_staff
     
   models:
+    Diet: manage
     Medform: manage
     Game: manage
     Items::Area: manage

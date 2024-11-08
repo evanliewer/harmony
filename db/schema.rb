@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_06_032952) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_08_170027) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +110,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_06_032952) do
     t.datetime "updated_at", null: false
     t.index ["department_id"], name: "index_departments_applied_tags_on_department_id"
     t.index ["tag_id"], name: "index_departments_applied_tags_on_tag_id"
+  end
+
+  create_table "diets", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.integer "sort_order"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_diets_on_team_id"
   end
 
   create_table "flights", force: :cascade do |t|
@@ -789,6 +798,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_06_032952) do
   add_foreign_key "departments", "teams"
   add_foreign_key "departments_applied_tags", "departments"
   add_foreign_key "departments_applied_tags", "items_tags", column: "tag_id"
+  add_foreign_key "diets", "teams"
   add_foreign_key "flights", "flights_timeframes"
   add_foreign_key "flights", "teams"
   add_foreign_key "flights_checks", "flights"

@@ -27,6 +27,7 @@ class Team < ApplicationRecord
   has_many :items_areas, class_name: "Items::Area", dependent: :destroy, enable_cable_ready_updates: true
   has_many :games, dependent: :destroy, enable_cable_ready_updates: true
   has_many :medforms, dependent: :destroy, enable_cable_ready_updates: true
+  has_many :diets, dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.

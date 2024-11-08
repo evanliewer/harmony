@@ -1,0 +1,93 @@
+en:
+  diets: &diets
+    label: &label Diets
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-wheat-awn-circle-exclamation
+    buttons: &buttons
+      new: Add New Diet
+      create: Create Diet
+      edit: Edit Diet
+      update: Update Diet
+      destroy: Remove Diet
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{diet_name}? This will also remove any child resources and can't be undone.
+    diet:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Diet ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Diets"
+      index: "List Diets"
+      create: "Add a New Diet"
+      member_actions: "Actions for an Individual Diet"
+      show: "Retrieve a Diet"
+      update: "Update a Diet"
+      destroy: "Delete a Diet"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Diets"
+      contexts:
+        team:
+          header: Diets
+          description: Below is a list of Diets that have been added for %{team_name}.
+          description_empty: No Diets have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{diet_name}"
+      header: Diet Details
+      description: Below are the details we have for %{diet_name}.
+      manage_description: You'll also find options for updating these details or removing %{diet_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Diet for %{team_name}"
+      header: New Diet Details
+      description: Please provide the details of the new Diet you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{diet_name}"
+      header: Edit Diet Details
+      description: You can update the details or settings for %{diet_name} below.
+      form: *form
+    notifications:
+      created: Diet was successfully created.
+      updated: Diet was successfully updated.
+      destroyed: Diet was successfully destroyed.
+  account:
+    diets: *diets
+  activerecord:
+    attributes:
+      diet:
+        name: *name
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at
