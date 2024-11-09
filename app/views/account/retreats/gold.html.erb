@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Complex Printable Document</title>
+  <title>Gold Sheet Printable Document</title>
 
   <style>
     /* Ensure page size is 8.5 x 11 inches */
@@ -133,7 +133,7 @@
 
     <!-- Title Section -->
     <div class="title-section">
-      <h1><%= @retreat.name %></h1>
+      <h1>Gold Sheet</h1>
 
     </div>
 
@@ -203,158 +203,110 @@
     </table>
 
 
-
-<!-- Deliveries -->
-<h3 class="section-title">Deliveries</h3>
+<!-- Meeting Spaces -->
+<h3 class="section-title">Meeting Spaces</h3>
  <table class="data-table">
           <thead>
             <tr>
-              <th>Delivery Item</th>
-              <th>Delivery Time</th>
-              <th>Who's Responsible</th>
-              <th>Completed At</th>
+              <th>Group</th>
+              <th>Meeting Spaces</th>
             </tr>
           </thead>
           <tbody>
-            <% @meals.each do |meal| %>
+            <% @retreats.each do |retreat| %>
+               <% meetingspaces = Reservation.where(retreat_id: retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false) %>
               <tr>
-                <td><%= meal.item.name %></td>
-                <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
-                <td></td>
-                <td></td>
+                <td><%= retreat.name %></td>
+                <td><%= meetingspaces.any? ? meetingspaces.map { |p| p.name }.to_sentence : "None" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+<!-- Cabins -->
+<h3 class="section-title">Cabins</h3>
+ <table class="data-table">
+          <thead>
+            <tr>
+              <th>Group</th>
+              <th>Lodging</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @retreats.each do |retreat| %>
+              <% lodging = Reservation.where(retreat_id: retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false).order(:name) %>
+              <tr>
+                <td><%= retreat.name %></td>
+                <td><%= lodging.any? ? lodging.map { |p| p.name }.to_sentence : "None" %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
 
 
-<!-- Lodging  -->
- <h3 class="section-title">Lodging</h3>
-  <table class="data-table">
-          <thead>
-            <tr>
-              <td><%= @lodging.any? ? @lodging.map { |p| p.name }.to_sentence : "None" %> </td>
-            </tr>
-          </thead>
-        </table>
+
+    <!-- Another Section (Full Width) -->
+        <div class="page-break"></div>
+    <h3 class="section-title">Dining Locations</h3>
+ 
+
+    <!-- Table for Special Diets -->
+
+    <table class="data-table">
+  <thead>
+    <tr>
+      <th>Group</th>
+      <th>Guest Count</th>
+      <th>None</th>
+      <% current_team.diets.order(:sort_order).each do |diet| %>
+        <th><%= diet.name %></th>
+      <% end %>  
+
+    </tr>
+  </thead>
+  <tbody>
+    <% current_team.locations.order(:sort_order).each do |location| %>
+      <% location_retreats = @retreats.select { |retreat| retreat.locations.include?(location) } %>
       
-<!-- End Lodging --> 
-
-
-    <!-- Two-Column Layout -->
-    <div class="two-column">
-      <div class="column">
-        <!-- First Column: General Info -->
-        <h3 class="section-title">Meals</h3>
-        <!--   <p class="highlight">Details of Groups</p>-->
-
-        <!-- Example Table 1: Financial Overview -->
-      <table class="data-table">
-          <thead>
-            <tr>
-              <th>Meal</th>
-              <th>Start Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @meals.each do |meal| %>
-              <tr>
-                <td><%= meal.item.name %></td>
-                <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-
-
-     
-
-      <div class="column">
-        <!-- Second Column: Project Milestones -->
-        <h3 class="section-title">Meeting Spaces</h3>
-
-        <!-- Example Table 2: Resource Allocation -->
-         <table class="data-table">
-          <thead>
-            <tr>
-              <th>Meeting Space</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @meetingspaces.each do |meetingspace| %>
-              <tr>
-                <td><%= meetingspace.item.name %></td>
-                <td><%= meetingspace.notes %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
- <div class="page-break"></div>
-   <!-- Department Requests -->
-  <h3 class="section-title">Department Requests</h3>
-   <table class="data-table">
-            <thead>
-              <tr>
-                <th>Department</th>
-                <th>Requests</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% if @retreat.requests.any? %>
-               <% @retreat.requests.each do |request| %>
-                <tr>
-                  <td><%= request.department.name %></td>
-                  <td><%= request.notes %></td>
-                </tr>
-               <% end %> 
-              <% else %>
-                <tr>
-                  <td>None</td>
-                  <td></td>
-                </tr>
-             <% end %> 
-            </tbody>
-          </table>
-  <!-- End Schedule  -->    
-
-<div class="page-break"></div>
-
-   <!-- Schedule -->
-  <h3 class="section-title">Schedule</h3>
-   <table class="data-table">
-            <thead>
-              <tr>
-                <th>Reservation</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @schedule.each do |reservation| %>
-                <tr>
-                  <td><%= reservation.item.name %></td>
-                  <td><%= reservation.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
-                  <td><%= reservation.end_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
-
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-  <!-- End Schedule  -->               
-<br/><br/><br/><br/><br/><br/><br/><br/>
-   
+      
+      <% if location_retreats.any? %>
+      <tr>
+          <td colspan="7" class="location-header"><strong><%= location.name %></strong></td>
+        </tr>
+       
+        
+        <% location_retreats.each do |retreat| %>
+          <tr>
+            <td><%= retreat.name %></td>
+            <td style="text-align: center;"><%= retreat.actual_count %></td>
+            <td style="text-align: center;"><%= Medform.where(retreat_id: retreat.id).where(diet_id: nil).count %></td>
+            <% current_team.diets.order(:sort_order).each do |diet| %>
+            <td style="text-align: center;"><%= Medform.where(retreat_id: retreat.id).where(diet_id: diet.id).count %></td>
+          <% end %> 
+          </tr>
+        <% end %>
+        
+        <!-- Total line for each location -->
+        <tr class="location-total">
+          <td style="text-align: right;"><strong>Total for <%= location.name %></strong></td>
+          <td style="text-align: center;"><strong><%= @retreats.select { |retreat| retreat.locations.include?(location) }.sum { |retreat| retreat.actual_count } %></strong></td>
+          <td style="text-align: center;"><strong><%= Medform.where(retreat_id: location_retreats.map(&:id)).where(diet_id: nil).count %></strong></td>
+          <% current_team.diets.order(:sort_order).each do |diet| %>
+            <td style="text-align: center;"><strong><%= Medform.where(retreat_id: location_retreats.map(&:id)).where(diet_id: diet.id).count %></strong></td>
+          <% end %>
+          
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
 
     <!-- Page Break for Next Section -->
     <div class="page-break"></div>
 
-    <!-- Another Section with a Table -->
-   
+
+  </div>
 
   <!-- Footer 
   <div class="footer">

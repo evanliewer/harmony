@@ -35,14 +35,14 @@
       <strong>Departing:</strong> <%= @retreat.departure.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.departure.day.ordinalize} %-l:%M%P") %>
     </p>
     <p>
-      <strong>Details:</strong> <%= @retreat.demographics.map { |d| d.name }.to_sentence %> <%= pluralize((@retreat.departure&.to_date - @retreat.arrival&.to_date).to_i, "Night") %>, <%# pluralize(@meals.count, "Meal") %>  ADD MEAL COUNT
+      <strong>Details:</strong> <%= @retreat.demographics.map { |d| d.name }.to_sentence %> <%= pluralize((@retreat.departure&.to_date - @retreat.arrival&.to_date).to_i, "Night") %>, <%= pluralize(@meals.count, "Meal") %>
     </p>
 
     <p class="mt-4">
-      <strong>Meeting Spaces:</strong> Chipmunk Corner and Hormel Hall: Auditorium (0.0% Clean)
+      <strong>Meeting Spaces:</strong> <%= @meetingspaces.any? ? @meetingspaces.map { |p| p.name }.to_sentence : "None" %>
     </p>
     <p>
-      <strong>Lodging:</strong> 12-A, 12-B, 16-A, 16-B, 17-A, 17-B, 46-A, 46-B, 47-A, 47-B, 48-A, 48-B, 49-B, 53-A, 53-B, 80- A, 80- B, 81- A, 81- B, 82- B, 83- A, 83- B, 84- B, 85- A, 85-B, and Biltmore Cabin (17.95% Clean)
+      <strong>Lodging:</strong> <%= @lodging.any? ? @lodging.map { |p| p.name }.to_sentence : "None" %>
     </p>
 
   <p class="mt-4"></p>
@@ -81,7 +81,7 @@
     <!-- Buttons Section -->
     <div class="flex flex-col gap-2">
       <%= link_to "Add New Reservation", [:new, :account, current_team, :reservation, { retreat_id: @retreat.id }], class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline hover:text-white" %>
-      <%= link_to "Group Page", root_path(retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline hover:text-white" %>
+      <%= link_to "Group Page", root_path(retreat_id: @retreat.obfuscated_id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline hover:text-white" %>
       <% if can? :create, Season.new(team: current_team) %>
           <% if @seasonal %>
            <%= link_to "Remove Seasonal Defaults", account_team_remove_seasonal_reservations_path(team_id: current_team.id, retreat_id: @retreat.id), data: { confirm: "Are you sure you want to remove all Seasonal Defaults to the group?  This will permantently remove them and they cannot be recovered.  You will be able to readd them from scratch." }, class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline  hover:text-white" %>
@@ -90,6 +90,7 @@
           <% end %> 
        <% end %>
       <%= link_to "Printable schedule", account_team_print_retreat_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
+      <%= link_to "Gold Sheet", account_team_print_gold_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
       <%= link_to "Lodging", account_team_lodging_path(team_id: @retreat.team_id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
     </div>
   </div>
@@ -156,6 +157,7 @@
             <%= render 'shared/attributes/has_many', attribute: :planners %>
             <%= render 'shared/attributes/has_many', attribute: :hosts %>
             <%= render 'shared/attributes/has_many', attribute: :contacts %>
+            <%= render 'shared/attributes/number', attribute: :actual_group_size %>
             <%# 🚅 super scaffolding will insert new fields above this line. %>
           <% end %>
         <% end %>
@@ -188,5 +190,3 @@
         <%= render 'account/retreats/papertrail' %>
       </div>
   <% end %>
-
-

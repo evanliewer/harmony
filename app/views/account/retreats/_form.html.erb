@@ -25,6 +25,7 @@
         choices: @retreat.valid_hosts.map { |membership| [membership.label_string, membership.id] } %>
       <%= render 'shared/fields/super_select', method: :contact_ids, html_options: {multiple: true},
         choices: @retreat.valid_contacts.map { |contact| [contact.label_string, contact.id] } %>
+      <%= render 'shared/fields/number_field', method: :actual_group_size %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

@@ -15,6 +15,7 @@ json.extract! retreat,
   :planner_ids,
   :host_ids,
   :contact_ids,
+  :actual_group_size,
   # 🚅 super scaffolding will insert new fields above this line.
   :created_at,
   :updated_at

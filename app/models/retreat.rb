@@ -36,6 +36,10 @@ class Retreat < ApplicationRecord
 
   # 🚅 add delegations above.
 
+  def actual_count
+    guest_count || actual_group_size
+  end
+
   def valid_organizations
     team.organizations
   end

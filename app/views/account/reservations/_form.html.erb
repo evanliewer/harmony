@@ -32,21 +32,6 @@
         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <%# render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
       <%# render 'shared/fields/super_select', method: :retreat_id, options: {}, html_options: {},
         choices: @reservation.valid_retreats.map { |retreat| [retreat.label_string, retreat.id] } %>
@@ -61,8 +46,12 @@
       <%# render 'shared/fields/options', method: :seasonal_default %>
       
       <%# render 'shared/fields/options', method: :active %>
-      <%= render 'shared/fields/super_select', method: :items_option_id, options: {include_blank: "None"}, html_options: {},
+      <% unless @reservation.item.nil? %>
+      <% unless @reservation.item.item_options.empty? %>
+        <%= render 'shared/fields/super_select', method: :items_option_id, options: {include_blank: "None"}, html_options: {},
         choices: @reservation.item.item_options.map { |option| [option.label_string, option.id] } %>
+      <% end %>  
+      <% end %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   scope module: "public" do
     # To keep things organized, we put non-authenticated controllers in the `Public::` namespace.
     # The root `/` path is routed to `Public::HomeController#index` by default.
+    get 'public_reservation' => 'home#public_reservation', as: 'public_reservation'
+    post 'new_public_reservation' => 'home#new_public_reservation', as: 'new_public_reservation'
+    patch 'new_public_reservation' => 'home#new_public_reservation', as: 'edit_public_reservation'
+    get 'destroy_reservation' => 'home#destroy_reservation', as: 'destroy_reservation' 
     get '/game_show/:color' => 'home#game_show', as: 'game_show'
     get '/waiver/:retreat' => 'home#waiver', as: 'waiver'
     post 'waiver/create_public_waiver', to: 'home#create_public_waiver', as: 'create_public_waiver'
@@ -82,6 +86,7 @@ Rails.application.routes.draw do
         patch 'fullcalendar_update/', to: 'reservations#fullcalendar_update', as: :fullcalendar_update
         patch '/account/:team_id/fullcalendar_update', to: 'account/teams#update_fullcalendar_event', as: 'account_team_fullcalendar_update'
         get 'print_retreat' => 'retreats#print', as: 'print_retreat'
+        get 'print_gold' => 'retreats#gold', as: 'print_gold'
         get '/lodging' => 'items#lodging', as: 'lodging'
 
         resources :demographics, concerns: [:sortable]

@@ -5,8 +5,8 @@ class Public::HomeController < Public::ApplicationController
  
    def index
     
-    if params[:retreat_id].present?
-      @retreat = Retreat.find(params[:retreat_id])
+    if params[:id].present?
+      @retreat = Retreat.find_by_obfuscated_id(params[:id])
     else 
       @retreat = Retreat.first
     end    
@@ -17,6 +17,7 @@ class Public::HomeController < Public::ApplicationController
       @snacks = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Snacks" }).ids }).where(items: { active: true})
       @cabins = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false)
       @questions = Question.joins([:locations]).where(locations: { id: @retreat.location_ids }).order(:sort_order)
+      @medforms = Medform.where(retreat_id: @retreat.id)
       render layout: false
       
   end
@@ -57,6 +58,107 @@ class Public::HomeController < Public::ApplicationController
 
     end
     #render layout: false
+  end
+
+  def public_reservation
+    puts "STARTING PUBLIC RESERVATION"
+    @path= "https://shuffle.dev/"
+    @retreat = Retreat.find_by_obfuscated_id(params[:retreat_id])
+    if params[:reservation_id].present?
+      @reservation = Reservation.find(params[:reservation_id])
+    else   
+      @reservation = Reservation.new(team_id: @retreat.team_id)
+    end
+   puts "About to Render Layout" 
+   render :layout => false
+  end
+
+  def destroy_reservation
+    @reservation = Reservation.find(params[:reservation_id])
+    @reservation.destroy
+    respond_to do |format|
+      format.html { redirect_to root_path(id: @reservation.retreat.obfuscated_id), notice: I18n.t('reservations.notifications.destroyed') }
+    end
+  end
+
+  def new_public_reservation 
+   puts "Reservation ID:" + params[:subaction].to_s + "-----"
+   retreat = Retreat.find(params[:retreat_id])
+   if params[:update_reservation].present?
+      @reservation = Reservation.find(params[:update_reservation])
+
+    begin
+       if params[:reservation][:start_time].present?
+         @reservation.start_time = ActiveSupport::TimeZone.new('Pacific Time (US & Canada)').parse(params[:reservation][:start_time]).utc
+       end
+       if params[:reservation][:end_time].present?
+         @reservation.end_time = ActiveSupport::TimeZone.new('Pacific Time (US & Canada)').parse(params[:reservation][:end_time]).utc
+       else
+         @reservation.end_time = @reservation.start_time + 1.hour
+       end
+    rescue => ex
+      puts "Error with times for public reservation"
+      puts ex.message
+    end
+     puts "Quantity and Notes"
+     puts "Quantity: " + params[:reservation][:quantity].to_s
+     puts "Notes: " + params[:reservation][:notes].to_s
+      @reservation.quantity = params[:reservation][:quantity]
+      @reservation.notes = params[:reservation][:notes]
+     puts "Done with quantity and notes" 
+      @reservation.item_id = params[:reservation][:item_id]
+      @reservation.items_option_id = params[:reservation][:items_option_id]
+
+   else 
+     puts "Create new reservation"
+
+     @reservation = Reservation.new(params.require(:reservation).permit(
+          :name,
+          :start_time,
+          :end_time,
+          :notes,
+          :retreat_id,
+          :item_id,
+          :quantity
+        ))
+     puts "Initialized Reservation"
+    @reservation.team_id = retreat.team_id
+    @reservation.retreat_id = retreat.id
+    @reservation.name = retreat.name.to_s + " " + Item.find(params[:reservation][:item_id]).name.to_s
+
+    @reservation.active = true
+
+    retreat_time_zone = ActiveSupport::TimeZone.new(retreat.team.time_zone)
+    @reservation.start_time = retreat_time_zone.parse(params[:reservation][:start_time])
+
+
+    if params[:reservation][:end_time].present?
+      end_time = DateTime.parse(params[:reservation][:end_time])
+      @reservation.end_time = end_time.in_time_zone('UTC') #.in_time_zone(retreat.team.time_zone)
+    else 
+      @reservation.end_time = @reservation.start_time + 1.hour
+    end  
+
+  end
+
+     respond_to do |format|
+      if @reservation.save!(validate: false)
+        1000.times do 
+          puts "Can save dawg"
+          puts @reservation.name
+          puts @reservation.retreat.name
+          puts @reservation.retreat.obfuscated_id
+        end  
+        puts @reservation.notes
+        puts "id: " + @reservation.id.to_s
+         format.html { redirect_to root_path(id: @reservation.retreat.obfuscated_id), notice: I18n.t('reservations.notifications.created') }
+         # format.json { render :show, status: :created, location: [:account, @reservation] }
+        else
+          puts "You faily"
+          format.html { redirect_to root_path(id: retreat.obfuscated_id) }
+        #  format.json { render json: @reservation.errors, status: :unprocessable_entity }
+        end
+      end  
   end
 
 

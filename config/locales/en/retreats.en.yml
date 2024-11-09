@@ -127,6 +127,12 @@ en:
         api_description: *contact_ids
         placeholder: None
       contacts: *contacts
+      actual_group_size:
+        _: &actual_group_size Actual Group Size
+        label: *actual_group_size
+        heading: *actual_group_size
+        api_title: *actual_group_size
+        api_description: *actual_group_size
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -196,6 +202,7 @@ en:
         planner_ids: *planner_ids
         host_ids: *host_ids
         contact_ids: *contact_ids
+        actual_group_size: *actual_group_size
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

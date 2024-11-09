@@ -265,16 +265,13 @@
                         <i class="fa fa-users fa-4x"></i>
                         <h3><%= t('group_show.attendees') %></h3>
                         
-                        <% begin %>  
-                             <% if @medforms.present? %>
-                                  <%= puts "You have" %> <%= pluralize(@medforms['content'].count, 'guests') %> registered <br/>
-                             <% end %>     
-                               Special Diets Requested: <%= @diets %><br/>
-                               <%= link_to 'Unique Registration Link', "https://form.jotform.com/#{@retreat.jotform_id}?itinerary=#{@retreat.id}" %> 
+                        <% begin %>   
+                          <p>You have <%= pluralize(@medforms.count, 'guests') %> registered<br/> 
+                        Special Diets Requested: <%= @medforms.where.not(diet: nil).count %><br/>
+                               <%= link_to 'Unique Registration Link', waiver_path(retreat: @retreat.obfuscated_id) %> 
                       
                         <% rescue => ex %>
-                        <%= ex.message %>
-                           <p>Online Registrations not enabled for individuals </p>
+                           <p>Error Loading Medforms </p>
                          
                         <% end %>        
 
@@ -507,11 +504,12 @@
                                       <tr>
                                         <td><%= meetingspace&.item&.name %><%# ": " + meetingspace&.items_option&.name if meetingspace.items_option.present? %></td>
                                         <td>
-                                         <%# link_to meetingspace&.resource&.name, cl_image_path(meetingspace.resource.image_tag) if meetingspace.resource.image_tag.present? %>
+                                         <%= link_to meetingspace&.item&.name, cl_image_path(meetingspace.item.image_tag) if meetingspace.item.image_tag.present? %>
                                          <%= link_to meetingspace&.item&.name, meetingspace.item.layout.url, download:true if meetingspace.item.layout.present? %>
                                         </td>  
                                         <td><%= meetingspace.notes %></td> 
-                                        <td><%# link_to t('group_show.edit'), public_reservation_path(retreat_id: @retreat.id, meeting: true, reservation_id: meetingspace.id), class: "" %></td>
+                                        <td><%= link_to "Edit", public_reservation_path(retreat_id: @retreat.id, meeting: true, reservation_id: meetingspace.id), class: "" %>
+                                        </td>
                                      </tr>
                                  <% end %>
                               </tbody>

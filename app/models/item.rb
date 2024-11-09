@@ -77,13 +77,8 @@ class Item < ApplicationRecord
   end
 
   def item_options
-
-    300.times do 
-      puts self.id 
-      puts self.options
-    end  
-    Item.find(self.id).options
-
+   # Item.find(self.id).options
+    self.options
   end
 
   # 🚅 add methods above.
