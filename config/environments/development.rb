@@ -118,4 +118,13 @@ Rails.application.configure do
   # ✅ YOUR APPLICATION'S CONFIGURATION
   # If you need to customize your application's configuration, this is the place to do it. This helps avoid merge
   # conflicts in the future when Rails or Bullet Train update their own default settings.
+
+ 
+  config.after_initialize do
+    Rails.application.routes.default_url_options[:host] = 'campdashboard.s3.amazonaws.com'
+    Rails.application.routes.default_url_options[:protocol] = 'https' # Specify the protocol separately
+    ActiveStorage::Current.url_options = Rails.application.routes.default_url_options
+  end
+
+
 end

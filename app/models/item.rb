@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  require 'csv'
   # 🚅 add concerns above.
 
   attr_accessor :layout_removal
@@ -80,6 +81,46 @@ class Item < ApplicationRecord
    # Item.find(self.id).options
     self.options
   end
+
+
+
+
+def self.to_csv(items)
+  50.times do
+  puts "Items Count in to_csv: #{items.count}"
+
+end
+    CSV.generate do |csv|
+      # Custom message at the top
+      csv << ["The document below is auto-generated to assist with your bed planning."]
+      csv << ["You have been assigned #{items.count} cabins and #{items.sum(:beds)} beds."]
+      csv << ["Below is a breakdown of beds by cabin. Note: Beds are counted as physical beds (e.g., a Queen bed counts as 1 bed even though it can sleep two people)."]
+      csv << [] # Blank line for spacing
+
+      # Headers for the cabin and bed details
+      csv << ["Cabin Name", "Description", "Bed Number"]
+
+      # Content Rows
+      items.order(:name).each do |item|
+        csv << [item.name, "", ""]
+        if item.beds.present?
+          # Clean description by removing HTML tags if present
+          description = item.description.gsub(/<\/?[^>]+>/, '')
+
+          # Cabin row with cleaned description, leaving Bed Number column empty for the main row
+          csv << [item.name, description, ""]
+
+          # Adding each bed under the corresponding cabin row
+          (1..item.beds).each do |bed_number|
+            csv << ["", "Bed #{bed_number}", ""]
+          end
+
+          csv << [] # Blank line to separate each cabin
+        end
+      end
+    end
+  end
+
 
   # 🚅 add methods above.
 end

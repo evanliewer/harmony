@@ -4,21 +4,32 @@ class Public::HomeController < Public::ApplicationController
 
  
    def index
+    ActiveStorage::Current.url_options = {host: "https://campdashboard.s3.amazonaws.com"}
     
     if params[:id].present?
       @retreat = Retreat.find_by_obfuscated_id(params[:id])
     else 
-      @retreat = Retreat.first
+      @retreat = Retreat.second
     end    
       @planner = User.first
       @schedule = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.schedulable.ids }).where(items: { active: true})
       @timeline = Flights::Check.includes(:flight).where(retreat_id: @retreat.id).where(:flights => { :external => true }).merge(Flight.order(sort_order: :desc))
       @meetingspaces = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false)
       @snacks = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Snacks" }).ids }).where(items: { active: true})
-      @cabins = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false)
       @questions = Question.joins([:locations]).where(locations: { id: @retreat.location_ids }).order(:sort_order)
       @medforms = Medform.where(retreat_id: @retreat.id)
-      render layout: false
+      @cabins = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false)
+      @cabin_ids = @cabins.pluck(:item_id)
+      @cabin_resources = Item.where(id: @cabin_ids).distinct
+
+    
+      
+
+      respond_to do |format|
+       format.html { render layout: false }
+       format.csv { send_data Item.to_csv(@cabin_resources), filename: "CabinAssignments-#{@retreat&.organization&.name}-#{@retreat.arrival.strftime("%B #{@retreat.arrival.day.ordinalize} %Y")}.csv" }
+                  
+     end
       
   end
 

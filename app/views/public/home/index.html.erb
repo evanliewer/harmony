@@ -685,8 +685,9 @@
  <div style="text-align: center"><h2><%= t('group_show.your_cabin_spaces') %></h2></div>
 <% begin %>
  <div style="text-align: center"><p><%= t('group_show.you_have') %> <%= pluralize(@cabins.count, 'Cabin') %> <%= t('group_show.reserved') %>. <br/>
-    <%= link_to t('group_show.download_housing'), group_show_path(format: 'csv'), class:"btn btn-large btn-primary" %>
+    <%= link_to "Download", root_path(id: @retreat.obfuscated_id, format: 'csv'), class:"btn btn-large btn-primary" %>
 <% rescue => ex %>
+    <%= ex.message %>
     <% puts ex.message %>
     <% puts "Error on Cabin Download" %>
  <% end %>  
@@ -694,15 +695,16 @@
 
   <% begin %>
     <% if current_user.present? && current_user.developer? %>
-    <%= link_to t('group_show.download_housing_layouts'), cabin_download_path(retreat: @retreat.obfuscated_id, format: 'pdf', disposition: "attachment"), class: "btn btn-large btn-primary" %>
+    <%# link_to t('group_show.download_housing_layouts'), cabin_download_path(retreat: @retreat.obfuscated_id, format: 'pdf', disposition: "attachment"), class: "btn btn-large btn-primary" %>
     <% end %>
  <% rescue => ex %>
     <% puts ex.message %>
  <% end %>      
 
 
-</p></div>
- 
+</p>
+</div>
+    
     <div id="housing-wrap" class="container">
       <div class="row">
       
