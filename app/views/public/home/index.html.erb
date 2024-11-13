@@ -430,7 +430,7 @@
  
                       <br/>
                      <% end %> 
-                          <small>&nbsp;&nbsp;&nbsp;<%= link_to reservation&.resource&.name, public_reservation_path(retreat_id: @retreat.id, reservation_id: reservation.id), class: "", :title => reservation.notes %> 
+                          <small>&nbsp;&nbsp;&nbsp;<%= link_to reservation&.item&.name, public_reservation_path(retreat_id: @retreat.id, reservation_id: reservation.id), class: "", :title => reservation.notes %> 
                             <%# if user_signed_in? || reservation.user_created == true %>
                             <% if user_signed_in? || reservation.user_id.nil? %>
                              (<%= link_to 'x', '#', "data-toggle"=>"modal", "data-target" => "#delete-#{reservation.id}",:class=>'' %>)
@@ -467,7 +467,7 @@
                         <% puts "Reservation ID: " + reservation.id.to_s %>
                         <% puts "Reservation Start: " + reservation.start_time.to_s %>
                         <% puts "Reservation End: " + reservation.end_time.to_s %>
-                        <% puts "Reservation Resource: " + reservation.resource&.name %>
+                        <% puts "Reservation Item: " + reservation.item&.name %>
                         <% puts ex.message %>
                     <% end %>
                     </div>
@@ -606,7 +606,7 @@
     <!-- end snack -->
 
     <% if user_signed_in? %>
-<% @all_reservations = Reservation.includes(:resource).where(itinerary_id: @retreat.id) %>
+<% @all_reservations = Reservation.includes(:item).where(itinerary_id: @retreat.id) %>
 
 
 <% if false %>
@@ -648,7 +648,7 @@
           <tbody>
             <% @all_reservations.each do |reservation| %>
             <tr>
-              <td><%= reservation.resource.name %></td>
+              <td><%= reservation.item.name %></td>
               <td><%= reservation.quantity %></td>
               <td><%= reservation.start_time.strftime("%B #{reservation.start_time.day.ordinalize} %-l:%M%P") if reservation.start_time.present? %></td> 
               <td><%= reservation.end_time.strftime("%B #{reservation.end_time.day.ordinalize} %-l:%M%P") if reservation.end_time.present? %></td>
@@ -756,16 +756,16 @@
 
 <!-- end cabin -->
 
-<% if false %>
+<% if true %>
 <!--- Medical  -->
-<% if @retreat.jotform_id.present? %>
+<% if @medforms.present? %>
 <section id="medforms">
     <div style="text-align: center"><h2>Your Currently Registered Guests</h2></div><br/>
         <% begin %> 
 
 
   <% puts "start med forms::" %>
- <div style="text-align: center"><p>You have <%= pluralize(@medforms['content'].count, 'guests') %> registered. <%= link_to 'Click Here', "https://form.jotform.com/#{@retreat.jotform_id}?itinerary=#{@retreat.id}" %> for your customized registration link that all guests must fill out.</p></div>
+ <div style="text-align: center"><p>You have <%= pluralize(@medforms.count, 'guests') %> registered. <%= link_to 'Click Here', waiver_path(retreat: @retreat.obfuscated_id) %> for your customized registration link that all guests must fill out.</p></div>
 <% puts "after med form call::" %>
 
 
@@ -775,44 +775,26 @@
  
     <div id="housing-wrap" class="container">
       <div class="row">
-            <table class="table table-lightborder">
-              <thead>
-                
-              </thead>
-              
-
+         <table class="table table-lightborder">
+            <thead>    
+            </thead>
               <tbody> 
                 <% puts "Starting look on alpha medforms" %>
-                <% @alpha_medforms.each_slice(4) do |group| %>
-               
-            <tr>
-              <% group.each do |guest| %>
-
-              <% begin %>
-              <% puts guest %>
-              <td><%= guest[0] %></td>
-              <% end %>
-              <% rescue %>
-                Error
-              <% end %>
-
-            </tr>
-            <% end %>
+                <% @medforms.each_slice(4) do |group| %>
+                    <tr>
+                      <% group.each do |guest| %>
+                         <td><%= guest.name %></td>
+                      <% end %>
+                    </tr>
+                <% end %>
             </tbody>
+         </table>
+        </div>  
+    </div> 
 
-
-            </table>
-
-        
-        
-        </div>
-                
-        
-  </div> 
-
-<% rescue => ex %>
-  <%= puts ex.message %>
-<% end %>  
+    <% rescue => ex %>
+      <%= puts ex.message %>
+    <% end %>  
 
   </section>
 <% end %>
