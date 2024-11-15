@@ -13,6 +13,7 @@ class Reservation < ApplicationRecord
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
+   scope :with_schedule_tag, -> {joins(item: { applied_tags: :tag }).where(items_tags: { name: 'Schedule' })}
 
   # 🚅 add scopes above.
 
@@ -33,7 +34,7 @@ class Reservation < ApplicationRecord
   end
 
   def valid_items
-    team.items
+    team.items.where(active: true).order(:name)
   end
 
   def valid_users

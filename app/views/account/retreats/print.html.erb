@@ -253,14 +253,14 @@
           <thead>
             <tr>
               <th>Meal</th>
-              <th>Start Time</th>
+              <th>Times</th>
             </tr>
           </thead>
           <tbody>
             <% @meals.each do |meal| %>
               <tr>
                 <td><%= meal.item.name %></td>
-                <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
+                <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %> - <%= meal.end_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
               </tr>
             <% end %>
           </tbody>
@@ -338,8 +338,8 @@
               <% @schedule.each do |reservation| %>
                 <tr>
                   <td><%= reservation.item.name %></td>
-                  <td><%= reservation.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
-                  <td><%= reservation.end_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
+                  <td><%= reservation.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") if reservation.start_time.present? %></td>
+                  <td><%= reservation.end_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") if reservation.end_time.present? %></td>
 
                 </tr>
               <% end %>

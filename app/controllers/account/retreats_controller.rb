@@ -5,7 +5,7 @@ class Account::RetreatsController < Account::ApplicationController
   # GET /account/teams/:team_id/retreats
   # GET /account/teams/:team_id/retreats.json
   def index
-    @retreats = Retreat.all.order(:name).limit(9)
+    @retreats = Retreat.all.order(:name)
     @onsite_retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.zone.now, Time.zone.now)
 
     delegate_json_to_api
@@ -15,10 +15,12 @@ class Account::RetreatsController < Account::ApplicationController
   # GET /account/retreats/:id.json
   def show
     create_flights
+    create_requests
     delegate_json_to_api
     @meals = Reservation.includes([:items_option, :item]).where(retreat_id: @retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id)
     @meetingspaces = Reservation.where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false)
     @lodging = Reservation.where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false).order(:name)
+
   end
 
   # GET /account/teams/:team_id/retreats/new
@@ -68,13 +70,25 @@ class Account::RetreatsController < Account::ApplicationController
   end
 
   def create_flights
-     flights = Flights::Check.includes([:flight]).where(retreat_id: @retreat.id).where(team_id: current_team.id)
+    flights = Flights::Check.includes([:flight]).where(retreat_id: @retreat.id).where(team_id: current_team.id)
     unless flights.any?
       Flight.where(team_id: current_team.id).each do |flight|
         Flights::Check.create!(flight_id: flight.id, retreat_id: @retreat.id, team_id: current_team.id, name: @retreat.name + " " + flight.name)
       end
     end 
-  end  
+  end
+
+  def create_requests
+
+   requests = Retreats::Request.where(retreat_id: @retreat.id)
+    unless requests.any?
+      departments = ["Audio Visual", "Buildings and Grounds", "Guest Dining", "Retail", "Recreation", "Accommodations"]
+      Department.where(team_id: current_team.id, name: departments).each do |department|
+        Retreats::Request.create!(department_id: department.id, retreat_id: @retreat.id, team_id: current_team.id)
+      end
+    end 
+   
+  end
 
   def print
     @retreat = Retreat.find(params[:retreat_id])

@@ -13,6 +13,14 @@
       <%= render 'shared/fields/text_field', method: :dietary %>
       <%= render 'shared/fields/super_select', method: :diet_id, options: {include_blank: "None"}, html_options: {},
         choices: @medform.valid_diets.map { |diet| [diet.label_string, diet.id] } %>
+      <%= render 'shared/fields/text_field', method: :gender %>
+      <%= render 'shared/fields/address_field', method: :address %>
+      <%= render 'shared/fields/text_field', method: :emergency_contact_name %>
+      <%= render 'shared/fields/text_field', method: :emergency_contact_phone %>
+      <%= render 'shared/fields/text_field', method: :emergency_contact_relationship %>
+      <%= render 'shared/fields/options', method: :terms %>
+      <%= render 'shared/fields/text_field', method: :form_for %>
+      <%= render 'shared/fields/text_field', method: :age %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

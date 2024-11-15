@@ -14,9 +14,7 @@ class Retreats::Request < ApplicationRecord
 
   # 🚅 add scopes above.
 
-  validates :retreat, scope: true
-  validates :department, scope: true
-  validates :department_id, uniqueness: { scope: :retreat_id, message: "already has a request for this retreat. Please edit their existing one" }
+
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.

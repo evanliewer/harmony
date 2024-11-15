@@ -1,4 +1,5 @@
 class Account::MedformsController < Account::ApplicationController
+  before_action :set_default_address, except: :index
   account_load_and_authorize_resource :medform, through: :team, through_association: :medforms
 
   # GET /account/teams/:team_id/medforms
@@ -69,5 +70,9 @@ class Account::MedformsController < Account::ApplicationController
 
   def process_params(strong_params)
     # 🚅 super scaffolding will insert processing for new fields above this line.
+  end
+
+  def set_default_address
+    @medform.address ||= Address.new
   end
 end

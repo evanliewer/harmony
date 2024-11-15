@@ -155,4 +155,4 @@ rails g super_scaffold:field Retreat actual_group_size:number_field
 
 
 
-rails g super_scaffold:field gender:text_field address:address_field emergency_contact_name:text_field emergency_contact_phone:text_field emergency_contact_relationship:text_field terms:boolean form_for:text_field age:text_field
+rails g super_scaffold:field Medform gender:text_field address:address_field emergency_contact_name:text_field emergency_contact_phone:text_field emergency_contact_relationship:text_field terms:boolean form_for:text_field age:text_field

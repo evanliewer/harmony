@@ -5,18 +5,110 @@
 <% hide_back ||= false %>
 
 <% with_attribute_settings object: retreat do %>
+
+
+
+              
+            <%  flightchecks = Flights::Check.includes([:flight]).where(retreat_id: retreat.id) %>
+                  <tr onclick="window.location='<%= url_for [:account, retreat] %>';" class="bg-white border-b">
+                        <td>
+                          <div class="row">
+                            <div class="text-base text-gray-900 font-semibold text-lg">
+                              <%= render 'shared/attributes/text', attribute: (retreat.internal? && retreat.description.present? ? :description : :name), url: [:account, retreat] %>
+                            </div>
+                               
+                          </div>
+                          <div class="flex space-x-1">
+                          <% retreat.demographic_tags.each do |tag| %>
+                             <span class="inline-block py-0 px-1 text-xs text-blue-600 bg-blue-100 rounded-full whitespace-nowrap"><%= tag.demographic&.name %></span>
+                          <% end %>
+                            <% retreat.host_tags.each do |tag| %>
+                              <span class="inline-block py-0 px-1 text-xs text-green-600 bg-blue-100 rounded-full whitespace-nowrap"><%= tag.host&.full_name %></span>
+
+                            <% end %>
+                            <% retreat.planner_tags.each do |tag| %>
+                              <span class="inline-block py-0 px-1 text-xs text-purple-600 bg-blue-100 rounded-full whitespace-nowrap"><%= tag.planner&.full_name %></span>
+
+                            <% end %>
+                             <% retreat.locations.each do |location| %>
+                              <span class="inline-block py-0 px-1 text-xs text-green-600 bg-blue-100 rounded-full whitespace-nowrap"><%= location&.name %></span>
+                             <% end %>
+                          </div>  
+                           <p class="text-xs font-medium text-coolGray-500"><%= @meetingspaces.where(retreat_id: retreat.id).map { |m| m.name }.to_sentence if @meetingspaces.present? %></p>
+                      </td> 
+                      <td class="py-2 px-6">
+                          <p class="font-semibold text-lg"><%= retreat.guest_count %></p>
+                      </td>
+                      <% if @meal_count.present? %>
+                        <td class="py-2 px-6">
+                          <p class="font-semibold text-lg"><%= Reservation.where(retreat_id: retreat.id, resource_id: @resource_meals.ids).count %></p>
+                        </td>
+                      <% end %>
+                      <td class="py-2 px-6">
+                          <p class="font-semibold"><%= retreat.arrival.strftime("%A %-l%P") %></p>
+                          <p class="text-gray-400"><%= retreat.arrival.strftime("%B #{retreat.arrival.day.ordinalize}") %></p>
+                      </td>
+                      <td class="py-2 px-6 hidden md:table-cell">
+                          <p class="font-semibold"><%= retreat.departure.strftime("%A %-l%P") %></p>
+                          <p class="text-gray-400"><%= retreat.departure.strftime("%B #{retreat.departure.day.ordinalize}") %></p>
+                      </td>
+                      <td class="py-4 px-6">
+                          <div class="flex items-center">
+                            <% if (retreat.arrival .. retreat.departure).cover?(Time.now) %>
+                              <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> Onsite
+                            <% else %>
+                              <div class="mr-2"></div><%= pluralize((retreat.arrival.to_date - Time.now.to_date).to_i, "day") %>
+                            <% end %> 
+                             
+                          </div>
+                      </td>
+                      <% if current_user.memberships.where(team_id: current_team.id).first.role_ids.include?("planner") || current_user.memberships.where(team_id: current_team.id).first.role_ids.include?("admin") %>
+                        <td class="py-2 px-6">
+                          <% if flightchecks.count == 0 %>
+                            N/A
+                          <% else %>  
+                            <%= number_to_percentage(100 * flightchecks.where.not(completed_at: nil).count.to_f / flightchecks.count.to_f, precision: 1)  %>
+                          <% end %>
+                        </td>
+                        <td class="py-2 px-6">  
+                          <% overdue = 0 %>
+                         <% flightchecks.where(completed_at: nil).each do |check| %>
+                   
+                            <% time_until_warning = (retreat.arrival.to_date - Time.now.to_date).to_i - check.flight.warning.to_i %>
+                            <% if time_until_warning < 0 %>
+
+                              <% overdue += 1 %>
+                            <% end %>  
+                         <% end %>
+                         <%= overdue %>
+
+                        </td>
+                      <% end %>  
+                  </tr>
+       
+         
+
+
+
+
+
+
+
+
+
+<% if false %>
   <tr data-id="<%= retreat.id %>">
     <%= render "shared/tables/checkbox", object: retreat %>
-    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, retreat] %></td>
-    <td><%= render 'shared/attributes/text', attribute: :description %></td>
+    <td><%= render 'shared/attributes/text', attribute: (retreat.internal? && retreat.description.present? ? :description : :name), url: [:account, retreat] %></td>
+
+    
     <td><%= render 'shared/attributes/date_and_time', attribute: :arrival %></td>
     <td><%= render 'shared/attributes/date_and_time', attribute: :departure %></td>
-    <td><%= render 'shared/attributes/number', attribute: :guest_count %></td>
-    <td><%= render 'shared/attributes/belongs_to', attribute: :organization %></td>
-    <td class="text-center"><%= render 'shared/attributes/option', attribute: :internal %></td>
-    <td class="text-center"><%= render 'shared/attributes/option', attribute: :active %></td>
-    <td><%= render 'shared/attributes/text', attribute: :jotform %></td>
-    <td><%= render 'shared/attributes/number', attribute: :actual_group_size %></td>
+    <td><%= render 'shared/attributes/text', attribute: (retreat.actual_group_size.present? ? :actual_group_size : :guest_count) %></td>
+    <td><%# render 'shared/attributes/belongs_to', attribute: :organization %></td>
+
+    <td><%# render 'shared/attributes/text', attribute: :jotform %></td>
+    
     <%# 🚅 super scaffolding will insert new fields above this line. %>
     <td class="buttons">
       <% unless hide_actions %>
@@ -30,4 +122,7 @@
       <% end %>
     </td>
   </tr>
+
+
+  <% end #fasle flag %>
 <% end %>

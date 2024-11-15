@@ -14,6 +14,113 @@
 
 
 
+<div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+  <% Retreat.all.limit(9).each do |retreat| %>
+    <!-- Box for each retreat -->
+     <% dynamic_classes = Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure ? "border-2 border-green-800" : "border border-grey-500" %>
+      <div class="flex w-full p-3 flex-col rounded-lg bg-white shadow-sm <%= dynamic_classes %>">
+       <div class="flex items-center gap-1 text-slate-800">
+        
+        <!-- Retreat Details -->
+        <div class="flex w-full flex-col">
+          <div class="flex items-center justify-between">
+            <h5 class="text-lg font-semibold text-slate-800 mb-1">
+              <%= link_to retreat.name, [:account, retreat] %>
+            </h5>
+            
+            <!-- ONSITE / DAYS STATUS -->
+            <div class="text-right basis-1/3">
+              <% if Time.zone.now < retreat.arrival %>
+                <!-- If the current time is before the arrival time -->
+                <div class="inline-block w-0 h-10 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400">
+                  <i class="leading-none text-sm relative top-1 text-white">
+                    <%= (retreat.arrival.to_date - Time.zone.now.to_date).to_i %>
+                  </i>
+                  <i class="leading-none text-xs relative top-1 text-white">Days</i>
+                </div>
+              <% elsif Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure %>
+                <!-- If the current time is between the arrival and departure times -->
+                <i class="leading-none text-sm relative top-1">On</i>
+                <i class="leading-none text-xs relative top-1">Site</i>
+              <% else %>
+                <!-- If the current time is after the departure time -->
+               <!-- <i class="leading-none relative top-1">Done</i>  -->
+                 <p class="font-semibold"><%= retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%A %-l%P") %></p>
+                          <p class="text-gray-400"><%= retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%B #{retreat.arrival.day.ordinalize}") %></p>
+              <% end %>
+            </div>
+          </div>
+          
+  
+          
+          <!-- Guest Info and Tags -->
+          <p class="text-xs uppercase font-bold text-slate-500 mt-1">
+            <span class="inline-block py-0.5 px-2 text-[10px] text-blue-800 bg-blue-200 rounded-full whitespace-nowrap"><%= pluralize(retreat.actual_count, "Guest") %></span>
+            <% retreat.locations.each do |location| %>
+              <span class="inline-block py-0.5 px-2 text-[10px] text-blue-600 bg-blue-100 rounded-full whitespace-nowrap">
+                <%= location.name %>
+              </span>
+            <% end %>
+            <% retreat.demographic_tags.each do |tag| %>
+              <span class="inline-block py-0.5 px-2 text-[10px] text-blue-600 bg-blue-100 rounded-full whitespace-nowrap">
+                <%= tag.demographic&.name %>
+              </span>
+            <% end %>
+            <% retreat.host_tags.each do |tag| %>
+              <span class="inline-block py-0.5 px-2 text-[10px] text-blue-600 bg-purple-100 rounded-full whitespace-nowrap"><%= tag.host&.full_name %></span>
+            <% end %>
+            <% retreat.planner_tags.each do |tag| %>
+              <span class="inline-block py-0.5 px-2 text-[10px] text-blue-600 bg-orange-100 rounded-full whitespace-nowrap"><%= tag.planner&.full_name %></span>
+            <% end %>
+              
+          </p>
+
+        </div>
+      </div>
+      
+      <!-- Retreat Description -->
+      <div class="mt-2">
+        <p class="text-sm text-slate-600 font-light leading-tight">
+          <%= retreat.description %>
+        </p>
+      </div>
+
+      <!-- Meeting Spaces and Planned -->
+      <div class="mt-2 border-t border-slate-200 pt-1 px-1 flex justify-between">
+        <span class="text-sm text-slate-600 font-medium">
+          <% @meetingspaces = Reservation.includes([:item]).where(retreat_id: retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false) %>
+          Meeting Spaces: <%= @meetingspaces.any? ? @meetingspaces.map { |p| p.name }.to_sentence : "None" %>
+        </span>
+        <span class="text-sm text-slate-600 font-light">
+          <%  flightchecks = Flights::Check.includes([:flight]).where(retreat_id: retreat.id) %>
+           <% if flightchecks.count == 0 %>
+              N/A
+            <% else %>  
+              <%= number_to_percentage(100 * flightchecks.where.not(completed_at: nil).count.to_f / flightchecks.count.to_f, precision: 1)  %> Planned
+            <% end %>
+        </span>
+      </div>
+
+
+    </div>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
 
@@ -115,121 +222,41 @@
 
 </div>
 
-
-
-
-
-
-
-
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
-  <% Retreat.all.limit(9).each do |retreat| %>
-    <!-- Box for each retreat -->
-    <div class="flex w-full p-4 flex-col rounded-lg bg-white shadow-sm border border-slate-200">
-      <div class="flex items-center gap-4 text-slate-800">
-        <!-- Retreat Locations -->
-        <% retreat.locations.each do |location| %>
-          <%= image_tag location_icon_url(location), class: 'relative inline-block h-[58px] w-[58px] !rounded-full object-cover object-center', alt: location&.name, style: "flex-shrink: 0;" %>
-        <% end %>
-        
-        <!-- Retreat Details -->
-        <div class="flex w-full flex-col">
-          <div class="flex items-center justify-between">
-            <h5 class="text-xl font-semibold text-slate-800">
-              <%= link_to retreat.name, [:account, retreat] %>
-            </h5>
-            
-            <!-- ONSITE / DAYS STATUS -->
-           <div class="text-right basis-1/3">
-              <% if Time.zone.now < retreat.arrival %>
-                <!-- If the current time is before the arrival time -->
-                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400">
-                  <i class="leading-none text-xl relative top-1.5 text-white">
-                    <%= (retreat.arrival.to_date - Time.zone.now.to_date).to_i %>
-                  </i>
-                  <i class="leading-none text-md relative top-1.5 text-white">Days</i>
-                </div>
-              <% elsif Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure %>
-                <!-- If the current time is between the arrival and departure times -->
-                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
-                  <i class="leading-none text-lg relative top-1.5 text-white">On</i>
-                  <i class="leading-none text-md relative top-1.5 text-white">Site</i>
-                </div>
-              <% else %>
-                <!-- If the current time is after the departure time -->
-                <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-red-700 to-red-500">
-                  <i class="leading-none text-sm relative top-1.5 text-white">Done</i>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          
-          <!-- Guest Info and Tags -->
-          <p class="text-xs uppercase font-bold text-slate-500 mt-0.5">
-            <span class="inline-block py-0 px-2 text-[10px] text-blue-800 bg-blue-200 rounded-full whitespace-nowrap">35 Guests</span>
-            <% retreat.demographic_tags.each do |tag| %>
-              <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-blue-100 rounded-full whitespace-nowrap">
-                <%= tag.demographic&.name %>
-              </span>
-            <% end %>
-            <% retreat.host_tags.each do |tag| %>
-              <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-purple-100 rounded-full whitespace-nowrap"><%= tag.host&.full_name %></span>
-            <% end %>
-            <% retreat.planner_tags.each do |tag| %>
-              <span class="inline-block py-0 px-2 text-[10px] text-blue-600 bg-orange-100 rounded-full whitespace-nowrap"><%= tag.planner&.full_name %></span>
-            <% end %>
-          </p>
-        </div>
-      </div>
-      
-      <!-- Retreat Description -->
-      <div class="mt-6">
-        <p class="text-base text-slate-600 font-light leading-normal">
-          <%= retreat.description %>
-        </p>
-      </div>
-
-      <!-- Meeting Spaces -->
-      <div class="mt-auto border-t border-slate-200 pt-1 px-1">
-        <span class="text-sm text-slate-600 font-medium">
-          <% @meetingspaces = Reservation.includes([:item]).where(retreat_id: retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false) %>
-          Meeting Spaces: <%= @meetingspaces.any? ? @meetingspaces.map { |p| p.name }.to_sentence : "None" %>
-        </span>
-      </div>
-    </div>
-  <% end %>
-</div>
-
-
-
-
-
-
-<% if false # add housing here below %>
-<% items = Item.joins(:tags).where(tags: { name: ['Lodging', 'Meeting Spaces'] }) %>
-<div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
-  <% items.each do |item| %>
-    <div class="bg-white p-4 rounded-lg shadow-md">
-
-      <% 10.times do %>
-        <p class="text-xs font-semibold mb-2 text-gray-800"><%= item.name %></p>
-      <% end %>
-
-    </div>
-  <% end %>
-</div>
+ <% end %>
 <% end %>
 
-<% if false ## Normal BT fields below %>
-    <%= render 'account/shared/box', pagy: pagy do |box| %>
-      <% box.title t(".contexts.#{context.class.name.underscore}.header") %>
-      <% box.description do %>
-        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless retreats.any?}") %>
-        <%= render "shared/limits/index", model: retreats.model %>
+
+
+
+
+<% if false #Table View %>
+     <%= render 'account/shared/box', pagy: pagy do |box| %>
+     
+<% box.title t(".contexts.#{context.class.name.underscore}.header") %>
+      <% box.table do %>
+        <% if retreats.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <%= render "shared/tables/select_all" %>
+                <th><%= t('.fields.name.heading') %></th>
+                <th><%= t('.fields.guest_count.heading') %></th>
+                <th><%= t('.fields.arrival.heading') %></th>
+                <th>Days Until</th>
+                <th>% Planned</th>
+                <th>Overdue</th>
+                
+                
+                <%# 🚅 super scaffolding will insert new field headers above this line. %>
+                <th class="text-right"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: 'account/retreats/retreat', collection: retreats %>
+            </tbody>
+          </table>
+        <% end %>
       <% end %>
-
-
 
       <% box.actions do %>
         <% unless hide_actions %>
@@ -253,6 +280,6 @@
         <%# 🚅 super scaffolding will insert new action model index views above this line. %>
       <% end %>
     <% end %>
-  <% end %>
-<% end %>
-<% end %>
+
+
+    <% end %>

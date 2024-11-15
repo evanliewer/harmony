@@ -5,12 +5,9 @@
     <%= render 'account/shared/forms/errors', form: form %>
 
     <% with_field_settings form: form do %>
-      <% if params[:retreat_id].present? %>
-        <%= render 'shared/fields/super_select', method: :retreat_id, options: {}, html_options: {},
-        choices: @request.valid_retreats.map { |retreat| [retreat.label_string, retreat.id] } %>
-      <% else %>
-        <%= form.hidden_field :retreat_id, value: params[:retreat_id] %>
-      <% end %>    
+
+        <%= form.hidden_field :retreat_id, value: @request.retreat_id %>
+   
       <%= render 'shared/fields/super_select', method: :department_id, options: {autofocus: true}, html_options: {autofocus: true},
         choices: @request.valid_departments.map { |department| [department.label_string, department.id] } %>
       <%= render 'shared/fields/text_field', method: :notes %>

@@ -1,6 +1,6 @@
 en:
   notifications/requests: &requests
-    label: &label Requests
+    label: &label Notification Requests
     breadcrumbs:
       label: *label
     navigation:
@@ -17,7 +17,7 @@ en:
         destroy: Delete
       confirmations:
         # TODO customize for your use-case.
-        destroy: Are you sure you want to remove %{request_name}? This will also remove any child resources and can't be undone.
+        destroy: Are you sure you want to remove this? This will also remove any child resources and can't be undone.
     request:
       buttons: *buttons
     fields: &fields
@@ -84,7 +84,7 @@ en:
       section: "%{teams_possessive} Requests"
       contexts:
         team:
-          header: Requests
+          header: Notification Requests
           description: Below is a list of Requests that have been added for %{team_name}.
           description_empty: No Requests have been added for %{team_name}.
       fields: *fields
@@ -92,8 +92,8 @@ en:
     show:
       section: "%{request_name}"
       header: Request Details
-      description: Below are the details we have for %{request_name}.
-      manage_description: You'll also find options for updating these details or removing %{request_name} from %{team_name} entirely.
+      description: Below are the details we have.
+      manage_description: You'll also find options for updating these details or removing this from %{team_name} entirely.
       fields: *fields
       buttons: *buttons
     form: &form

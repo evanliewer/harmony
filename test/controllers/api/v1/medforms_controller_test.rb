@@ -37,6 +37,14 @@ class Api::V1::MedformsControllerTest < Api::Test
     assert_equal_or_nil medform_data['email'], medform.email
     assert_equal_or_nil medform_data['dietary'], medform.dietary
     assert_equal_or_nil medform_data['diet_id'], medform.diet_id
+    assert_equal_or_nil medform_data['gender'], medform.gender
+    assert_equal_or_nil medform_data['address'], medform.address
+    assert_equal_or_nil medform_data['emergency_contact_name'], medform.emergency_contact_name
+    assert_equal_or_nil medform_data['emergency_contact_phone'], medform.emergency_contact_phone
+    assert_equal_or_nil medform_data['emergency_contact_relationship'], medform.emergency_contact_relationship
+    assert_equal_or_nil medform_data['terms'], medform.terms
+    assert_equal_or_nil medform_data['form_for'], medform.form_for
+    assert_equal_or_nil medform_data['age'], medform.age
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal medform_data["team_id"], medform.team_id
@@ -99,6 +107,12 @@ class Api::V1::MedformsControllerTest < Api::Test
         phone: 'Alternative String Value',
         email: 'Alternative String Value',
         dietary: 'Alternative String Value',
+        gender: 'Alternative String Value',
+        emergency_contact_name: 'Alternative String Value',
+        emergency_contact_phone: 'Alternative String Value',
+        emergency_contact_relationship: 'Alternative String Value',
+        form_for: 'Alternative String Value',
+        age: 'Alternative String Value',
         # 🚅 super scaffolding will also insert new fields above this line.
       }
     }
@@ -114,6 +128,12 @@ class Api::V1::MedformsControllerTest < Api::Test
     assert_equal @medform.phone, 'Alternative String Value'
     assert_equal @medform.email, 'Alternative String Value'
     assert_equal @medform.dietary, 'Alternative String Value'
+    assert_equal @medform.gender, 'Alternative String Value'
+    assert_equal @medform.emergency_contact_name, 'Alternative String Value'
+    assert_equal @medform.emergency_contact_phone, 'Alternative String Value'
+    assert_equal @medform.emergency_contact_relationship, 'Alternative String Value'
+    assert_equal @medform.form_for, 'Alternative String Value'
+    assert_equal @medform.age, 'Alternative String Value'
     # 🚅 super scaffolding will additionally insert new fields above this line.
 
     # Also ensure we can't do that same action as another user.

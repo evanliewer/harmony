@@ -39,7 +39,7 @@ class Account::Retreats::RequestsController < Account::ApplicationController
   # PATCH/PUT /account/retreats/requests/:id.json
   def update
     respond_to do |format|
-      if @request.update(request_params)
+      if @request.update!(request_params)
         format.html { redirect_to [:account, @request.retreat], notice: I18n.t("retreats/requests.notifications.updated") }
         format.json { render :show, status: :ok, location: [:account, @request] }
       else

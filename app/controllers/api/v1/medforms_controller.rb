@@ -50,8 +50,25 @@ if defined?(Api::V1::ApplicationController)
           :email,
           :dietary,
           :diet_id,
+          :gender,
+          :emergency_contact_name,
+          :emergency_contact_phone,
+          :emergency_contact_relationship,
+          :terms,
+          :form_for,
+          :age,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
+          address_attributes: [
+            :id,
+            :_destroy,
+            :address_one,
+            :address_two,
+            :city,
+            :country_id,
+            :region_id,
+            :postal_code
+          ],
           # 🚅 super scaffolding will insert new arrays above this line.
         )
 

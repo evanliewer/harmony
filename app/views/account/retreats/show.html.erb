@@ -1,14 +1,6 @@
 <%= cable_ready_updates_for @retreat do %>
 
 
-<% if false %>
-<% checks = Flights::Check.create!(team_id: current_team.id, name: "Pizza", flight_id: Flight.first.id, retreat_id: @retreat.id) %>
-<% checks = Flights::Check.create!(team_id: current_team.id, name: "Pizza2", flight_id: Flight.second.id, retreat_id: @retreat.id) %>
-<% checks = Flights::Check.create!(team_id: current_team.id, name: "Pizza3", flight_id: Flight.last.id, retreat_id: @retreat.id) %>
-<% checks = Flights::Check.create!(team_id: current_team.id, name: "Pizza4", flight_id: Flight.first.id, retreat_id: @retreat.id) %>
-<% end %>
-
-
 <% with_attribute_settings object: @retreat do %>
     <div class="w-full bg-white p-4 rounded-lg shadow-md flex flex-col lg:flex-row gap-4">
   <!-- Left Box (Details Section) -->
@@ -16,9 +8,9 @@
     <h1 class="text-3xl font-bold text-blue-600">
       <%# render 'shared/attributes/text', attribute: :name %>
       <%  if can? :edit, @retreat %>
-        <%= link_to @retreat.name, [:edit, :account, @retreat] %>
+        <%= link_to @retreat.name, [:edit, :account, @retreat] %> <h2 class="text-2xl font-bold text-gray-800"><%= pluralize(@retreat.actual_count,"Guest") %>, <%= @retreat.locations.present? ? @retreat.locations.map { |p| p.name }.to_sentence : "Not Assigned" %></h2>
       <% else %>
-        <%= render 'shared/attributes/text', attribute: :name %>
+        <%= render 'shared/attributes/text', attribute: :name %> <h2 class="text-2xl font-bold text-gray-800"><%= pluralize(@retreat.actual_count,"Guest") %>, <%= @retreat.locations.present? ? @retreat.locations.map { |p| p.name }.to_sentence : "Not Assigned" %></h2>
       <% end %>
     </h1>
     <p class="text-gray-600 mt-2">
@@ -26,13 +18,14 @@
     </p>
 
     <p class="mt-4">
-      <strong>Itinerary:</strong> <%= @retreat.id %>
+      
+      
     </p>
     <p>
-      <strong>Arriving:</strong> <%= @retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.arrival.day.ordinalize} %-l:%M%P") %>
+      <strong>Arriving:</strong> <%= @retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.arrival.in_time_zone("America/Los_Angeles").day.ordinalize} %-l:%M%P") %>
     </p>
     <p>
-      <strong>Departing:</strong> <%= @retreat.departure.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.departure.day.ordinalize} %-l:%M%P") %>
+      <strong>Departing:</strong> <%= @retreat.departure.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.departure.in_time_zone("America/Los_Angeles").day.ordinalize} %-l:%M%P") %>
     </p>
     <p>
       <strong>Details:</strong> <%= @retreat.demographics.map { |d| d.name }.to_sentence %> <%= pluralize((@retreat.departure&.to_date - @retreat.arrival&.to_date).to_i, "Night") %>, <%= pluralize(@meals.count, "Meal") %>
@@ -44,39 +37,29 @@
     <p>
       <strong>Lodging:</strong> <%= @lodging.any? ? @lodging.map { |p| p.name }.to_sentence : "None" %>
     </p>
+    <p><strong>Group Leaders: </strong><%= @retreat.contacts.present? ? @retreat.contacts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
+    <p><strong>Event Planners: </strong><%= @retreat.planners.present? ? @retreat.planners.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
+    <p><strong>Hosts: </strong><%= @retreat.hosts.present? ? @retreat.hosts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
+    <p><strong>Registraions: </strong>67 Registered, 45%</p>
+    <p><strong>Itinerary:</strong> <%= @retreat.id %></p>
 
-  <p class="mt-4"></p>
-      <strong>Special Diets: </strong> 
-      <ul class="list-disc list-inside">
-        <li>No appears <strong>67 times</strong></li>
-        <li>Yes, I am Egg Free appears <strong>2 times</strong></li>
-        <li>Yes, I am Gluten Free appears <strong>5 times</strong></li>
-        <li>Yes, I am Gluten Free and Dairy Free appears <strong>1 time</strong></li>
-    </ul>
-    </p>
+
+
+<br/>
+    <p>Temp Schedule Resources</p>
+
+    <% @retreat.reservations.with_schedule_tag.each do |res| %>
+  <p><%= res.name %></p>
+<% end %> 
 
   </div>
   <!-- Location icons aligned at the bottom -->
-  <p class="flex -space-x-4">
-    <% @retreat.locations.each do |location| %>
-      <%= image_tag location_icon_url(location), class: 'inline-block h-10 w-10 rounded-full ring-2 ring-white self-end', alt: location&.name %>
-    <% end %>
-  </p>
+ 
 <% end ### with attributes settting %>  
 
 
 
-  <div class="flex flex-col gap-4">
-    
-    <div class="bg-gray-100 p-4 rounded-lg">
 
-      <h2 class="text-2xl font-bold text-gray-800">91 Guests</h2>
-     
-      <p><strong>Group Leaders: </strong><%= @retreat.contacts.present? ? @retreat.contacts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
-      <p><strong>Event Planners: </strong><%= @retreat.planners.present? ? @retreat.planners.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
-      <p><strong>Hosts: </strong><%= @retreat.hosts.present? ? @retreat.hosts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
-      <p><strong>Registraions: </strong>67 Registered, 45%</p>
-    </div>
 
     <!-- Buttons Section -->
     <div class="flex flex-col gap-2">
@@ -96,14 +79,29 @@
   </div>
 
 
-</div>
 
 <div class="mb-4"></div>
 
+
+
 <div class="bg-white p-6 rounded-lg shadow-md w-full mb-4">
-  <h2 class="text-xl font-bold text-gray-700 mb-4">Calendar</h2>
-    <%= render 'account/retreats/schedule' %> 
+  <h2 class="text-xl font-bold text-gray-700 mb-4">Agenda</h2>
+
+
+
+
+
+
+
+
+    
+
+<%= render 'account/retreats/schedule' %> 
+<%# render 'account/retreats/agenda' %>
+
+
 </div>
+
 
 
 
@@ -131,54 +129,16 @@
 
 
 
-<% if false ##Origainal Code %>
-      <%= render 'account/shared/box', divider: true do |box| %>
-        <% box.title t('.header') %>
-        <% box.description do %>
-          <%= t('.description') %>
-          <%= t('.manage_description') if can? :manage, @retreat %>
-        <% end %>
+
+<% end %>  
+
+
+<%= render 'account/retreats/requests' %>
 
 
 
-        <% box.body do %>
-          <% with_attribute_settings object: @retreat, strategy: :label do %>
-            <%= render 'shared/attributes/text', attribute: :name %>
-            <%= render 'shared/attributes/text', attribute: :description %>
-            <%= render 'shared/attributes/date_and_time', attribute: :arrival %>
-            <%= render 'shared/attributes/date_and_time', attribute: :departure %>
-            <%= render 'shared/attributes/number', attribute: :guest_count %>
-            <%= render 'shared/attributes/belongs_to', attribute: :organization %>
-            <%= render 'shared/attributes/option', attribute: :internal %>
-            <%= render 'shared/attributes/option', attribute: :active %>
-            <%= render 'shared/attributes/text', attribute: :jotform %>
-            <%= render 'shared/attributes/has_many', attribute: :locations %>
-            <%= render 'shared/attributes/has_many', attribute: :demographics %>
-            <%= render 'shared/attributes/has_many', attribute: :planners %>
-            <%= render 'shared/attributes/has_many', attribute: :hosts %>
-            <%= render 'shared/attributes/has_many', attribute: :contacts %>
-            <%= render 'shared/attributes/number', attribute: :actual_group_size %>
-            <%# 🚅 super scaffolding will insert new fields above this line. %>
-          <% end %>
-        <% end %>
-      
 
 
-        <% box.actions do %>
-          <%= link_to t('.buttons.edit'), [:edit, :account, @retreat], class: first_button_primary if can? :edit, @retreat %>
-          <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
-          <%= button_to t('.buttons.destroy'), [:account, @retreat], method: :delete, class: first_button_primary, data: { confirm: t('.buttons.confirmations.destroy', model_locales(@retreat)) } if can? :destroy, @retreat %>
-          <%= link_to t('global.buttons.back'), [:account, @team, :retreats], class: first_button_primary %>
-        <% end %>
-
-        <% box.raw_footer do %>
-          <%# 🚅 super scaffolding will insert new action model index views above this line. %>
-        <% end %>
-      <% end %>
-    <% end %>
-<% end ## orignal BT code %>  
-
-<%= render 'account/retreats/requests/index', requests: @retreat.requests, hide_back: true %>
 <br/>
   <% if can? :edit, @retreat %>
     <%= render 'account/retreats/comments/index', comments: @retreat.comments, hide_back: true %>

@@ -26,7 +26,7 @@ en:
       team_id:
         heading: Team ID
       name:
-        _: &name Name
+        _: &name Full Name
         label: *name
         heading: *name
         api_title: *name
@@ -40,7 +40,7 @@ en:
         placeholder: None
       retreat: *retreat
       phone:
-        _: &phone Phone
+        _: &phone Cell Phone Number
         label: *phone
         heading: *phone
         api_title: *phone
@@ -58,13 +58,63 @@ en:
         api_title: *dietary
         api_description: *dietary
       diet_id: &diet
-        _: &diet_id Diet
+        _: &diet_id Special Diet Request
         label: *diet_id
         heading: *diet_id
         api_title: *diet_id
         api_description: *diet_id
         placeholder: None
       diet: *diet
+      gender:
+        _: &gender Gender
+        label: *gender
+        heading: *gender
+        api_title: *gender
+        api_description: *gender
+      address:
+        _: &address Address
+        label: *address
+        heading: *address
+        api_title: *address
+        api_description: *address
+      emergency_contact_name:
+        _: &emergency_contact_name Emergency Contact Name
+        label: *emergency_contact_name
+        heading: *emergency_contact_name
+        api_title: *emergency_contact_name
+        api_description: *emergency_contact_name
+      emergency_contact_phone:
+        _: &emergency_contact_phone Emergency Contact Phone
+        label: *emergency_contact_phone
+        heading: *emergency_contact_phone
+        api_title: *emergency_contact_phone
+        api_description: *emergency_contact_phone
+      emergency_contact_relationship:
+        _: &emergency_contact_relationship Emergency Contact Relationship
+        label: *emergency_contact_relationship
+        heading: *emergency_contact_relationship
+        api_title: *emergency_contact_relationship
+        api_description: *emergency_contact_relationship
+      terms:
+        _: &terms Terms
+        label: *terms
+        heading: *terms
+        api_title: *terms
+        api_description: *terms
+        options:
+          yes: "Yes"
+      form_for:
+        _: &form_for I am an adult completing this form for..
+        label: *form_for
+        heading: *form_for
+        api_title: *form_for
+        api_description: *form_for
+      age:
+        _: &age Age
+        label: *age
+        heading: *age
+        api_title: *age
+        api_description: *age
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -127,6 +177,14 @@ en:
         email: *email
         dietary: *dietary
         diet_id: *diet_id
+        gender: *gender
+        address: *address
+        emergency_contact_name: *emergency_contact_name
+        emergency_contact_phone: *emergency_contact_phone
+        emergency_contact_relationship: *emergency_contact_relationship
+        terms: *terms
+        form_for: *form_for
+        age: *age
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

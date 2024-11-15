@@ -10,7 +10,7 @@
   var calendar = new FullCalendar.Calendar(calendarEl, {  
     eventSources: [
       {
-        url: '<%= account_team_reservations_path(team_id: current_team.id, format: :json) %>', 
+        url: '<%= account_team_schedule_json_path(team_id: current_team.id, format: :json) %>', 
         extraParams: {
           retreat: '<%= @retreat.id %>',
         },
@@ -31,7 +31,7 @@
         }
       }
     ],
-    <% days = (@retreat.departure.to_date - @retreat.arrival.to_date).to_i + 1 %>
+    <% days = (@retreat.departure.in_time_zone("America/Los_Angeles").to_date - @retreat.arrival.in_time_zone("America/Los_Angeles").to_date).to_i + 1 %>
     initialView: '<%= days < 7 ? 'timeGridFlex' : 'timeGridWeek' %>', 
     views: {
       timeGridFlex: {
@@ -39,7 +39,7 @@
         duration: { days: <%= days %> }
       }
     },
-    initialDate: '<%= @retreat.arrival.strftime("%Y-%m-%d") %>',
+    initialDate: '<%= @retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%Y-%m-%d") %>',
     slotMinTime: '06:00:00',
     slotMaxTime: '23:00:00',
     slotDuration: '00:30:00',
@@ -58,6 +58,28 @@
       hour: '2-digit',
       minute: '2-digit',
       meridiem: true
+    },
+
+       // Callback to modify the event appearance based on its title
+
+
+     eventDidMount: function(info) {
+      if (/Breakfast|Lunch|Dinner/.test(info.event.title)) {
+        info.el.style.backgroundColor = "#FFA500"; // Gold color
+        info.el.style.borderColor = "#FFA500";
+        info.el.style.color = "#000000"; // Optional: change text color
+      }
+      else if (info.event.title.includes("Gathering")) {
+        info.el.style.backgroundColor = "#0000FF"; // Gold color
+        info.el.style.borderColor = "#0000FF";
+        info.el.style.color = "#FFFFFF"; // Optional: change text color
+      }
+      else if (info.event.title.includes("Free Time")) {
+        info.el.style.backgroundColor = "#FF00FF"; // Gold color
+        info.el.style.borderColor = "#FFA500";
+        info.el.style.color = "#FFFFFF"; // Optional: change text color
+      }
+
     },
 
     eventDrop: function(info) {

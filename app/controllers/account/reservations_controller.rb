@@ -10,6 +10,13 @@ class Account::ReservationsController < Account::ApplicationController
     delegate_json_to_api
   end
 
+  def schedule_json
+    @reservations = Reservation.where(retreat_id: [67088, 67110]).with_schedule_tag
+    respond_to do |format|
+      format.json { render json: @reservations }
+    end
+  end
+
   # GET /account/reservations/:id
   # GET /account/reservations/:id.json
   def show

@@ -1,0 +1,60 @@
+
+
+    <!-- Agenda Section -->
+    <% @schedule = Reservation.where(retreat_id: [67088, 67110]) %>
+
+
+
+    <!-- Schedule Content -->
+  <% number_days = (@retreat.departure.in_time_zone("America/Los_Angeles").to_date - @retreat.arrival.in_time_zone("America/Los_Angeles").to_date).to_i + 1 %>
+  
+  <!-- Table Structure for the Schedule -->
+  <table class="table-auto w-full border-collapse">
+    <thead>
+      <tr>
+        <% number_days.times do |i| %>
+          <% day = @retreat.arrival.in_time_zone("America/Los_Angeles") + i.days %>
+          <th class="px-4 py-2 border font-bold text-lg text-center"><%= day.strftime("%A, %B %-d") %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% number_days.times do |i| %>
+          <% day = @retreat.arrival.in_time_zone("America/Los_Angeles") + i.days %>
+          <!-- Add align-top class and inline style to ensure top alignment -->
+          <td class="align-top px-4 py-2 border" style="vertical-align: top;">
+            <% last_start_time = nil %>
+            <% last_end_time = nil %>
+            
+            <% @schedule.order(:start_time).each do |reservation| %>
+              <% if reservation.start_time.present? && day.to_date == reservation.start_time.in_time_zone(@retreat.team.time_zone).to_date %>
+                <% current_start_time = reservation.start_time.in_time_zone(@retreat.team.time_zone) %>
+                <% current_end_time = reservation.end_time.in_time_zone(@retreat.team.time_zone) %>
+
+                <!-- Display the time heading only if the current start and end times are different from the last ones -->
+                <% if current_start_time != last_start_time || current_end_time != last_end_time %>
+                  <div class="font-semibold mt-2 mb-1">
+                    <%= current_start_time.strftime("%-l:%M%P") %> - <%= current_end_time.strftime("%-l:%M%P") %>
+                  </div>
+                <% end %>
+
+                <!-- Display the reservation item -->
+                <div class="ml-4">
+                  <%= link_to reservation&.item&.name, [:account, reservation], class: "text-blue-600 hover:underline", title: reservation.notes %> 
+                  <% if reservation.notes.present? %>
+                    (<%= reservation.notes.truncate(50) %>)
+                  <% end %>  
+                </div>
+
+                <!-- Update the last start and end times -->
+                <% last_start_time = current_start_time %>
+                <% last_end_time = current_end_time %>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+
