@@ -39,11 +39,7 @@
                       <td class="py-2 px-6">
                           <p class="font-semibold text-lg"><%= retreat.guest_count %></p>
                       </td>
-                      <% if @meal_count.present? %>
-                        <td class="py-2 px-6">
-                          <p class="font-semibold text-lg"><%= Reservation.where(retreat_id: retreat.id, resource_id: @resource_meals.ids).count %></p>
-                        </td>
-                      <% end %>
+               
                       <td class="py-2 px-6">
                           <p class="font-semibold"><%= retreat.arrival.strftime("%A %-l%P") %></p>
                           <p class="text-gray-400"><%= retreat.arrival.strftime("%B #{retreat.arrival.day.ordinalize}") %></p>
