@@ -1,7 +1,7 @@
 require "application_system_test_case"
 
 class InvitationListsTest < ApplicationSystemTestCase
-  def setup
+  setup do
     # TODO: Capybara.current_driver is returning :selenium,
     # when it should be either :selenium_chrome or :selenium_chrome_headless.
     Capybara.current_driver = Capybara.default_driver
@@ -13,7 +13,7 @@ class InvitationListsTest < ApplicationSystemTestCase
     end
   end
 
-  def teardown
+  teardown do
     BulletTrain.configure do |config|
       config.enable_bulk_invitations = @current_bulk_invitations_setting
     end
@@ -37,6 +37,9 @@ class InvitationListsTest < ApplicationSystemTestCase
         complete_pricing_page
       end
     end
+
+    # Call assert text to make sure that we're on the invitations list page before proceeding
+    assert_text("Invite your team members")
 
     # Click on next to show that bulk invitations will raise an error if not filled out properly.
     click_on "Next"
