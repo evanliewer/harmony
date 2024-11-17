@@ -34,7 +34,6 @@
     "postcss-nested": "^6.2.0",
     "stimulus-reveal": "^1.4.2",
     "stimulus-scroll-reveal": "^3.2.0",
-    "tailwindcss": "^3.4.14",
     "yalc": "^1.0.0-pre.53"
   },
   "scripts": {
@@ -44,5 +43,8 @@
     "light:build:css": "THEME=\"light\" NODE_PATH=./node_modules tailwindcss -c tailwind.config.js -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.light.css --postcss ./postcss.config.js",
     "light:build:mailer:css": "THEME=\"light\" NODE_PATH=./node_modules tailwindcss -c $(bundle exec bin/theme tailwind-mailer-config light) -i $(bundle exec bin/theme tailwind-stylesheet light) -o ./app/assets/builds/application.mailer.light.css --postcss ./postcss.mailer.config.js"
   },
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.2.2",
+  "devDependencies": {
+    "tailwindcss": "^3.4.15"
+  }
 }

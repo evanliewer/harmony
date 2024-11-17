@@ -219,4 +219,5 @@ gem "pry"
 gem "bullet_train-power_pack", github: "julianrubisch/bullet_train-power_pack"
 gem 'paper_trail'
 gem 'simple_calendar'
+gem "bullet_train-audit_logs"
 
