@@ -5,7 +5,8 @@ class Account::RetreatsController < Account::ApplicationController
   # GET /account/teams/:team_id/retreats
   # GET /account/teams/:team_id/retreats.json
   def index
-    @retreats = Retreat.all.order(:name)
+    query = params[:search_query]
+    @retreats = query.present? ? Retreat.search_by_id_or_name(query) : Retreat.all   
     @onsite_retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.zone.now, Time.zone.now)
 
     delegate_json_to_api

@@ -25,7 +25,14 @@ class Retreat < ApplicationRecord
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
-
+  scope :search_by_id_or_name, ->(query) {
+    query = query.to_s.strip
+      if query.match?(/^\d+$/) # Check if the query is numeric
+        where('id = ? OR name ILIKE ?', query.to_i, "%#{query}%")
+      else
+        where('name ILIKE ?', "%#{query}%")
+      end
+    }
   # 🚅 add scopes above.
 
   validates :name, presence: true

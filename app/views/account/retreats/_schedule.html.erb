@@ -7,6 +7,12 @@
  document.addEventListener('turbo:load', function() {
   var calendarEl = document.getElementById('calendar');
 
+    // Check if a calendar is already initialized and destroy it
+  if (calendarEl && calendarEl.fullCalendarInstance) {
+    calendarEl.fullCalendarInstance.destroy();
+    delete calendarEl.fullCalendarInstance;
+  }
+
   var calendar = new FullCalendar.Calendar(calendarEl, {  
     eventSources: [
       {

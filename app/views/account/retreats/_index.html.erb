@@ -14,7 +14,7 @@
 
 <ul class="flex border-b">
   <li class="-mb-px mr-1">
-    <a class="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold" href="#">Active</a>
+    <%= link_to "Next 7 Days", account_team_retreats_path, class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
   </li>
   <li class="mr-1">
     <%= link_to "On Site", account_team_retreats_path, class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
@@ -29,7 +29,7 @@
 </ul>
 
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
-  <% Retreat.all.limit(9).each do |retreat| %>
+  <% @retreats.each do |retreat| %>
     <!-- Box for each retreat -->
      <% dynamic_classes = Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure ? "border-2 border-green-800" : "border border-grey-500" %>
       <div class="flex w-full p-3 flex-col rounded-lg bg-white shadow-sm <%= dynamic_classes %>">
@@ -101,16 +101,27 @@
 
       <!-- Meeting Spaces and Planned -->
       <div class="mt-2 border-t border-slate-200 pt-1 px-1 flex justify-between">
-        <span class="text-sm text-slate-600 font-medium">
+        <span class="text-sm text-slate-600 font-medium text-right">
           <% @meetingspaces = Reservation.includes([:item]).where(retreat_id: retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false) %>
           Meeting Spaces: <%= @meetingspaces.any? ? @meetingspaces.map { |p| p.name }.to_sentence : "None" %>
         </span>
-        <span class="text-sm text-slate-600 font-light">
+        <span class="text-sm text-slate-600 font-light text-right">
           <%  flightchecks = Flights::Check.includes([:flight]).where(retreat_id: retreat.id) %>
            <% if flightchecks.count == 0 %>
               N/A
             <% else %>  
               <%= number_to_percentage(100 * flightchecks.where.not(completed_at: nil).count.to_f / flightchecks.count.to_f, precision: 1)  %> Planned
+              <% if Time.zone.now < retreat.arrival %>
+                <!-- Retreat is in the future -->
+                <p>Arriving in <%= distance_of_time_in_words(Time.zone.now, retreat.arrival.in_time_zone("America/Los_Angeles")) %></p>
+              <% elsif Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure %>
+                <!-- Retreat is currently ongoing -->
+                <p>On Site Arrived <%= distance_of_time_in_words(retreat.arrival.in_time_zone("America/Los_Angeles"), Time.zone.now) %> ago</p>
+              <% else %>
+                <!-- Retreat is in the past -->
+                <p>Arrived <%= distance_of_time_in_words(retreat.departure.in_time_zone("America/Los_Angeles"), Time.zone.now) %> ago</p>
+              <% end %>
+
             <% end %>
         </span>
       </div>
