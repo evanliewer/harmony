@@ -18,7 +18,6 @@ class Medform < ApplicationRecord
 
   validates :name, presence: true
   validates :retreat, scope: true
-  validates :diet, scope: true
   validates :terms, presence: true
   validates :phone, presence: true
   validates :email, presence: true
@@ -27,6 +26,7 @@ class Medform < ApplicationRecord
   validates :emergency_contact_name, presence: true
   validates :emergency_contact_phone, presence: true
   validates :emergency_contact_relationship, presence: true
+  validate :unique_entry_for_retreat
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.
@@ -42,6 +42,13 @@ class Medform < ApplicationRecord
     #Not used as team is not passed to model
     team.diets
   end
+ 
+  def unique_entry_for_retreat
+    if Medform.where('LOWER(name) = ? AND phone = ? AND retreat_id = ?', name.downcase, phone, retreat_id).exists?
+      errors.add(:name, 'has already been submitted and this is likely a duplicate entry.  If it is not, please resubmit with a different name or phone number')
+    end
+  end
+ 
 
 
   # 🚅 add methods above.

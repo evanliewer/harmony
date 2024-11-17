@@ -64,7 +64,7 @@
     <!-- Buttons Section -->
     <div class="flex flex-col gap-2">
       <%= link_to "Add New Reservation", [:new, :account, current_team, :reservation, { retreat_id: @retreat.id }], class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline hover:text-white" %>
-      <%= link_to "Group Page", root_path(retreat_id: @retreat.obfuscated_id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline hover:text-white" %>
+      <%= link_to "Group Page", root_path(id: @retreat.obfuscated_id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline hover:text-white" %>
       <% if can? :create, Season.new(team: current_team) %>
           <% if @seasonal %>
            <%= link_to "Remove Seasonal Defaults", account_team_remove_seasonal_reservations_path(team_id: current_team.id, retreat_id: @retreat.id), data: { confirm: "Are you sure you want to remove all Seasonal Defaults to the group?  This will permantently remove them and they cannot be recovered.  You will be able to readd them from scratch." }, class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 hover:no-underline  hover:text-white" %>
@@ -75,6 +75,7 @@
       <%= link_to "Printable schedule", account_team_print_retreat_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
       <%= link_to "Gold Sheet", account_team_print_gold_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
       <%= link_to "Lodging", account_team_lodging_path(team_id: @retreat.team_id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
+      <%= link_to "Med Forms", account_team_medforms_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
     </div>
   </div>
 

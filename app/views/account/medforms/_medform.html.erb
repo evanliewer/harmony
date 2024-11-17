@@ -11,16 +11,9 @@
     <td><%= render 'shared/attributes/belongs_to', attribute: :retreat %></td>
     <td><%= render 'shared/attributes/text', attribute: :phone %></td>
     <td><%= render 'shared/attributes/text', attribute: :email %></td>
-    <td><%= render 'shared/attributes/text', attribute: :dietary %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :diet %></td>
     <td><%= render 'shared/attributes/text', attribute: :gender %></td>
-    <td><%= render 'shared/attributes/address', attribute: :address, one_line: true %></td>
-    <td><%= render 'shared/attributes/text', attribute: :emergency_contact_name %></td>
-    <td><%= render 'shared/attributes/text', attribute: :emergency_contact_phone %></td>
-    <td><%= render 'shared/attributes/text', attribute: :emergency_contact_relationship %></td>
-    <td class="text-center"><%= render 'shared/attributes/option', attribute: :terms %></td>
-    <td><%= render 'shared/attributes/text', attribute: :form_for %></td>
-    <td><%= render 'shared/attributes/text', attribute: :age %></td>
+
     <%# 🚅 super scaffolding will insert new fields above this line. %>
     <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">

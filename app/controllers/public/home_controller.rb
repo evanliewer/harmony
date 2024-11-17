@@ -51,7 +51,7 @@ class Public::HomeController < Public::ApplicationController
   end
 
   def medform_params
-    params.require(:medform).permit(:team_id, :name, :phone, :email, :dietary, :retreat_id)
+    params.require(:medform).permit(:team_id, :name, :phone, :email, :dietary, :retreat_id, :dietary, :age, :gender, :emergency_contact_name, :emergency_contact_phone, :emergency_contact_relationship, :terms, :form_for)
   end
 
   def game_show

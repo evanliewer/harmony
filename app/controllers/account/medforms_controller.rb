@@ -5,6 +5,11 @@ class Account::MedformsController < Account::ApplicationController
   # GET /account/teams/:team_id/medforms
   # GET /account/teams/:team_id/medforms.json
   def index
+    if params[:retreat_id].present?
+      @medforms = Medform.where(retreat_id: params[:retreat_id])
+    else 
+      @medforms = Medform.all
+    end    
     delegate_json_to_api
   end
 
