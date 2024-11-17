@@ -1,0 +1,9 @@
+<%= render 'shared/version', version: version do |p| %>
+  <% if version.event == "update" %>
+    <% p.content_for :body do %>
+      <% item = version.item&.reload %>
+      <%= render 'shared/deltas/radio_field', method: :name, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <% end %>
+  <% end %>
+<% end %>

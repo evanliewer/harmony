@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_13_045006) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_17_045659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_13_045006) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "activity_versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.jsonb "object"
+    t.jsonb "object_changes"
+    t.bigint "team_id"
+    t.bigint "activity_versions_id"
+    t.bigint "action_text_rich_text_id"
+    t.datetime "created_at"
+    t.bigint "location_id"
+    t.index ["action_text_rich_text_id"], name: "index_activity_versions_on_action_text_rich_text_id"
+    t.index ["activity_versions_id"], name: "index_activity_versions_on_activity_versions_id"
+    t.index ["item_type", "item_id"], name: "index_activity_versions_on_item_type_and_item_id"
+    t.index ["location_id"], name: "index_activity_versions_on_location_id"
+    t.index ["team_id"], name: "index_activity_versions_on_team_id"
   end
 
   create_table "addresses", force: :cascade do |t|

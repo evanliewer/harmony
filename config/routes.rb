@@ -92,7 +92,7 @@ Rails.application.routes.draw do
 
         resources :demographics, concerns: [:sortable]
         resources :departments, concerns: [:sortable]
-        resources :locations, concerns: [:sortable]
+        resources :locations, concerns: [:sortable, :activity]
         resources :items do
           scope module: 'items' do
             resources :options, only: collection_actions, concerns: [:sortable]

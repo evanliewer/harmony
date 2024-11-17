@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/bullet-train-pro/bullet_train-audit_logs.git
+  revision: 425d6a2dc08d5beaf8fdc7fd9a99bc28886a16f5
+  specs:
+    bullet_train-audit_logs (1.0.1)
+      diffy (~> 3.4)
+      paper_trail (>= 14.0)
+      rails (>= 6.0)
+
+GIT
   remote: https://github.com/julianrubisch/bullet_train-power_pack.git
   revision: 56289b3e47bdb668313e06a1b21c59f45cd2c16a
   specs:
@@ -302,6 +311,7 @@ GEM
       devise (~> 4.0)
       railties (~> 7.0)
       rotp (~> 6.0)
+    diffy (3.4.3)
     docile (1.4.1)
     doorkeeper (5.8.0)
       railties (>= 5)
@@ -733,6 +743,7 @@ DEPENDENCIES
   bootsnap
   bullet_train (= 1.8.4)
   bullet_train-api (= 1.8.4)
+  bullet_train-audit_logs!
   bullet_train-fields (= 1.8.4)
   bullet_train-has_uuid (= 1.8.4)
   bullet_train-incoming_webhooks (= 1.8.4)
