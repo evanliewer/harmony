@@ -14,7 +14,8 @@
 <%= render 'account/shared/page' do |page| %>
 <% page.title "Forest Home Waiver" %>
   <% page.actions do %>
-    <%= link_to "Spanish", root_url, class: "border-2 p-2 rounded-full border-indigo-300" %>
+    <%= link_to 'English', waiver_path(retreat: @retreat.obfuscated_id, language: "en"), class: "border-2 p-2 rounded-full border-indigo-300" %>
+    <%= link_to 'Spanish', waiver_path(retreat: @retreat.obfuscated_id, language: "sp"), class: "border-2 p-2 rounded-full border-indigo-300" %>
     <%= link_to "Korean", root_url, class: "border-2 p-2 rounded-full border-indigo-300" %>
   <% end %>
   <% page.body.render 'account/shared/box', divider: false, no_background: true do |box| %>

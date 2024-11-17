@@ -27,13 +27,25 @@ class Public::HomeController < Public::ApplicationController
 
       respond_to do |format|
        format.html { render layout: false }
-       format.csv { send_data Item.to_csv(@cabin_resources), filename: "CabinAssignments-#{@retreat&.organization&.name}-#{@retreat.arrival.strftime("%B #{@retreat.arrival.day.ordinalize} %Y")}.csv" }
-                  
-     end
+       format.csv { send_data Item.to_csv(@cabin_resources), filename: "CabinAssignments-#{@retreat&.organization&.name}-#{@retreat.arrival.strftime("%B #{@retreat.arrival.day.ordinalize} %Y")}.csv" }          
+      end
       
   end
 
+
+
   def waiver
+   if params[:language] == "fr"
+     I18n.locale = :fr
+    elsif params[:language] == "kr"
+     I18n.locale = :kr
+    elsif params[:language] == "sp"
+     I18n.locale = :sp
+    elsif params[:language] == "kj"
+     I18n.locale = :kj 
+    else 
+     I18n.locale = :en
+    end 
     @retreat = Retreat.find_by_obfuscated_id(params[:retreat])
     @team = @retreat.team
     @medform = Medform.new
@@ -171,6 +183,9 @@ class Public::HomeController < Public::ApplicationController
         end
       end  
   end
+
+   
+
 
 
   include RootRedirect
