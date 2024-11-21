@@ -7,6 +7,7 @@ class Account::MedformsController < Account::ApplicationController
   def index
     if params[:retreat_id].present?
       @medforms = Medform.where(retreat_id: params[:retreat_id])
+      @retreat = Retreat.find(params[:retreat_id])
     else 
       @medforms = Medform.all
     end    

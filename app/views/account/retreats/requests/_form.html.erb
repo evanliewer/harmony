@@ -8,9 +8,9 @@
 
         <%= form.hidden_field :retreat_id, value: @request.retreat_id %>
    
-      <%= render 'shared/fields/super_select', method: :department_id, options: {autofocus: true}, html_options: {autofocus: true},
+      <%# render 'shared/fields/super_select', method: :department_id, options: {autofocus: true}, html_options: {autofocus: true},
         choices: @request.valid_departments.map { |department| [department.label_string, department.id] } %>
-      <%= render 'shared/fields/text_field', method: :notes %>
+      <%= render 'shared/fields/text_area', method: :notes %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

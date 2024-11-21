@@ -41,8 +41,6 @@ class Public::HomeController < Public::ApplicationController
      I18n.locale = :kr
     elsif params[:language] == "sp"
      I18n.locale = :sp
-    elsif params[:language] == "kj"
-     I18n.locale = :kj 
     else 
      I18n.locale = :en
     end 

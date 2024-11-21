@@ -18,6 +18,7 @@ class Account::RetreatsController < Account::ApplicationController
     create_flights
     create_requests
     delegate_json_to_api
+    @previous_retreats = Retreat.where(organization_id: @retreat.organization_id).where.not(id: @retreat.id)
     @meals = Reservation.includes([:items_option, :item]).where(retreat_id: @retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id)
     @meetingspaces = Reservation.where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false)
     @lodging = Reservation.where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false).order(:name)
@@ -105,6 +106,42 @@ class Account::RetreatsController < Account::ApplicationController
    def gold
     @retreat = Retreat.find(params[:retreat_id])
     @retreats = Retreat.all.limit(6)
+    @retail_openings = Reservation
+                   .select('DISTINCT ON (item_id, start_time, end_time) reservations.*')
+                   .where(retreat_id: @retreats.ids)
+                   .joins(:item)
+                   .where(items: { id: Item.joins(:tags).where(items_tags: { name: "Retail" }).pluck(:id) })
+                   .where.not(active: false)
+
+     @rec_openings = Reservation
+                   .select('DISTINCT ON (item_id, start_time, end_time) reservations.*')
+                   .where(retreat_id: @retreats.ids)
+                   .joins(:item)
+                   .where(items: { id: Item.joins(:tags).where(items_tags: { name: "Recreation" }).pluck(:id) })
+                   .where.not(active: false)               
+
+
+    reserved_lodging_ids = Reservation
+                .where(retreat_id: @retreats.ids)
+                .joins(:item)
+                .where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids })
+                .where.not(active: false)
+                .pluck(:id)
+
+    @non_reserved_lodging_items = Item
+                              .joins(:tags, :location) # Ensure associations exist
+                              .where(tags: { name: "Lodging" })
+                              .where.not(
+                                id: Reservation
+                                     .where(retreat_id: @retreats.ids)
+                                     .joins(:item)
+                                     .where.not(active: false)
+                                     .pluck(:item_id)
+                              )
+                              .where.not(locations: { name: "Wild Rock" })
+                              .order(:name)
+
+                                
     render layout: false
   end
 

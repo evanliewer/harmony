@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-2">
-  <% @retreat.requests.each do |request| %>      
+  <% @retreat.requests.order(:department_id).each do |request| %>      
     <div class="col-span-1">
       <%= render 'account/shared/box' do |box| %>
         <%# box.title request.department.name %>
@@ -7,15 +7,17 @@
     
        <h2 class="text-xl font-bold text-gray-700 mb-2"><%= request.department.name %></h2>
               <%= request.notes %>
-         
-            <% if can? :edit, request %>
-              <div class="mt-auto text-right">
+            
+          <div class="mt-auto text-right">
+            Last Updated: <%= distance_of_time_in_words(Time.zone.now, request.updated_at.in_time_zone('America/Los_Angeles')) %>
+            <% if can? :edit, request %>  
                 <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, request], class: 'button-secondary button-smaller' %>
-              </div>
             <% end %>
+            <%= link_to "View", root_path %>
+          </div>  
        
         <% end %>
       <% end %>
-    </div>
+     </div> 
   <% end %>      
 </div>

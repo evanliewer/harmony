@@ -13,7 +13,8 @@
     <%= render 'account/shared/box', pagy: pagy do |box| %>
       <% box.title t(".contexts.#{context.class.name.underscore}.header") %>
       <% box.description do %>
-        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless medforms.any?}") %>
+        <%# t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless medforms.any?}") %>
+        There are <%= pluralize(@medforms.count, "Release Forms") %> <%= @retreat.present? ? "for #{@retreat.name}" : "located below." %>
         <%= render "shared/limits/index", model: medforms.model %>
       <% end %>
 
@@ -26,12 +27,11 @@
                 <th><%= t('.fields.name.heading') %></th>
                 <th><%= t('.fields.retreat.heading') %></th>
                 <th><%= t('.fields.phone.heading') %></th>
-                <th><%= t('.fields.email.heading') %></th>
                 <th><%= t('.fields.diet.heading') %></th>
                 <th><%= t('.fields.gender.heading') %></th>
           
                 <%# 🚅 super scaffolding will insert new field headers above this line. %>
-                <th><%= t('.fields.created_at.heading') %></th>
+                <th><%# t('.fields.created_at.heading') %></th>
                 <th class="text-right"></th>
               </tr>
             </thead>

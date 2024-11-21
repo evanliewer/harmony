@@ -240,12 +240,59 @@
                 <td><%= lodging.any? ? lodging.map { |p| p.name }.to_sentence : "None" %></td>
               </tr>
             <% end %>
+              <tr>
+                <td>Open Cabins</td>
+                <td><%= @non_reserved_lodging_items.any? ? @non_reserved_lodging_items.map { |p| p.name }.to_sentence : "None" %></td>
+              </tr>  
           </tbody>
         </table>
 
-<h3 class="section-title">Retail Openings</h3>
+<!-- Cabins -->
+<div class="two-column">
+      <div class="column">
+        <!-- First Column: General Info -->
+        <h3 class="section-title">Retail Openings</h3>
+         <table class="data-table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Open Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @retail_openings.each do |retail_opening| %>
+              <tr>
+                <td><%= retail_opening.item&.name %></td>
+                <td><%= retail_opening.start_time.in_time_zone('America/Los_Angeles').strftime("%A %-l:%M%P") %> - <%= retail_opening.end_time.in_time_zone('America/Los_Angeles').strftime("%A %-l:%M%P") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <div class="column">
+      <h3 class="section-title">Rec Openings</h3>
+      <table class="data-table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Open Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @rec_openings.each do |rec_opening| %>
+              <tr>
+                <td><%= rec_opening.item&.name %></td>
+                <td><%= rec_opening.start_time.in_time_zone('America/Los_Angeles').strftime("%A %-l:%M%P") %> - <%= rec_opening.end_time.in_time_zone('America/Los_Angeles').strftime("%A %-l:%M%P") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    </div>
+</div>        
+
+
+
 <h3 class="section-title">Meal Times</h3>
-<h3 class="section-title">Rec Openings</h3>
 <h3 class="section-title">Groups listed on huddle</h3>
 <h3 class="section-title">Add non-overlap and send yellow flag if these overlap or if there is a gap</h3>
 <h3 class="section-title">Shared Use items (fire pits, fields)</h3>

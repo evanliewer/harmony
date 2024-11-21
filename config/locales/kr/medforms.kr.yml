@@ -1,0 +1,190 @@
+kr:
+  medforms: &medforms
+    label: &label Medforms
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-solid fa-file-medical
+    buttons: &buttons
+      new: Add New Medform
+      create: Create Medform
+      edit: Edit Medform
+      update: Update Medform
+      destroy: Remove Medform
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{medform_name}? This will also remove any child resources and can't be undone.
+    medform:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Medform ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Korean Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      retreat_id: &retreat
+        _: &retreat_id Retreat
+        label: *retreat_id
+        heading: *retreat_id
+        api_title: *retreat_id
+        api_description: *retreat_id
+        placeholder: None
+      retreat: *retreat
+      phone:
+        _: &phone Telephono
+        label: *phone
+        heading: *phone
+        api_title: *phone
+        api_description: *phone
+      email:
+        _: &email Email
+        label: *email
+        heading: *email
+        api_title: *email
+        api_description: *email
+      dietary:
+        _: &dietary Dietary
+        label: *dietary
+        heading: *dietary
+        api_title: *dietary
+        api_description: *dietary
+      diet_id: &diet
+        _: &diet_id Special Diet Request
+        label: *diet_id
+        heading: *diet_id
+        api_title: *diet_id
+        api_description: *diet_id
+        placeholder: None
+      diet: *diet
+      gender:
+        _: &gender Gender
+        label: *gender
+        heading: *gender
+        api_title: *gender
+        api_description: *gender
+      address:
+        _: &address Address
+        label: *address
+        heading: *address
+        api_title: *address
+        api_description: *address
+      emergency_contact_name:
+        _: &emergency_contact_name Emergency Contact Name
+        label: *emergency_contact_name
+        heading: *emergency_contact_name
+        api_title: *emergency_contact_name
+        api_description: *emergency_contact_name
+      emergency_contact_phone:
+        _: &emergency_contact_phone Emergency Contact Phone
+        label: *emergency_contact_phone
+        heading: *emergency_contact_phone
+        api_title: *emergency_contact_phone
+        api_description: *emergency_contact_phone
+      emergency_contact_relationship:
+        _: &emergency_contact_relationship Emergency Contact Relationship
+        label: *emergency_contact_relationship
+        heading: *emergency_contact_relationship
+        api_title: *emergency_contact_relationship
+        api_description: *emergency_contact_relationship
+      terms:
+        _: &terms Terms
+        label: *terms
+        heading: *terms
+        api_title: *terms
+        api_description: *terms
+        options:
+          yes: "Yes"
+      form_for:
+        _: &form_for I am an adult completing this form for..
+        label: *form_for
+        heading: *form_for
+        api_title: *form_for
+        api_description: *form_for
+      age:
+        _: &age Edad
+        label: *age
+        heading: *age
+        api_title: *age
+        api_description: *age
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Medforms"
+      index: "List Medforms"
+      create: "Add a New Medform"
+      member_actions: "Actions for an Individual Medform"
+      show: "Retrieve a Medform"
+      update: "Update a Medform"
+      destroy: "Delete a Medform"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Medforms"
+      contexts:
+        team:
+          header: Medforms
+          description: Below is a list of Medforms that have been added for %{team_name}.
+          description_empty: No Medforms have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{medform_name}"
+      header: Medform Details
+      description: Below are the details we have for %{medform_name}.
+      manage_description: You'll also find options for updating these details or removing %{medform_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Medform for %{team_name}"
+      header: New Medform Details
+      description: Please provide the details of the new Medform you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{medform_name}"
+      header: Edit Medform Details
+      description: You can update the details or settings for %{medform_name} below.
+      form: *form
+    notifications:
+      created: Medform was successfully created.
+      updated: Medform was successfully updated.
+      destroyed: Medform was successfully destroyed.
+  account:
+    medforms: *medforms
+  activerecord:
+    attributes:
+      medform:
+        name: *name
+        retreat_id: *retreat_id
+        phone: *phone
+        email: *email
+        dietary: *dietary
+        diet_id: *diet_id
+        gender: *gender
+        address: *address
+        emergency_contact_name: *emergency_contact_name
+        emergency_contact_phone: *emergency_contact_phone
+        emergency_contact_relationship: *emergency_contact_relationship
+        terms: *terms
+        form_for: *form_for
+        age: *age
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at
