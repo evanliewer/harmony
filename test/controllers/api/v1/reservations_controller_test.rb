@@ -43,6 +43,7 @@ class Api::V1::ReservationsControllerTest < Api::Test
     assert_equal_or_nil reservation_data['exclusive'], reservation.exclusive
     assert_equal_or_nil reservation_data['active'], reservation.active
     assert_equal_or_nil reservation_data['items_option_id'], reservation.items_option_id
+    assert_equal_or_nil reservation_data['dining_style'], reservation.dining_style
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal reservation_data["team_id"], reservation.team_id
@@ -103,6 +104,7 @@ class Api::V1::ReservationsControllerTest < Api::Test
       reservation: {
         name: 'Alternative String Value',
         notes: 'Alternative String Value',
+        dining_style: 'Alternative String Value',
         # 🚅 super scaffolding will also insert new fields above this line.
       }
     }
@@ -116,6 +118,7 @@ class Api::V1::ReservationsControllerTest < Api::Test
     @reservation.reload
     assert_equal @reservation.name, 'Alternative String Value'
     assert_equal @reservation.notes, 'Alternative String Value'
+    assert_equal @reservation.dining_style, 'Alternative String Value'
     # 🚅 super scaffolding will additionally insert new fields above this line.
 
     # Also ensure we can't do that same action as another user.

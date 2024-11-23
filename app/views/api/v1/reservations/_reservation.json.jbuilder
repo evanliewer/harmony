@@ -13,6 +13,7 @@ json.extract! reservation,
   :exclusive,
   :active,
   :items_option_id,
+  :dining_style,
   # 🚅 super scaffolding will insert new fields above this line.
   :created_at,
   :updated_at

@@ -14,10 +14,10 @@
 
 <ul class="flex border-b">
   <li class="-mb-px mr-1">
-    <%= link_to "Next 7 Days", account_team_retreats_path, class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
+    <%= link_to "Next 7 Days", account_team_retreats_path(team_id: current_team.id), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
   </li>
   <li class="mr-1">
-    <%= link_to "On Site", account_team_retreats_path, class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
+    <%= link_to "On Site", account_team_retreats_path(team_id: current_team.id), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
 
   </li>
   <li class="mr-1">
@@ -28,6 +28,7 @@
   </li>
 </ul>
 
+<% if @retreats&.exists? && @retreats.any? %>
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
   <% @retreats.each do |retreat| %>
     <!-- Box for each retreat -->
@@ -131,7 +132,7 @@
   <% end %>
 </div>
 
-
+<% end %>
 
 
 

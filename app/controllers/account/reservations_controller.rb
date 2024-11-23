@@ -11,9 +11,21 @@ class Account::ReservationsController < Account::ApplicationController
   end
 
   def schedule_json
-    @reservations = Reservation.where(retreat_id: params[:retreat_id]).with_schedule_tag
+    @reservations = Reservation.includes(:item).where(retreat_id: params[:retreat_id]).with_schedule_tag
     respond_to do |format|
-      format.json { render json: @reservations }
+      format.json do
+        # Explicitly convert to array before rendering
+        transformed_reservations = @reservations.map do |reservation|
+          {
+            id: reservation.id,
+            start_time: reservation.start_time,
+            end_time: reservation.end_time,
+            title: reservation.item&.name + (reservation.dining_style.present? ? ": #{reservation.dining_style}" : "")
+          }
+        end
+
+        render json: transformed_reservations
+      end
     end
   end
 

@@ -44,14 +44,29 @@
       <%# render 'shared/fields/number_field', method: :quantity %>
       
       <%# render 'shared/fields/options', method: :seasonal_default %>
-      
-      <%# render 'shared/fields/options', method: :active %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
       <% unless @reservation.item.nil? %>
       <% unless @reservation.item.item_options.empty? %>
-        <%= render 'shared/fields/super_select', method: :items_option_id, options: {include_blank: "None"}, html_options: {},
-        choices: @reservation.item.item_options.map { |option| [option.label_string, option.id] } %>
-      <% end %>  
-      <% end %>
+         <div class="col-span-1 md:col-span-1">
+          <%= render 'shared/fields/super_select', method: :items_option_id, options: {include_blank: "None"}, html_options: {},
+          choices: @reservation.item.item_options.map { |option| [option.label_string, option.id] } %>
+         </div> 
+        <% end %>  
+        <% end %>
+        <% if @reservation.persisted? %>
+          <div class="col-span-1 md:col-span-1">
+            <%= render 'shared/fields/super_select', method: :dining_style, options: {}, html_options: {},
+        choices: ['Shared Use', 'Exclusive Use', 'Split Schedule A', 'Split Schedule B'].map { |option| [option, option] } %>
+          </div>
+        <% end %>  
+        </div>
+
+      
+      <%# render 'shared/fields/options', method: :active %>
+      
+       
+
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

@@ -29,6 +29,7 @@ class Reservation < ApplicationRecord
 
   # 🚅 add delegations above.
 
+
   def valid_retreats
     team.retreats
   end

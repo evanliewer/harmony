@@ -24,7 +24,7 @@
           var events = data.map(function(item) {
             return {
               id: item.id,
-              title: item.name,
+              title: item.title,
               start: item.start_time,
               end: item.end_time,
               allDay: false
@@ -86,6 +86,13 @@
         info.el.style.color = "#FFFFFF"; // Optional: change text color
       }
 
+    },
+
+     eventClick: function (info) {
+      var reservationId = info.event.id; // Get the reservation ID from the event object
+      var editUrl = '/account/reservations/' + reservationId + '/edit'; // Construct the URL dynamically
+      window.location.href = editUrl; // Redirect to the edit page
+      info.jsEvent.preventDefault(); // Prevents the default browser behavior
     },
 
     eventDrop: function(info) {
