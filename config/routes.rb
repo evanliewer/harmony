@@ -105,6 +105,7 @@ Rails.application.routes.draw do
           end
           member do
             get :department_view
+            get :kitchen
           end
         end
         resources :reservations

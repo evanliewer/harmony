@@ -11,7 +11,7 @@ class Account::ReservationsController < Account::ApplicationController
   end
 
   def schedule_json
-    @reservations = Reservation.where(retreat_id: [67088, 67110]).with_schedule_tag
+    @reservations = Reservation.where(retreat_id: params[:retreat_id]).with_schedule_tag
     respond_to do |format|
       format.json { render json: @reservations }
     end

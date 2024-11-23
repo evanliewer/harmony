@@ -16,7 +16,7 @@
   var calendar = new FullCalendar.Calendar(calendarEl, {  
     eventSources: [
       {
-        url: '<%= account_team_schedule_json_path(team_id: current_team.id, format: :json) %>', 
+        url: '<%= account_team_schedule_json_path(team_id: current_team.id, retreat_id: @retreat.id, format: :json) %>', 
         extraParams: {
           retreat: '<%= @retreat.id %>',
         },

@@ -151,6 +151,18 @@ class Account::RetreatsController < Account::ApplicationController
     @retreats = Retreat.all.limit(6)
   end
 
+   def kitchen
+    @team = current_team
+    @retreat = Retreat.find(params[:id])
+    @retreats = Retreat.where(id: [67474, 67088])
+    @meals = Reservation.includes([:items_option, :item]).where(retreat_id: @retreats.ids, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).order(:start_time)
+    @meetingspaces = Reservation.where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false)
+    @lodging = Reservation.where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false).order(:name)
+    @schedule = Reservation.joins([:team, :item]).where(retreat_id: @retreat.id, item_id: Item.where(team_id: current_team.id).schedulable, team_id: current_team.id).where(items: { active: true }).order(:start_time)
+
+    render layout: false
+  end
+
   private
 
   if defined?(Api::V1::ApplicationController)

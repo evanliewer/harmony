@@ -161,3 +161,6 @@ rails generate super_scaffold:audit_logs Location Team name:text_field capacity:
 
 
 rails g super_scaffold:field Retreat nps:number_field debrief:text_field
+
+
+rails g super_scaffold:field Diet abbreviation:text_field

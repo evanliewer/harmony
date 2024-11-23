@@ -79,6 +79,10 @@
       <%= link_to "Gold Sheet", account_team_print_gold_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
       <%= link_to "Lodging", account_team_lodging_path(team_id: @retreat.team_id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
       <%= link_to "Med Forms", account_team_medforms_path(team_id: @retreat.team_id, retreat_id: @retreat.id), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
+
+
+
+      <%= link_to "Kitchen View", kitchen_account_retreat_path(@retreat), class: "bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600  hover:text-white hover:no-underline" %>
     </div>
   </div>
 
