@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complex Printable Document</title>
+
+  <style>
+    /* Ensure page size is 8.5 x 11 inches */
+    @page {
+      size: 8.5in 11in;
+      margin: 0.5in;
+    }
+
+    /* General body styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 11in;
+      height: 8.5in;
+      color: #333;
+    }
+
+    /* Common container for print sections */
+    .print-area {
+      width: 100%;
+      margin: 0.5in;
+    }
+
+    /* Title section */
+    .title-section {
+      text-align: center;
+      padding-bottom: 0.1in;
+    }
+
+    .title-section h1 {
+      font-size: 24pt;
+      margin-bottom: 0.1in;
+    }
+
+    .title-section h2 {
+      font-size: 18pt;
+      color: #666;
+      margin-bottom: 0.1in;
+    }
+
+    /* Header table (client details, date, etc.) */
+    .header-table {
+      width: 100%;
+      margin-bottom: 0.1in;
+    }
+
+    .header-table td {
+      padding: 0.0in;
+      vertical-align: top;
+    }
+
+   /* Multiple tables for content */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.1in;
+}
+
+.data-table th, .data-table td {
+  border: 1px solid #000;
+  padding: 0.03in;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #f0f0f0;
+}
+
+/* Add faint background color to every other row */
+.data-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light gray */
+}
+
+/* Two-column layout */
+.two-column {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  width: 48%;
+}
+
+/* Footer section */
+.footer {
+  position: fixed;
+  bottom: 0.5in;
+  left: 0.5in;
+  right: 0.5in;
+  text-align: center;
+  font-size: 10pt;
+  color: #666;
+}
+
+
+    /* Print styling */
+    @media print {
+      .no-print {
+        display: none;
+      }
+
+      /* Ensure fixed elements stay in place */
+      .footer {
+        position: fixed;
+        bottom: 0.5in;
+      }
+    }
+
+    /* Section breaks */
+    .section-title {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 0.2in 0;
+    }
+
+    .highlight {
+      background-color: #f5f5f5;
+      padding: 0.2in;
+      border-radius: 4px;
+    }
+
+    /* Page break after complex sections */
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Main Print Area -->
+  <div class="print-area">
+
+    <!-- Title Section -->
+    <div class="title-section">
+      <h1>Lakeview Kitchen Sheet</h1>
+      <h2>Friday December 3rd to Sunday December 5th</h2>
+
+    </div>
+
+    <!-- Header Table (Client and Report Details) -->
+    <table class="header-table">
+      <tr>
+        <td><strong>Arrival Date:</strong> <%= @retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.arrival.in_time_zone("America/Los_Angeles").day.ordinalize}") %></td>
+        <td><strong>Depature Date:</strong> <%= @retreat.departure.in_time_zone("America/Los_Angeles").strftime("%A %B #{@retreat.departure.in_time_zone("America/Los_Angeles").day.ordinalize}") %></td>
+        
+      </tr>
+      <tr>
+        <td><strong>Printed At:</strong> <%= Time.zone.now.strftime("%A %B #{Time.zone.now.day.ordinalize} %-l:%M%P") %></td>
+        <td><strong>Guests:</strong> <%= @retreats.count + 100 %> &nbsp;&nbsp;&nbsp;<strong>Groups:</strong> <%= @retreats.count %> </td>
+        <td><strong></strong> </td>
+      </tr>
+    </table>
+
+     <!-- Another Section (Full Width)
+    <h3 class="section-title">Detailed Breakdown</h3>
+      --> 
+
+    <!-- Table for Detailed Breakdown -->
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Meal</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Group Total</th>
+          <th>Group Type</th>
+          <% Diet.where(team_id: current_team).each do |diet| %>
+          	<th><%= diet.abbreviation %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @meals.each do |meal| %>
+          <tr>
+            <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%B #{meal.start_time.in_time_zone("America/Los_Angeles").day.ordinalize}") %></td>
+            <td><%= meal.item&.name %></td>
+            <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+            <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+            <td><%= meal.retreat.actual_count %></td>
+            <td><%= meal.retreat.demographic_tags.map { |tag| tag.demographic.name }.reject { |name| ["Shared Use", "Exclusive Use"].include?(name) }.to_sentence %></td>
+            <% Diet.where(team_id: current_team).each do |diet| %>
+            	<td><%= Medform.where(retreat_id: meal.retreat.id, diet_id: diet.id).count.to_i %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+
+
+<!-- Deliveries -->
+<h3 class="section-title">Groups</h3>
+
+ 	<table class="data-table">
+      <thead>
+      	 <tr>
+            <td>1</td>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+      </thead>
+      <tbody>
+      	<% @retreats.each do |retreat| %>
+      		<tr>
+      		</tr>
+      	<% end %>	
+
+      </tbody>
+     </table> 
+
+
+
+
+
+
+
+
+<!-- Groups -->
+<h3 class="section-title">Groups</h3>
+<% @retreats.each do |retreat| %>
+ <table class="data-table">
+          <thead>
+
+          </thead>
+          <tbody>
+          <tr>
+			  <td colspan="2" style="text-align: left;"><strong><%= retreat.name %></strong></td>
+			  <td><%= pluralize(retreat.actual_count, "Guest") %></td>
+			  
+			  <td><%= retreat.demographic_tags.map { |tag| tag.demographic.name }.reject { |name| ["Shared Use", "Exclusive Use"].include?(name) }.to_sentence %></td>
+			  <td><%= pluralize(Reservation.includes([:items_option, :item]).where(retreat_id: retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).count.to_i, "Meal") %></td>
+			  <td>Schedule</td>
+			</tr>
+			<tr>
+			  <% first_meal = Reservation.includes([:items_option, :item]).where(retreat_id: retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).order(:start_time).first %>
+			  <% last_meal = Reservation.includes([:items_option, :item]).where(retreat_id: retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).order(:start_time).last %>
+			  <td style="width: 30%;"><%= retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%B #{retreat.arrival.in_time_zone("America/Los_Angeles").day.ordinalize}") %></td>
+			  
+			  <td style="width: 20%;">First Meal <%= first_meal.item.name %> <%= first_meal.start_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+			  
+			  <td colspan="2" style="width: 20%;">Last Meal <%= last_meal.item.name %> <%= last_meal.start_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+			  <td colspan="2" style="text-align: left; width: 20%;">6 GFs, 5 DFs, 11 EFs</td>
+			 
+			</tr>
+
+            
+          </tbody>
+        </table>
+<% end %>        
+
+
+<!-- Lodging  -->
+ <h3 class="section-title">Lodging</h3>
+  <table class="data-table">
+          <thead>
+            <tr>
+              <td><%= @lodging.any? ? @lodging.map { |p| p.name }.to_sentence : "None" %> </td>
+            </tr>
+          </thead>
+        </table>
+      
+<!-- End Lodging --> 
+
+
+    <!-- Two-Column Layout -->
+    <div class="two-column">
+      <div class="column">
+        <!-- First Column: General Info -->
+        <h3 class="section-title">Meals</h3>
+        <!--   <p class="highlight">Details of Groups</p>-->
+
+        <!-- Example Table 1: Financial Overview -->
+      <table class="data-table">
+          <thead>
+            <tr>
+              <th>Meal</th>
+              <th>Times</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @meals.each do |meal| %>
+              <tr>
+                <td><%= meal.item.name %></td>
+                <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %> - <%= meal.end_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+
+     
+
+      <div class="column">
+        <!-- Second Column: Project Milestones -->
+        <h3 class="section-title">Meeting Spaces</h3>
+
+        <!-- Example Table 2: Resource Allocation -->
+         <table class="data-table">
+          <thead>
+            <tr>
+              <th>Meeting Space</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @meetingspaces.each do |meetingspace| %>
+              <tr>
+                <td><%= meetingspace.item.name %></td>
+                <td><%= meetingspace.notes %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+ <div class="page-break"></div>
+   <!-- Department Requests -->
+  <h3 class="section-title">Department Requests</h3>
+   <table class="data-table">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Requests</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @retreat.requests.any? %>
+               <% @retreat.requests.each do |request| %>
+                <tr>
+                  <td><%= request.department.name %></td>
+                  <td><%= request.notes %></td>
+                </tr>
+               <% end %> 
+              <% else %>
+                <tr>
+                  <td>None</td>
+                  <td></td>
+                </tr>
+             <% end %> 
+            </tbody>
+          </table>
+  <!-- End Schedule  -->    
+
+<div class="page-break"></div>
+
+   <!-- Schedule -->
+  <h3 class="section-title">Schedule</h3>
+   <table class="data-table">
+            <thead>
+              <tr>
+                <th>Reservation</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @schedule.each do |reservation| %>
+                <tr>
+                  <td><%= reservation.item.name %></td>
+                  <td><%= reservation.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") if reservation.start_time.present? %></td>
+                  <td><%= reservation.end_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") if reservation.end_time.present? %></td>
+
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+  <!-- End Schedule  -->               
+<br/><br/><br/><br/><br/><br/><br/><br/>
+   
+
+
+    <!-- Page Break for Next Section -->
+    <div class="page-break"></div>
+
+    <!-- Another Section with a Table -->
+   
+
+  <!-- Footer 
+  <div class="footer">
+    Prepared for John Doe | Confidential Report | Page 1 of 1
+  </div> -->
+</body>
+</html>

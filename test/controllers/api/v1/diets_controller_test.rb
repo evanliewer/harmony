@@ -32,6 +32,7 @@ class Api::V1::DietsControllerTest < Api::Test
     diet = Diet.find(diet_data["id"])
 
     assert_equal_or_nil diet_data['name'], diet.name
+    assert_equal_or_nil diet_data['abbreviation'], diet.abbreviation
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal diet_data["team_id"], diet.team_id
@@ -91,6 +92,7 @@ class Api::V1::DietsControllerTest < Api::Test
       access_token: access_token,
       diet: {
         name: 'Alternative String Value',
+        abbreviation: 'Alternative String Value',
         # 🚅 super scaffolding will also insert new fields above this line.
       }
     }
@@ -103,6 +105,7 @@ class Api::V1::DietsControllerTest < Api::Test
     # But we have to manually assert the value was properly updated.
     @diet.reload
     assert_equal @diet.name, 'Alternative String Value'
+    assert_equal @diet.abbreviation, 'Alternative String Value'
     # 🚅 super scaffolding will additionally insert new fields above this line.
 
     # Also ensure we can't do that same action as another user.

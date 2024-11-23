@@ -31,6 +31,12 @@ en:
         heading: *name
         api_title: *name
         api_description: *name
+      abbreviation:
+        _: &abbreviation Abbreviation
+        label: *abbreviation
+        heading: *abbreviation
+        api_title: *abbreviation
+        api_description: *abbreviation
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -88,6 +94,7 @@ en:
     attributes:
       diet:
         name: *name
+        abbreviation: *abbreviation
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

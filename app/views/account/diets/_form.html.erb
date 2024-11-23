@@ -5,7 +5,10 @@
     <%= render 'account/shared/forms/errors', form: form %>
 
     <% with_field_settings form: form do %>
-      <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
+      <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <div class="col-span-1 md:col-span-4"><%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %></div>
+        <div class="col-span-1 md:col-span-2"><%= render 'shared/fields/text_field', method: :abbreviation %></div>
+      </div>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 
