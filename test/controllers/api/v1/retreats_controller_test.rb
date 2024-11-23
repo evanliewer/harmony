@@ -46,6 +46,8 @@ class Api::V1::RetreatsControllerTest < Api::Test
     assert_equal_or_nil retreat_data['host_ids'], retreat.host_ids
     assert_equal_or_nil retreat_data['contact_ids'], retreat.contact_ids
     assert_equal_or_nil retreat_data['actual_group_size'], retreat.actual_group_size
+    assert_equal_or_nil retreat_data['nps'], retreat.nps
+    assert_equal_or_nil retreat_data['debrief'], retreat.debrief
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal retreat_data["team_id"], retreat.team_id
@@ -107,6 +109,7 @@ class Api::V1::RetreatsControllerTest < Api::Test
         name: 'Alternative String Value',
         description: 'Alternative String Value',
         jotform: 'Alternative String Value',
+        debrief: 'Alternative String Value',
         # 🚅 super scaffolding will also insert new fields above this line.
       }
     }
@@ -121,6 +124,7 @@ class Api::V1::RetreatsControllerTest < Api::Test
     assert_equal @retreat.name, 'Alternative String Value'
     assert_equal @retreat.description, 'Alternative String Value'
     assert_equal @retreat.jotform, 'Alternative String Value'
+    assert_equal @retreat.debrief, 'Alternative String Value'
     # 🚅 super scaffolding will additionally insert new fields above this line.
 
     # Also ensure we can't do that same action as another user.

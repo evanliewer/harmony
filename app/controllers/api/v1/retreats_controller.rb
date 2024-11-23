@@ -54,6 +54,8 @@ if defined?(Api::V1::ApplicationController)
           :active,
           :jotform,
           :actual_group_size,
+          :nps,
+          :debrief,
           # 🚅 super scaffolding will insert new fields above this line.
           *permitted_arrays,
           location_ids: [],

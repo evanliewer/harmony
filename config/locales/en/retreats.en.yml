@@ -133,6 +133,18 @@ en:
         heading: *actual_group_size
         api_title: *actual_group_size
         api_description: *actual_group_size
+      nps:
+        _: &nps Nps
+        label: *nps
+        heading: *nps
+        api_title: *nps
+        api_description: *nps
+      debrief:
+        _: &debrief Debrief
+        label: *debrief
+        heading: *debrief
+        api_title: *debrief
+        api_description: *debrief
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -203,6 +215,8 @@ en:
         host_ids: *host_ids
         contact_ids: *contact_ids
         actual_group_size: *actual_group_size
+        nps: *nps
+        debrief: *debrief
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at

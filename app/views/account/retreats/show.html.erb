@@ -46,7 +46,7 @@
     <% if @previous_retreats.any? %>
      Previous Retreats:
       <% @previous_retreats.each do |retreat| %>
-        <%= link_to retreat.arrival.in_time_zone('America/Los_Angeles').strftime("%B #{retreat.arrival.in_time_zone('America/Los_Angeles').day.ordinalize} %Y"), [:account, retreat] %> <%= '|' unless @previous_retreats.last == retreat %> 
+        <%= link_to retreat.arrival.in_time_zone('America/Los_Angeles').strftime("%B #{retreat.arrival.in_time_zone('America/Los_Angeles').day.ordinalize} %Y"), [:account, retreat], class: "" %><%# todo, based off NPS, make the color red green blue text-green-500 %> <%= '|' unless @previous_retreats.last == retreat %> 
       <% end %>  
     <% end %>
 

@@ -1,0 +1,34 @@
+<%= render 'account/shared/page' do |page| %>
+  <% page.title "Department View for #{@department.name} begining on #{Date.today.in_time_zone("America/Los_Angeles").strftime("%A %B #{Date.today.in_time_zone("America/Los_Angeles").day.ordinalize}")}" %>
+  <% page.body do %>
+
+	 <% @retreats.each do |retreat| %>
+       <% department = Department.find_by(name: "Recreation") %>
+       <% request = Retreats::Request.find_by(department_id: @department.id, retreat_id: retreat.id) %>
+
+      	<div class="bg-white p-6 rounded-lg shadow-md w-full mb-4">
+	  <h2 class="text-xl font-bold text-gray-700 mb-4"><%= link_to retreat.name, [:account, retreat] %></h2>
+	  <p><%= request.notes %></p>
+	   <div class="mt-auto text-right">
+	   	 <p><%= retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%A %B #{retreat.arrival.in_time_zone("America/Los_Angeles").day.ordinalize} %-l:%M%P") %> - <%= retreat.departure.in_time_zone("America/Los_Angeles").strftime("%A %B #{retreat.departure.in_time_zone("America/Los_Angeles").day.ordinalize} %-l:%M%P") %></p>
+   		 <p><strong><%= retreat.locations.present? ? retreat.locations.map { |p| p.name }.to_sentence : "Not Assigned" %> | </strong> <%= retreat.planners.present? ? retreat.planners.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
+   		 <p>Last Updated: <%= distance_of_time_in_words(Time.zone.now, request.updated_at.in_time_zone('America/Los_Angeles')) %> ago</p>
+		  </div>
+	 </div>
+    <% end %>
+
+
+
+	 <div class="bg-white p-6 rounded-lg shadow-md w-full mb-4">
+	  <h2 class="text-xl font-bold text-gray-700 mb-4">Schedule</h2>
+		<%= render 'account/retreats/agenda' %> 
+	</div>
+
+
+			
+
+
+
+    <%# 🚅 super scaffolding will insert new children above this line. %>
+  <% end %>
+<% end %>

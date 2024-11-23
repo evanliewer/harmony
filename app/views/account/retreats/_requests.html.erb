@@ -13,7 +13,7 @@
             <% if can? :edit, request %>  
                 <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, request], class: 'button-secondary button-smaller' %>
             <% end %>
-            <%= link_to "View", root_path %>
+            <%= link_to "View", department_view_account_retreat_path(@retreat, department: request.department.id) %>
           </div>  
        
         <% end %>

@@ -81,7 +81,6 @@ class Account::RetreatsController < Account::ApplicationController
   end
 
   def create_requests
-
    requests = Retreats::Request.where(retreat_id: @retreat.id)
     unless requests.any?
       departments = ["Audio Visual", "Buildings and Grounds", "Guest Dining", "Retail", "Recreation", "Accommodations"]
@@ -143,6 +142,13 @@ class Account::RetreatsController < Account::ApplicationController
 
                                 
     render layout: false
+  end
+
+  def department_view
+    @department = Department.find(params[:department]) || Department.find_by(name: "Recreation")
+    @team = current_team
+    @retreat = Retreat.find(params[:id])
+    @retreats = Retreat.all.limit(6)
   end
 
   private

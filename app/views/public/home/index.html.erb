@@ -586,7 +586,7 @@
         <% if days_until > 14 %>
           <%= link_to t('group_show.snack_request'), public_reservation_path(retreat_id: @retreat.id, snack: true), class: "btn btn-large btn-primary pull-right" %>
         <% else %>
-          You are past the ordering deadline. Please call or email your Event Planner if you have any last minute requests.  
+          To ensure we can provide your requests well, we only allow online edits to Snacks and Deliveries 2 weeks or more before your event. You still may be able to make requests, but will need to contact your event planner directly. 
         <% end %>  
         <% rescue => ex %>
             <% puts ex.message %>

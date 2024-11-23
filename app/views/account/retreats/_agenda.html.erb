@@ -1,12 +1,13 @@
 
 
     <!-- Agenda Section -->
-    <% @schedule = Reservation.where(retreat_id: [67088, 67110]) %>
+    <% @schedule = Reservation.where(retreat_id: @retreats.ids).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: @department.name }).ids }).where.not(active: false).order(:name) %>
 
 
 
     <!-- Schedule Content -->
-  <% number_days = (@retreat.departure.in_time_zone("America/Los_Angeles").to_date - @retreat.arrival.in_time_zone("America/Los_Angeles").to_date).to_i + 1 %>
+  <%# number_days = (@retreat.departure.in_time_zone("America/Los_Angeles").to_date - @retreat.arrival.in_time_zone("America/Los_Angeles").to_date).to_i + 1 %>
+  <% number_days = 7 %>
   
   <!-- Table Structure for the Schedule -->
   <table class="table-auto w-full border-collapse">
@@ -14,7 +15,7 @@
       <tr>
         <% number_days.times do |i| %>
           <% day = @retreat.arrival.in_time_zone("America/Los_Angeles") + i.days %>
-          <th class="px-4 py-2 border font-bold text-lg text-center"><%= day.strftime("%A, %B %-d") %></th>
+          <th class="px-4 py-2 border font-bold text-lg bg-gray-300 text-center"><%= day.strftime("%A, %B %-d") %></th>
         <% end %>
       </tr>
     </thead>

@@ -5,27 +5,56 @@
     <%= render 'account/shared/forms/errors', form: form %>
 
     <% with_field_settings form: form do %>
-      <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
+      
+      
+
+      <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <div class="col-span-1 md:col-span-4"><%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %></div>
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/number_field', method: :guest_count %></div>
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/number_field', method: :actual_group_size %></div>
+      </div>
+
       <%= render 'shared/fields/text_field', method: :description %>
-      <%= render 'shared/fields/date_and_time_field', method: :arrival %>
-      <%= render 'shared/fields/date_and_time_field', method: :departure %>
-      <%= render 'shared/fields/number_field', method: :guest_count %>
-      <%= render 'shared/fields/super_select', method: :organization_id, options: {}, html_options: {},
-        choices: @retreat.valid_organizations.map { |organization| [organization.label_string, organization.id] } %>
-      <%= render 'shared/fields/buttons', method: :internal %>
-      <%= render 'shared/fields/buttons', method: :active %>
-      <%= render 'shared/fields/text_field', method: :jotform %>
-      <%= render 'shared/fields/super_select', method: :location_ids, html_options: {multiple: true},
-        choices: @retreat.valid_locations.map { |location| [location.label_string, location.id] } %>
-      <%= render 'shared/fields/super_select', method: :demographic_ids, html_options: {multiple: true},
-        choices: @retreat.valid_demographics.map { |demographic| [demographic.label_string, demographic.id] } %>
-      <%= render 'shared/fields/super_select', method: :planner_ids, html_options: {multiple: true}, other_options: {search: true},
-        choices: @retreat.valid_planners.map { |membership| [membership.label_string, membership.id] } %>
-      <%= render 'shared/fields/super_select', method: :host_ids, html_options: {multiple: true}, other_options: {search: true},
-        choices: @retreat.valid_hosts.map { |membership| [membership.label_string, membership.id] } %>
-      <%= render 'shared/fields/super_select', method: :contact_ids, html_options: {multiple: true},
-        choices: @retreat.valid_contacts.map { |contact| [contact.label_string, contact.id] } %>
-      <%= render 'shared/fields/number_field', method: :actual_group_size %>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/super_select', method: :organization_id, options: {}, html_options: {},
+        choices: @retreat.valid_organizations.map { |organization| [organization.label_string, organization.id] } %></div>
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/super_select', method: :contact_ids, html_options: {multiple: true},
+        choices: @retreat.valid_contacts.map { |contact| [contact.label_string, contact.id] } %></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/date_and_time_field', method: :arrival %></div>
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/date_and_time_field', method: :departure %></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/super_select', method: :location_ids, html_options: {multiple: true},
+        choices: @retreat.valid_locations.map { |location| [location.label_string, location.id] } %></div>
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/super_select', method: :demographic_ids, html_options: {multiple: true},
+        choices: @retreat.valid_demographics.map { |demographic| [demographic.label_string, demographic.id] } %></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/super_select', method: :planner_ids, html_options: {multiple: true}, other_options: {search: true},
+        choices: @retreat.valid_planners.map { |membership| [membership.label_string, membership.id] } %></div>
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/super_select', method: :host_ids, html_options: {multiple: true}, other_options: {search: true},
+        choices: @retreat.valid_hosts.map { |membership| [membership.label_string, membership.id] } %></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/buttons', method: :active %></div>
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/buttons', method: :internal %></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <div class="col-span-1 md:col-span-1"><%= render 'shared/fields/number_field', method: :nps %></div>
+        <div class="col-span-1 md:col-span-5"><%= render 'shared/fields/text_field', method: :debrief %></div>
+      </div>
+
+  
+      
+      
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

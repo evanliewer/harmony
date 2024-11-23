@@ -160,3 +160,4 @@ rails g super_scaffold:field Medform gender:text_field address:address_field eme
 rails generate super_scaffold:audit_logs Location Team name:text_field capacity:number_field
 
 
+rails g super_scaffold:field Retreat nps:number_field debrief:text_field

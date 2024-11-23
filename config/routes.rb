@@ -103,6 +103,9 @@ Rails.application.routes.draw do
           scope module: 'retreats' do
             resources :comments, only: collection_actions
           end
+          member do
+            get :department_view
+          end
         end
         resources :reservations
         namespace :items do
