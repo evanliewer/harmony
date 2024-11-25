@@ -11,6 +11,16 @@ class Account::ItemsController < Account::ApplicationController
   # GET /account/items/:id
   # GET /account/items/:id.json
   def show
+    @previous_reservations = Reservation
+                            .where(item_id: @item.id)
+                            .where("start_time < ?", Time.zone.now)
+                            .order(start_time: :desc)
+                            .limit(5)
+    @next_reservations = Reservation
+                        .where(item_id: @item.id)
+                        .where("start_time >= ?", Time.zone.now)
+                        .order(start_time: :asc)
+                        .limit(5)
     delegate_json_to_api
   end
 

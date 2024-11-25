@@ -202,14 +202,11 @@
 <% @retreats.each do |retreat| %>
  <table class="data-table">
           <thead>
-
           </thead>
           <tbody>
           <tr>
 			  <td colspan="2" style="text-align: left;"><strong><%= retreat.name %> | <%= retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%B #{retreat.arrival.in_time_zone("America/Los_Angeles").day.ordinalize}") %></strong></td>
 			  <td><%= pluralize(retreat.actual_count, "Guest") %>, <%= retreat.demographic_tags.map { |tag| tag.demographic.name }.reject { |name| ["Shared Use", "Exclusive Use"].include?(name) }.to_sentence %></td>
-			  
-			 
 			  <td><%= pluralize(Reservation.includes([:items_option, :item]).where(retreat_id: retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).count.to_i, "Meal") %></td>
 			  <td>Schedule</td>
 			</tr>
@@ -218,11 +215,8 @@
 			  <% last_meal = Reservation.includes([:items_option, :item]).where(retreat_id: retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).order(:start_time).last %>
 			  <td style="width: 30%;"> First Meal <%= first_meal.item.name %> <%= first_meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
 			  <td colspan="2" style="width: 20%;">Last Meal <%= last_meal.item.name %> <%= last_meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %></td>
-			  <td colspan="2" style="text-align: left; width: 20%;">6 GFs, 5 DFs, 11 EFs</td>
-			 
+			  <td colspan="2" style="text-align: left; width: 20%;"><%= Medform.diet_summary_for_retreat(retreat.id) %></td>
 			</tr>
-
-            
           </tbody>
         </table>
 <% end %>        

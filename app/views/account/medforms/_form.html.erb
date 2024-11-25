@@ -6,21 +6,36 @@
 
     <% with_field_settings form: form do %>
       <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
-      <%= render 'shared/fields/super_select', method: :retreat_id, options: {}, html_options: {},
-        choices: @medform.valid_retreats.map { |retreat| [retreat.label_string, retreat.id] } %>
-      <%= render 'shared/fields/text_field', method: :phone %>
-      <%= render 'shared/fields/text_field', method: :email %>
-      <%= render 'shared/fields/text_field', method: :dietary %>
-      <%= render 'shared/fields/super_select', method: :diet_id, options: {include_blank: "None"}, html_options: {},
-        choices: @medform.valid_diets.map { |diet| [diet.label_string, diet.id] } %>
-      <%= render 'shared/fields/text_field', method: :gender %>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-2">
+        <div class="col-span-1"><%= render 'shared/fields/phone_field', method: :phone %></div>
+        <div class="col-span-1"><%= render 'shared/fields/email_field', method: :email %></div>
+      </div> 
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-2">
+        <div class="col-span-1"><%= render 'shared/fields/super_select', method: :diet_id, options: {include_blank: "None"}, html_options: {},
+        choices: @medform.valid_diets.map { |diet| [diet.label_string, diet.id] } %></div>
+        <div class="col-span-1"><%= render 'shared/fields/super_select', method: :retreat_id, options: {}, other_options: {search: true}, html_options: {},
+        choices: @medform.valid_retreats.map { |retreat| [retreat.label_string, retreat.id] } %></div>
+      </div>
+      <%# render 'shared/fields/text_field', method: :dietary %>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-2">
+        <div class="col-span-1"><%= render 'shared/fields/number_field', method: :age %></div>
+        <div class="col-span-1"><%= render 'shared/fields/super_select', method: :gender, options: {}, html_options: {},
+          choices: [["Male", "Male"],["Female","Female"]] %></div>
+      </div> 
       <%= render 'shared/fields/address_field', method: :address %>
       <%= render 'shared/fields/text_field', method: :emergency_contact_name %>
-      <%= render 'shared/fields/text_field', method: :emergency_contact_phone %>
-      <%= render 'shared/fields/text_field', method: :emergency_contact_relationship %>
-      <%= render 'shared/fields/options', method: :terms %>
-      <%= render 'shared/fields/text_field', method: :form_for %>
-      <%= render 'shared/fields/text_field', method: :age %>
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-2">
+        <div class="col-span-1"><%= render 'shared/fields/phone_field', method: :emergency_contact_phone %></div>
+        <div class="col-span-1"><%= render 'shared/fields/text_field', method: :emergency_contact_relationship %></div>
+      </div> 
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-2">
+        <div class="col-span-1"><%= render 'shared/fields/options', method: :terms %></div>
+        <div class="col-span-1"><%= render 'shared/fields/super_select', method: :form_for, options: {}, html_options: {},
+              choices: [["Myself", "Myself"],["My child under 18","My child under 18"]] %></div>
+      </div>
+      
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

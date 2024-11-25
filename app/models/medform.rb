@@ -48,6 +48,18 @@ class Medform < ApplicationRecord
       errors.add(:name, 'has already been submitted and this is likely a duplicate entry.  If it is not, please resubmit with a different name or phone number')
     end
   end
+
+  def self.diet_summary_for_retreat(retreat_id)
+    # Group by diet_id and abbreviation, then count records
+    diet_counts = Medform
+                    .where(retreat_id: retreat_id)
+                    .joins(:diet) # Assuming `Medform` belongs_to :diet
+                    .group('diets.id', 'diets.abbreviation')
+                    .pluck('diets.abbreviation, COUNT(medforms.id) as count')
+
+    # Format the result into a string
+    diet_counts.map { |abbreviation, count| "#{count} #{abbreviation.pluralize}" }.to_sentence
+  end
  
 
 

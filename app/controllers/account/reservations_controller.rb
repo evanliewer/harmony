@@ -29,6 +29,27 @@ class Account::ReservationsController < Account::ApplicationController
     end
   end
 
+  def calendar_json
+    @reservations = Reservation.includes(:item).where(item_id: params[:item_id])
+    respond_to do |format|
+      format.json do
+        # Explicitly convert to array before rendering
+        transformed_reservations = @reservations.map do |reservation|
+          {
+            id: reservation.id,
+            start_time: reservation.start_time,
+            end_time: reservation.end_time,
+            title: reservation.retreat&.name
+          }
+        end
+
+        render json: transformed_reservations
+      end
+    end
+  end
+
+
+
   # GET /account/reservations/:id
   # GET /account/reservations/:id.json
   def show

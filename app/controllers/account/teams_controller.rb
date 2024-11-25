@@ -1,5 +1,6 @@
 class Account::TeamsController < Account::ApplicationController
   include Account::Teams::ControllerBase
+  filter_resource "Medform", [:full_name], actions: :show
   filter_resource "Item", [:name, :description, :location], actions: :show
 
   def update_fullcalendar_event

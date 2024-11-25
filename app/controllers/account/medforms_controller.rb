@@ -1,6 +1,7 @@
 class Account::MedformsController < Account::ApplicationController
   before_action :set_default_address, except: :index
   account_load_and_authorize_resource :medform, through: :team, through_association: :medforms
+  filter_resource "Medform", [:name]
 
   # GET /account/teams/:team_id/medforms
   # GET /account/teams/:team_id/medforms.json

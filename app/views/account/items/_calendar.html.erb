@@ -1,0 +1,142 @@
+
+
+<!-- Full Calendar  -->
+   <!--<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>-->
+   <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js'></script>
+ <script>
+ document.addEventListener('turbo:load', function() {
+  var calendarEl = document.getElementById('calendar');
+
+    // Check if a calendar is already initialized and destroy it
+  if (calendarEl && calendarEl.fullCalendarInstance) {
+    calendarEl.fullCalendarInstance.destroy();
+    delete calendarEl.fullCalendarInstance;
+  }
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {  
+    eventSources: [
+      {
+        url: '<%= account_team_calendar_json_path(team_id: current_team.id, item_id: @item.id, format: :json) %>', 
+        extraParams: {
+          item: '<%= @item.id %>',
+        },
+        success: function(data) {
+          var events = data.map(function(item) {
+            return {
+              id: item.id,
+              title: item.title,
+              start: item.start_time,
+              end: item.end_time,
+              allDay: false
+            };
+          });
+          return events;
+        },
+        error: function(error) {
+          console.error('Error fetching events:', error);
+        }
+      }
+    ],
+    <% days = 4 %>
+    initialView: 'dayGridMonth', 
+    views: {
+      timeGridFlex: {
+        type: 'dayGridMonth',
+        duration: { days: <%= days %> }
+      }
+    },
+    initialDate: '<%= Time.zone.now.strftime("%Y-%m-%d") %>',
+    slotMinTime: '06:00:00',
+    slotMaxTime: '23:00:00',
+    slotDuration: '00:30:00',
+    height: "auto",
+    editable: true,  // Allow dragging and resizing
+    droppable: false,
+    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+    headerToolbar: {
+      start: '',
+      center: 'title',
+      <% if days > 7 %>
+      end: 'prev,next today'
+      <% end %>
+    },
+    eventTimeFormat: {
+   //   hour: '2-digit',
+    //  minute: '2-digit',
+    //  meridiem: true
+    },
+       // Remove date from event text
+    eventContent: function(info) {
+      return { html: `<div>${info.event.title}</div>` }; // Render only the title
+    },
+
+       // Callback to modify the event appearance based on its title
+
+
+      // Add a tooltip to display time on hover
+    eventDidMount: function(info) {
+      var startTime = new Date(info.event.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      var endTime = info.event.end ? new Date(info.event.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : null;
+
+      var tooltipContent = `${info.event.title}`;
+      if (startTime) tooltipContent += `\nStart: ${startTime}`;
+      if (endTime) tooltipContent += `\nEnd: ${endTime}`;
+
+      // Add a tooltip to the event
+      info.el.setAttribute('title', tooltipContent); // Adds a native browser tooltip
+    },
+
+     eventClick: function (info) {
+      var reservationId = info.event.id; // Get the reservation ID from the event object
+      var editUrl = '/account/reservations/' + reservationId + '/edit'; // Construct the URL dynamically
+      window.location.href = editUrl; // Redirect to the edit page
+      info.jsEvent.preventDefault(); // Prevents the default browser behavior
+    },
+
+    
+    eventResize: function(info) {
+      var event = info.event;
+
+      // Log the resize data before sending it
+      console.log('Resizing event:', {
+        id: event.id,
+        reservation: event.id,
+        start: event.start.toISOString(),
+        end: event.end.toISOString()
+      });
+
+      fetch('<%= account_team_fullcalendar_update_url(team_id: current_team.id) %>', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+          id: event.id,
+          reservation: event.id,
+          start: event.start.toISOString(),
+          end: event.end.toISOString()
+        })
+      }).then(response => response.json())
+      .then(data => {
+        console.log('Event resized successfully', data);
+      }).catch(error => {
+        console.error('Error resizing event:', error);
+      });
+    }
+  });
+
+  calendar.render();
+});
+
+
+</script>
+
+
+  
+<!-- End Full Calendar -->
+<div class="container mx-auto grid grid-cols-1 lg:grid-cols-1 gap-4">
+  <div class="col-span-1 flex flex-col bg-white border-2 p-4 rounded-lg">
+    <div id='calendar'></div>
+  </div>
+</div>  

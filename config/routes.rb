@@ -89,6 +89,7 @@ Rails.application.routes.draw do
         get 'print_gold' => 'retreats#gold', as: 'print_gold'
         get '/lodging' => 'items#lodging', as: 'lodging'
         get 'schedule_json' => 'reservations#schedule_json', as: 'schedule_json'
+        get 'calendar_json' => 'reservations#calendar_json', as: 'calendar_json'
 
         resources :demographics, concerns: [:sortable]
         resources :departments, concerns: [:sortable]

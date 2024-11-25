@@ -12,6 +12,7 @@
         <% box.body do %>
           <% with_attribute_settings object: @item, strategy: :label do %>
             <%= render 'shared/attributes/text', attribute: :name %>
+            <%= render 'shared/attributes/text', attribute: :id %>
             <%= render 'shared/attributes/text', attribute: :description %>
             <%= render 'shared/attributes/belongs_to', attribute: :location %>
             <%= render 'shared/attributes/option', attribute: :active %>
@@ -39,6 +40,79 @@
         <% end %>
       <% end %>
     <% end %>
+
+    <div class="bg-white p-6 rounded-lg shadow-md w-full mb-4">
+      <h2 class="text-xl font-bold text-gray-700 mb-4">Use Schedule</h2>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="lg:col-span-2">
+        <% if @previous_reservations.any? %>
+         <table class="table">
+          <thead>
+            <tr>
+              <th>Previous Groups</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+             
+            <% @previous_reservations.order(:start_time).each do |reservation| %> 
+             <tr>
+              <td><%= reservation.start_time.in_time_zone("America/Los_Angeles").strftime("%B #{reservation.start_time.in_time_zone("America/Los_Angeles").day.ordinalize} %Y") %></td>
+                <td><%= link_to reservation.retreat&.name, [:account, reservation] %></td>
+                <td><%= distance_of_time_in_words(Time.zone.now, reservation.start_time.in_time_zone("America/Los_Angeles")) %> ago</td>
+            </tr> 
+           <% end %>  
+              
+         
+       </tbody>
+     </table>
+     <% else %>
+      <p>There are no previous usage of this item </p>
+     <% end %>
+      </div>
+     <div class="lg:col-span-2">
+       <% if @next_reservations.any? %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Upcoming Groups</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+             
+            <% @next_reservations.order(:start_time).each do |reservation| %> 
+             <tr>
+              <td><%= reservation.start_time.in_time_zone("America/Los_Angeles").strftime("%B #{reservation.start_time.in_time_zone("America/Los_Angeles").day.ordinalize} %Y") %></td>
+                <td><%= link_to reservation.retreat&.name, [:account, reservation] %></td>
+                <td><%= distance_of_time_in_words(Time.zone.now, reservation.start_time.in_time_zone("America/Los_Angeles")) %> until arrival</td>
+            </tr> 
+           <% end %>  
+              
+         
+       </tbody>
+     </table>
+     <% else %>
+       <p>There are no upcoming reservations for this item </p>
+     <% end %>
+      </div>
+    </div> 
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow-md w-full mb-4">
+  <h2 class="text-xl font-bold text-gray-700 mb-4">Calendar</h2>
+
+
+    <%= render 'account/items/calendar' %> 
+    <%# render 'account/retreats/agenda' %>
+
+
+</div>
+
+
 
     <%= render 'account/items/options/index', options: @item.options, hide_back: true %>
     <%# 🚅 super scaffolding will insert new children above this line. %>
