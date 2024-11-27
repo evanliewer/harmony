@@ -14,17 +14,28 @@
 
 <ul class="flex border-b">
   <li class="-mb-px mr-1">
-    <%= link_to "Next 7 Days", account_team_retreats_path(team_id: current_team.id), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
+    <%= link_to "Next 7 Days", account_team_retreats_path(team_id: current_team.id, search: "Next_7"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
   </li>
   <li class="mr-1">
-    <%= link_to "On Site", account_team_retreats_path(team_id: current_team.id), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-
+    <%= link_to "On Site", account_team_retreats_path(team_id: current_team.id, search: "Onsite"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
   </li>
   <li class="mr-1">
-    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#">Tab</a>
+    <%= link_to "Creekside", account_team_retreats_path(team_id: current_team.id, search: "Last_Week"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
   </li>
   <li class="mr-1">
-    <a class="bg-white inline-block py-2 px-4 text-gray-400 font-semibold" href="#">Tab</a>
+    <%= link_to "No Internal", account_team_retreats_path(team_id: current_team.id, search: "No_Internal"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
+  </li>
+  <li class="mr-1">
+    <%= link_to "Forest Center", account_team_retreats_path(team_id: current_team.id, search: "Forest_Center"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
+  </li>
+  <li class="mr-1">
+    <%= link_to "Lakeview", account_team_retreats_path(team_id: current_team.id, search: "Lakeview"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
+  </li>
+  <li class="mr-1">
+    <%= link_to "Creekside", account_team_retreats_path(team_id: current_team.id, search: "Creekside"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
+  </li>
+  <li class="mr-1">
+    <%= link_to "Reset", account_team_retreats_path(team_id: current_team.id, search: "Reset"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
   </li>
 </ul>
 

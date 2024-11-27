@@ -5,9 +5,46 @@ class Account::RetreatsController < Account::ApplicationController
   # GET /account/teams/:team_id/retreats
   # GET /account/teams/:team_id/retreats.json
   def index
-    query = params[:search_query]
-    @retreats = query.present? ? Retreat.search_by_id_or_name(query) : Retreat.all   
-    @onsite_retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.zone.now, Time.zone.now)
+    
+    if params[:search_query].present?
+      @retreats = Retreat.search_by_id_or_name(params[:search_query])
+    elsif params[:search].present?
+      case params[:search]
+      when "Next_7"
+        @retreats = Retreat.where(arrival: Date.today.beginning_of_day..(Date.today + 7.days).end_of_day).order(:arrival)
+      when "Onsite"
+        @retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.current, Time.current).order(:arrival)
+      when "Last_Week"
+        @retreats = Retreat.where('arrival >= ? AND arrival <= ?', 7.days.ago.beginning_of_day, Time.current.end_of_day).order(:arrival)
+      when "No_Internal"
+        @retreats = @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).where.not(internal: true).limit(50).order(:arrival)
+      when "Forest_Center"
+        @retreats = Retreat.joins(:locations).where(locations: { name: 'Forest Center' }).where('arrival > ?', Date.today.beginning_of_day).limit(50).order(:arrival)
+      when "Lakeview"
+        @retreats = Retreat.joins(:locations).where(locations: { name: 'Lakeview' }).where('arrival > ?', Date.today.beginning_of_day).limit(50).order(:arrival)
+      when "Creekside"
+        @retreats = Retreat.joins(:locations).where(locations: { name: 'Creekside' }).where('arrival > ?', Date.today.beginning_of_day).limit(50).order(:arrival)
+      else
+        @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).order(:arrival).limit(50)
+      end
+    else 
+      @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).order(:arrival).limit(50)
+    end  
+
+    #@retreats = query.present? ? Retreat.search_by_id_or_name(query) : Retreat.all
+
+
+
+
+
+
+
+
+
+
+
+
+    #@onsite_retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.zone.now, Time.zone.now)
 
     delegate_json_to_api
   end
