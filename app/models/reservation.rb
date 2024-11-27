@@ -4,7 +4,7 @@ class Reservation < ApplicationRecord
   # 🚅 add attribute accessors above.
 
   belongs_to :team
-  belongs_to :retreat, optional: true
+  belongs_to :retreat, optional: true, touch: true
   belongs_to :item, optional: true
   belongs_to :user, class_name: "Membership", optional: true
   belongs_to :items_option, class_name: "Items::Option", optional: true

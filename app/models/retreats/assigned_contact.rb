@@ -3,7 +3,7 @@ class Retreats::AssignedContact < ApplicationRecord
 
   # 🚅 add attribute accessors above.
 
-  belongs_to :retreat
+  belongs_to :retreat, touch: true
   belongs_to :contact, class_name: "Organizations::Contact"
   # 🚅 add belongs_to associations above.
 

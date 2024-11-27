@@ -183,7 +183,9 @@
             <td><%= meal.item&.name %> (<%= meal.retreat.actual_count %>)</td>
             <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %> - <%= meal.end_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
       
-            <td><%= meal.retreat.demographic_tags.map { |tag| tag.demographic.name }.reject { |name| ["Shared Use", "Exclusive Use"].include?(name) }.to_sentence %></td>
+            <td><%= meal.retreat.demographic_tags.map { |tag| tag.demographic.name }.reject { |name| ["Shared Use", "Exclusive Use"].include?(name) }.to_sentence %>
+              <%= meal.dining_style if meal.dining_style.present? %>
+            </td>
             <% Diet.where(team_id: current_team).each do |diet| %>
             	<td><%= Medform.where(retreat_id: meal.retreat.id, diet_id: diet.id).count.to_i %></td>
             <% end %>
@@ -208,7 +210,7 @@
 			  <td colspan="2" style="text-align: left;"><strong><%= retreat.name %> | <%= retreat.arrival.in_time_zone("America/Los_Angeles").strftime("%B #{retreat.arrival.in_time_zone("America/Los_Angeles").day.ordinalize}") %></strong></td>
 			  <td><%= pluralize(retreat.actual_count, "Guest") %>, <%= retreat.demographic_tags.map { |tag| tag.demographic.name }.reject { |name| ["Shared Use", "Exclusive Use"].include?(name) }.to_sentence %></td>
 			  <td><%= pluralize(Reservation.includes([:items_option, :item]).where(retreat_id: retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).count.to_i, "Meal") %></td>
-			  <td>Schedule</td>
+			  
 			</tr>
 			<tr>
 			  <% first_meal = Reservation.includes([:items_option, :item]).where(retreat_id: retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id).order(:start_time).first %>
@@ -242,7 +244,7 @@
           <tbody>
             <% @meals.each do |meal| %>
               <tr>
-                <td><%= meal.item.name %></td>
+                <td><%= meal.item.name %> (<%= meal.retreat.actual_count %>)</td>
                 <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %> - <%= meal.end_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
               </tr>
             <% end %>
@@ -253,31 +255,36 @@
 
      
 
-      <div class="column">
-        <!-- Second Column: Project Milestones -->
-        <h3 class="section-title">Meeting Spaces</h3>
+       <div class="column">
+        <!-- First Column: General Info -->
+        <h3 class="section-title">Delivieries</h3>
+        <!--   <p class="highlight">Details of Groups</p>-->
 
-        <!-- Example Table 2: Resource Allocation -->
-         <table class="data-table">
-          <thead>
-            <tr>
-              <th>Meeting Space</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @meetingspaces.each do |meetingspace| %>
-              <tr>
-                <td><%= meetingspace.item.name %></td>
-                <td><%= meetingspace.notes %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <!-- Example Table 1: Financial Overview -->
+        <% if @deliveries.any? %>
+          <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Meal</th>
+                  <th>Times</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @deliveries.each do |delivery| %>
+                  <tr>
+                    <td><%= delivery.item.name %></td>
+                    <td><%= delivery.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %> - <%= delivery.end_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+         <% else %>
+          No Deliveries for this group
+         <% end %>    
       </div>
+
     </div>
 
- <div class="page-break"></div>
    <!-- Department Requests -->
   <h3 class="section-title">Department Requests</h3>
    <table class="data-table">
@@ -288,10 +295,10 @@
               </tr>
             </thead>
             <tbody>
-              <% if @retreat.requests.any? %>
-               <% @retreat.requests.each do |request| %>
+              <% if @requests.any? %>
+               <% @requests.each do |request| %>
                 <tr>
-                  <td><%= request.department.name %></td>
+                  <td><%= request.retreat.name %></td>
                   <td><%= request.notes %></td>
                 </tr>
                <% end %> 
@@ -303,45 +310,8 @@
              <% end %> 
             </tbody>
           </table>
-  <!-- End Schedule  -->    
+  <!-- End Department Requests  -->    
 
-<div class="page-break"></div>
-
-   <!-- Schedule -->
-  <h3 class="section-title">Schedule</h3>
-   <table class="data-table">
-            <thead>
-              <tr>
-                <th>Reservation</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @schedule.each do |reservation| %>
-                <tr>
-                  <td><%= reservation.item.name %></td>
-                  <td><%= reservation.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") if reservation.start_time.present? %></td>
-                  <td><%= reservation.end_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") if reservation.end_time.present? %></td>
-
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-  <!-- End Schedule  -->               
-<br/><br/><br/><br/><br/><br/><br/><br/>
-   
-
-
-    <!-- Page Break for Next Section -->
-    <div class="page-break"></div>
-
-    <!-- Another Section with a Table -->
-   
-
-  <!-- Footer 
-  <div class="footer">
-    Prepared for John Doe | Confidential Report | Page 1 of 1
-  </div> -->
+        
 </body>
 </html>

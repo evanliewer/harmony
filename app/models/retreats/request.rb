@@ -4,7 +4,7 @@ class Retreats::Request < ApplicationRecord
   # 🚅 add attribute accessors above.
 
   belongs_to :team
-  belongs_to :retreat
+  belongs_to :retreat, touch: true
   belongs_to :department, optional: true
   # 🚅 add belongs_to associations above.
 

@@ -12,32 +12,17 @@
 <%= action_model_select_controller do %>
   <% cable_ready_updates_for context, collection do %>
 
-<ul class="flex border-b">
-  <li class="-mb-px mr-1">
-    <%= link_to "Next 7 Days", account_team_retreats_path(team_id: current_team.id, search: "Next_7"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
-  <li class="mr-1">
-    <%= link_to "On Site", account_team_retreats_path(team_id: current_team.id, search: "Onsite"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
-  <li class="mr-1">
-    <%= link_to "Creekside", account_team_retreats_path(team_id: current_team.id, search: "Last_Week"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
-  <li class="mr-1">
-    <%= link_to "No Internal", account_team_retreats_path(team_id: current_team.id, search: "No_Internal"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
-  <li class="mr-1">
-    <%= link_to "Forest Center", account_team_retreats_path(team_id: current_team.id, search: "Forest_Center"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
-  <li class="mr-1">
-    <%= link_to "Lakeview", account_team_retreats_path(team_id: current_team.id, search: "Lakeview"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
-  <li class="mr-1">
-    <%= link_to "Creekside", account_team_retreats_path(team_id: current_team.id, search: "Creekside"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
-  <li class="mr-1">
-    <%= link_to "Reset", account_team_retreats_path(team_id: current_team.id, search: "Reset"), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg" %>
-  </li>
+  <% tabs = ["Next 7 Days", "On Site", "Last Week", "No Internal", "Forest Center", "Lakeview", "Creekside", "Reset"] %>
+
+<ul class="flex flex-wrap border-b md:flex-nowrap">
+  <% tabs.each do |tab| %>
+    <li class="mr-1 w-1/2 md:w-auto">
+      <%= link_to tab, account_team_retreats_path(team_id: current_team.id, search: tab.parameterize.underscore), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-lg text-center" %>
+    </li>
+  <% end %>
 </ul>
+
+
 
 <% if @retreats&.exists? && @retreats.any? %>
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
@@ -123,6 +108,7 @@
               N/A
             <% else %>  
               <%= number_to_percentage(100 * flightchecks.where.not(completed_at: nil).count.to_f / flightchecks.count.to_f, precision: 1)  %> Planned
+            <% end %>
               <% if Time.zone.now < retreat.arrival %>
                 <!-- Retreat is in the future -->
                 <p>Arriving in <%= distance_of_time_in_words(Time.zone.now, retreat.arrival.in_time_zone("America/Los_Angeles")) %></p>
@@ -133,8 +119,7 @@
                 <!-- Retreat is in the past -->
                 <p>Arrived <%= distance_of_time_in_words(retreat.departure.in_time_zone("America/Los_Angeles"), Time.zone.now) %> ago</p>
               <% end %>
-
-            <% end %>
+                <p>Last Update: <%= distance_of_time_in_words(Time.now, retreat.updated_at) %> ago</p>
         </span>
       </div>
 
@@ -142,6 +127,11 @@
     </div>
   <% end %>
 </div>
+
+<% else %>
+  <div class="bg-white p-6 rounded-lg shadow-md w-full mb-4">
+    <h2 class="text-xl font-bold text-gray-700 mb-4">No Retreats Match Parameters</h2>
+  </div>
 
 <% end %>
 
