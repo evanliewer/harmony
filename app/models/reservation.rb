@@ -14,6 +14,8 @@ class Reservation < ApplicationRecord
 
   # 🚅 add has_one associations above.
    scope :with_schedule_tag, -> {joins(item: { applied_tags: :tag }).where(items_tags: { name: 'Schedule' })}
+   # Scope to check if an item is currently reserved
+  scope :currently_reserved, ->(item_id) { where(item_id: item_id).where('start_time <= ? AND end_time >= ?', Time.current, Time.current)}
 
   # 🚅 add scopes above.
 
