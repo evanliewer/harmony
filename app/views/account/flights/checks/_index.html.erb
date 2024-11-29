@@ -1,5 +1,4 @@
 <% checks = checks.accessible_by(current_ability) %>
-<%# checks = @checks %>
 <% team = @team %>
 <% context ||= team %>
 <% collection ||= :flights_checks %>
@@ -13,7 +12,7 @@
   <% cable_ready_updates_for context, collection do %>
 
   <% if @event_planners.present? %>
-    <% tabs = ["Due in Two Weeks", "Overdue", "My Upcoming", "My Overdue"] %>
+    <% tabs = ["Due in Two Weeks", "Overdue"] %>
     <% @event_planners.each do |planner| %>
       <% tabs << Membership.find(planner).user_first_name %>
     <% end %>

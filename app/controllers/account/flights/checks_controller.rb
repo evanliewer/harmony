@@ -10,24 +10,18 @@ class Account::Flights::ChecksController < Account::ApplicationController
     if params[:search].present?
       case params[:search]
       when "due_in_two_weeks"
-        from_date = Time.current
-        to_date = 2.weeks.from_now
-
-        @checks = Flights::Check.joins(:flight)
+        @checks = Flights::Check.joins(:flight, :retreat)
                             .where(completed_at: nil) # Exclude completed checks
-                            .where.not('flights.warning IS NULL') # Ensure warning exists
-                            .where('flights.created_at + (flights.warning * interval \'1 day\') BETWEEN ? AND ?', from_date, to_date)
-        @checks = Flights::Check.joins(:flight).where(completed_at: nil)                 
-
+                            .where('(DATE(retreats.arrival) - DATE(?) - COALESCE(flights.warning, 0)) BETWEEN 0 AND 14', Time.zone.today)
       when "overdue"
+        @checks = Flights::Check.joins(:flight, :retreat).where(completed_at: nil).where('DATE(retreats.arrival) - DATE(?) - flights.warning <= 0', Time.zone.today)
+      when "reset"
         @checks = Flights::Check.all
-      when "my_upcoming"
-        @checks = Flights::Check.all
-      when "my_overdue"
-        @checks = Flights::Check.all
-     
       else
-        @checks = Flights::Check.all
+         @retreats = Retreat.joins(:planner_tags)
+                   .joins('INNER JOIN memberships ON retreats_planner_tags.planner_id = memberships.id')
+                   .where('memberships.user_first_name ILIKE ?', "#{params[:search]}")
+         @checks = Flights::Check.where(retreat: @retreats.ids)
       end
     else 
       @checks = Flights::Check.joins(:retreat).order('retreats.arrival')
