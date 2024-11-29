@@ -4,6 +4,35 @@ class Account::Flights::ChecksController < Account::ApplicationController
   # GET /account/teams/:team_id/flights/checks
   # GET /account/teams/:team_id/flights/checks.json
   def index
+    @retreats = Retreat.where(arrival: (Time.zone.now - 7.days)..(Time.zone.now + 6.months)).order(:arrival)
+    @event_planners = @retreats.flat_map { |retreat| retreat.planners&.ids }.compact.uniq
+
+    if params[:search].present?
+      case params[:search]
+      when "due_in_two_weeks"
+        from_date = Time.current
+        to_date = 2.weeks.from_now
+
+        @checks = Flights::Check.joins(:flight)
+                            .where(completed_at: nil) # Exclude completed checks
+                            .where.not('flights.warning IS NULL') # Ensure warning exists
+                            .where('flights.created_at + (flights.warning * interval \'1 day\') BETWEEN ? AND ?', from_date, to_date)
+        @checks = Flights::Check.joins(:flight).where(completed_at: nil)                 
+
+      when "overdue"
+        @checks = Flights::Check.all
+      when "my_upcoming"
+        @checks = Flights::Check.all
+      when "my_overdue"
+        @checks = Flights::Check.all
+     
+      else
+        @checks = Flights::Check.all
+      end
+    else 
+      @checks = Flights::Check.joins(:retreat).order('retreats.arrival')
+    end 
+
     delegate_json_to_api
   end
 

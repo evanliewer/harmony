@@ -15,7 +15,7 @@ class Reservation < ApplicationRecord
   # 🚅 add has_one associations above.
    scope :with_schedule_tag, -> {joins(item: { applied_tags: :tag }).where(items_tags: { name: 'Schedule' })}
    # Scope to check if an item is currently reserved
-  scope :currently_reserved, ->(item_id) { where(item_id: item_id).where('start_time <= ? AND end_time >= ?', Time.current, Time.current)}
+   scope :currently_reserved, ->(item_id) { where(item_id: item_id).where('start_time <= ? AND end_time >= ?', Time.current, Time.current)}
 
   # 🚅 add scopes above.
 
@@ -45,7 +45,6 @@ class Reservation < ApplicationRecord
   end
 
   def set_defaults
-    puts "set_defaults"
     self.name ||= self.retreat.name + " " + self.item.name
     self.quantity ||= 1
     self.active ||= true
@@ -69,6 +68,27 @@ end
   def valid_items_options
     self.item.options
   end
+
+  def self.next_meal_at(location)
+    now = Time.current
+
+    # Find the next reservation for meals at the specified location
+    next_meal = joins(:retreat, :item)
+      .joins(retreat: :locations) # Join through locations
+      .where(items: { name: ['Breakfast', 'Lunch', 'Dinner'] }) # Filter meals
+      .where('reservations.start_time > ?', now) # Future reservations
+      .where(locations: { name: location }) # Match the location name
+      .order('reservations.start_time ASC') # Sort by the closest time
+      .first # Get the next reservation
+
+      if next_meal
+        "#{next_meal.start_time.in_time_zone('America/Los_Angeles').strftime("%A %-l:%M%P")}"
+      else
+        "No upcoming meal"
+      end  
+      
+  end
+
 
   # 🚅 add methods above.
 end

@@ -5,6 +5,12 @@ class Account::ItemsController < Account::ApplicationController
   # GET /account/teams/:team_id/items
   # GET /account/teams/:team_id/items.json
   def index
+    if params[:tag].present?
+      @items = Item.joins(:tags).where(tags: { name: params[:tag] })
+    else 
+      @items = Item.where.not(id: Item.joins(:tags).where("tags.name ILIKE ?", "%Amenity%").where(tags: { name: ['Lodging','Meeting Spaces'] }).select(:id))  
+    end
+
     delegate_json_to_api
   end
 

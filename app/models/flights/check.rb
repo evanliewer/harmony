@@ -4,8 +4,8 @@ class Flights::Check < ApplicationRecord
   # 🚅 add attribute accessors above.
 
   belongs_to :team
-  belongs_to :retreat, optional: true
-  belongs_to :flight, optional: true
+  belongs_to :retreat
+  belongs_to :flight
   belongs_to :user, class_name: "Membership", optional: true
   # 🚅 add belongs_to associations above.
 
@@ -16,8 +16,9 @@ class Flights::Check < ApplicationRecord
   # 🚅 add scopes above.
 
   validates :name, presence: true
-  validates :retreat, scope: true
-  validates :flight, scope: true
+  #validates :retreat, scope: true
+ # validates :flight, scope: true
+  validates :retreat, uniqueness: { scope: :flight, message: "and flight combination must be unique" }
   validates :user, scope: true
   # 🚅 add validations above.
 

@@ -63,101 +63,99 @@ module Circuitree
 
 
 
-      def self.circuitree_download(team = nil, itinerary = nil)
-        Team.all.each do |team|
-         puts "Begin CT Download for #{team.name}"
-         start_date = Date.today
-         end_date = Date.today + 14.days
+ def self.circuitree_download(team = nil, itinerary = nil)
+    Team.all.each do |team|
+     puts "Begin CT Download for #{team.name}"
+     start_date = Date.today
+     end_date = Date.today + 14.days
 
-         puts "CTquery method from CT library module"
-         url = "https://api.circuitree.com/Exports/ExecuteQuery.json"
-       
-         paramArray = []
+     puts "CTquery method from CT library module"
+     url = "https://api.circuitree.com/Exports/ExecuteQuery.json"
+   
+     paramArray = []
 
-         param = {
-          'ParameterID' => 8,
-          'ParameterValue' => start_date
-            }
-         paramArray << param   
+     param = {
+      'ParameterID' => 8,
+      'ParameterValue' => start_date
+        }
+     paramArray << param   
 
-         param = {
-          'ParameterID' => 9,
-          'ParameterValue' => end_date
-            } 
-         paramArray << param  
-
-
-         if itinerary.present?
-          puts "ItineraryID was present: " + itinerary.to_s
-            param = {
-          'ParameterID' => 26,
-          'ParameterValue' => itinerary
-            } 
-         paramArray << param 
-
-         end   
-         
-         data = {
-            'ApiToken' => team.circuitree_api,
-            'ExportQueryID' =>  team.groups_query,
-            'QueryParameters' => paramArray
-          }
-
-          uri = URI(url)
-          http = Net::HTTP.new(uri.host, uri.port)
-          http.use_ssl = true
-          req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
-          req.body = data.to_json
-          res = http.request(req)
-          ct_results = JSON.parse(res.body)
-
-          puts "Starting Itinerary Download"
-          begin
-             ct_results.each do |key,value|
-              if key == "Results"
-                JSON.parse(value).each do |val|
-                  puts "--------------------~~~~~ " + val['GroupName'] + " ~~~~~---------------------------"
-                  begin
-                   puts "start itinerary search and save"
-                   retreat = Retreat.find_or_initialize_by(:team_id => team.id, :id => val['ItineraryID'].to_i)
-                   #unless retreat.import_lock == true
-                   unless 1 == 2 
-                     retreat.name = val['GroupName'].to_s
-                     
-                     if Rails.env.production?
-                      retreat.arrival = DateTime.parse(val['ArrivalDateTime'])
-                      retreat.departure = DateTime.parse(val['DepartureDateTime'])
-                     else 
-                      puts "Development"
-                      arrivalDateTime = val['ArrivalDateTime'].to_datetime
-                      departureDateTime = val['DepartureDateTime'].to_datetime
-                      arrival = Time.now.in_time_zone("Pacific Time (US & Canada)")
-                      departure = Time.now.in_time_zone("Pacific Time (US & Canada)")
-                      retreat.arrival = arrival.change(:year => arrivalDateTime.year, :month => arrivalDateTime.month, :day => arrivalDateTime.day, :hour => arrivalDateTime.hour, :min => arrivalDateTime.min)
-                      retreat.departure = departure.change(:year => departureDateTime.year, :month => departureDateTime.month, :day => departureDateTime.day, :hour => departureDateTime.hour, :min => departureDateTime.min)
-                     end 
-                     
-                     retreat.guest_count = val['ProgramCount'].to_i
-                     #retreat.import_identifier = val['ItineraryID']
-                     retreat.id = val['ItineraryID'].to_i
-                   #  retreat.import_lock = true
-                     retreat.active = val['ItineraryStatus'] == 'Active' ? true : false
+     param = {
+      'ParameterID' => 9,
+      'ParameterValue' => end_date
+        } 
+     paramArray << param  
 
 
-                     ##Save Organization 
-                     organization = Organization.find_or_create_by(:team_id => team.id, :name => val['GroupName'].to_s)       
-                     organization.name = val['GroupName'].to_s
-                     organization.save!
-                     retreat.organization_id = organization.id 
-                     retreat.save(validate: false) 
-                    # retreat.versions.last.update_attributes!(:whodunnit => 1) ##Havent tested
+     if itinerary.present?
+      puts "ItineraryID was present: " + itinerary.to_s
+        param = {
+      'ParameterID' => 26,
+      'ParameterValue' => itinerary
+        } 
+     paramArray << param 
 
-                     puts "Arrival: " + retreat.arrival.strftime("%A %B #{retreat.arrival.day.ordinalize} %-l%P")
-                     puts "Departure: " + retreat.departure.strftime("%A %B #{retreat.departure.day.ordinalize}  %-l%P")
-                     puts "Guest Count: " + retreat.guest_count.to_s
-                     puts "ItineraryStatus: " + retreat.active.to_s
-                
+     end   
+     
+     data = {
+        'ApiToken' => team.circuitree_api,
+        'ExportQueryID' =>  team.groups_query,
+        'QueryParameters' => paramArray
+      }
 
+      uri = URI(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+      req.body = data.to_json
+      res = http.request(req)
+      ct_results = JSON.parse(res.body)
+
+        puts "Starting Itinerary Download"
+        begin
+           ct_results.each do |key,value|
+            if key == "Results"
+              JSON.parse(value).each do |val|
+                puts "--------------------~~~~~ " + val['GroupName'] + " ~~~~~---------------------------"
+                begin
+                 puts "start itinerary search and save"
+                 retreat = Retreat.find_or_initialize_by(:team_id => team.id, :id => val['ItineraryID'].to_i)
+                 #unless retreat.import_lock == true
+                 unless 1 == 2 
+                   retreat.name = val['GroupName'].to_s
+                   
+                   if Rails.env.production?
+                    retreat.arrival = DateTime.parse(val['ArrivalDateTime'])
+                    retreat.departure = DateTime.parse(val['DepartureDateTime'])
+                   else 
+                    puts "Development"
+                    arrivalDateTime = val['ArrivalDateTime'].to_datetime
+                    departureDateTime = val['DepartureDateTime'].to_datetime
+                    arrival = Time.now.in_time_zone("Pacific Time (US & Canada)")
+                    departure = Time.now.in_time_zone("Pacific Time (US & Canada)")
+                    retreat.arrival = arrival.change(:year => arrivalDateTime.year, :month => arrivalDateTime.month, :day => arrivalDateTime.day, :hour => arrivalDateTime.hour, :min => arrivalDateTime.min)
+                    retreat.departure = departure.change(:year => departureDateTime.year, :month => departureDateTime.month, :day => departureDateTime.day, :hour => departureDateTime.hour, :min => departureDateTime.min)
+                   end 
+                   
+                   retreat.guest_count = val['ProgramCount'].to_i
+                   retreat.id = val['ItineraryID'].to_i
+                   retreat.active = val['ItineraryStatus'] == 'Approved' ? true : false
+
+
+                   ##Save Organization 
+                   organization = Organization.find_or_create_by(:team_id => team.id, :name => val['GroupName'].to_s)       
+                   organization.name = val['GroupName'].to_s
+                   organization.save!
+                   retreat.organization_id = organization.id 
+                   retreat.save(validate: false) 
+                  # retreat.versions.last.update_attributes!(:whodunnit => 1) ##Havent tested
+
+                   puts "Arrival: " + retreat.arrival.strftime("%A %B #{retreat.arrival.day.ordinalize} %-l%P")
+                   puts "Departure: " + retreat.departure.strftime("%A %B #{retreat.departure.day.ordinalize}  %-l%P")
+                   puts "Guest Count: " + retreat.guest_count.to_s
+                   puts "ItineraryStatus: " + retreat.active.to_s
+              
+                   begin
                      ##Save Contact
                      contact = Organizations::Contact.find_or_create_by(:first_name => val['PrimaryContact'].to_s.split.first, :last_name => val['PrimaryContact'].to_s.split[1..-1].join(' '))
                      contact.save
@@ -167,128 +165,135 @@ module Circuitree
 
                      retreat_contact = Retreats::AssignedContact.find_or_create_by(retreat_id: retreat.id, contact_id: contact.id)
                      retreat_contact.save
-
-                     ##Save Host
-                     puts "Checking User for Host"
-                     if val['FHHost'].present?
-                       puts "Creating: " + val['FHHost']
-                       first = val['FHHost'].to_s.split.first
-                       last = val['FHHost'].to_s.split[1..-1].join(' ')
-                       user = User.find_or_create_by!(first_name: first, last_name: last) do |u|
-                          puts "First Name: " + u.first_name.to_s
-                          u.email = first + "." + last + "@foresthome.org"
-                          u.password = "fsdfsdjkfdf874r8fh747hffk8l7l"
-                          u.time_zone = "Pacific Time (US & Canada)"
-                          u.save!
-                        end  
-   
-                      puts "Checking Membership for Host"
-                        membership = Membership.find_or_create_by(team_id: team.id, user_id: user.id, user_first_name: first, user_last_name: last) do |m|
-                          puts "Creating Membership"
-                          m.user_email = first + "." + last + "@foresthome.org"
-                          m.user_first_name = first
-                          m.user_last_name = last 
-                          m.save!
-                        end
-            
-                        retreat_host = Retreats::HostTag.find_or_create_by!(retreat_id: retreat.id, host_id: membership.id)
-                        retreat_host.save 
-                     end
-                     puts "Team: " + team.name.to_s
-                      ##Save Event Planner
-                     puts "Checking User for Planner"
-                     if val['FHEventCoordinator'].present?
-                       puts "Creating: " + val['FHEventCoordinator']
-                       first = val['FHEventCoordinator'].to_s.split.first
-                       last = val['FHEventCoordinator'].to_s.split[1..-1].join(' ')
-                       user = User.find_or_create_by!(first_name: first, last_name: last) do |u|
-                          puts "First Name: " + u.first_name.to_s
-                          u.email = first + "." + last + "@foresthome.org"
-                          u.password = "fsdfsdjkfdf874r8fh747hffk8l7l"
-                          u.time_zone = "Pacific Time (US & Canada)"
-                          u.save!
-                        end  
-   
-                    puts "Checking Membership for Planner"
-
-                       membership = Membership.find_or_create_by!(team_id: team.id, user_id: user.id)
-                        if membership.new_record?
-                          puts "Creating Membership"
-                          membership.user_email = "#{first}.#{last}@foresthome.org"
-                          membership.user_first_name = first
-                          membership.user_last_name = last
-                          membership.save!
-                        end
-
-                        retreat_planner = Retreats::PlannerTag.find_or_create_by!(retreat_id: retreat.id, planner_id: membership.id)
-                        retreat_planner.save 
-                     end
+                   rescue => ex 
+                     puts ex.message
+                     puts "Failure to save contact or organization.  This is likely an internal group"
+                   end
 
 
-                     ##Save Location
-                      location = Location.find_or_create_by(:team_id => team.id, :name => val['Location'].to_s) do |l|
-                        l.initials = val['Location'].to_s[0, 2].upcase
-                        l.save
+                   ##Save Host
+                   puts "Checking User for Host"
+                   if val['FHHost'].present?
+                     puts "Creating: " + val['FHHost']
+                     first = val['FHHost'].to_s.split.first
+                     last = val['FHHost'].to_s.split[1..-1].join(' ')
+                     user = User.find_or_create_by!(first_name: first, last_name: last) do |u|
+                        puts "First Name: " + u.first_name.to_s
+                        u.email = first + "." + last + "@foresthome.org"
+                        u.password = "fsdfsdjkfdf874r8fh747hffk8l7l"
+                        u.time_zone = "Pacific Time (US & Canada)"
+                        u.save!
+                      end  
+ 
+                    puts "Checking Membership for Host"
+                      membership = Membership.find_or_create_by(team_id: team.id, user_id: user.id, user_first_name: first, user_last_name: last) do |m|
+                        puts "Creating Membership"
+                        m.user_email = first + "." + last + "@foresthome.org"
+                        m.user_first_name = first
+                        m.user_last_name = last 
+                        m.save!
+                      end
+          
+                      retreat_host = Retreats::HostTag.find_or_create_by!(retreat_id: retreat.id, host_id: membership.id)
+                      retreat_host.save 
+                   end
+                   puts "Team: " + team.name.to_s
+                    ##Save Event Planner
+                   puts "Checking User for Planner"
+                   if val['FHEventCoordinator'].present?
+                     puts "Creating: " + val['FHEventCoordinator']
+                     first = val['FHEventCoordinator'].to_s.split.first
+                     last = val['FHEventCoordinator'].to_s.split[1..-1].join(' ')
+                     user = User.find_or_create_by!(first_name: first, last_name: last) do |u|
+                        puts "First Name: " + u.first_name.to_s
+                        u.email = first + "." + last + "@foresthome.org"
+                        u.password = "fsdfsdjkfdf874r8fh747hffk8l7l"
+                        u.time_zone = "Pacific Time (US & Canada)"
+                        u.save!
+                      end  
+ 
+                  puts "Checking Membership for Planner"
+
+                     membership = Membership.find_or_create_by!(team_id: team.id, user_id: user.id)
+                      if membership.new_record?
+                        puts "Creating Membership"
+                        membership.user_email = "#{first}.#{last}@foresthome.org"
+                        membership.user_first_name = first
+                        membership.user_last_name = last
+                        membership.save!
                       end
 
-                      retreat_location = Retreats::LocationTag.find_or_create_by(retreat_id: retreat.id, location_id: location.id)
-                      retreat_location.save!
-                      puts "Location: " + retreat_location.location.name
+                      retreat_planner = Retreats::PlannerTag.find_or_create_by!(retreat_id: retreat.id, planner_id: membership.id)
+                      retreat_planner.save 
+                   end
 
-                    ##Save Demographic
 
-                    if val['Internal'] == "TRUE"
-                      puts "INTERNAL Group"
-                      internal = Demographic.find_or_create_by!(:team_id => team.id, :name => "Internal") do |d|
-                          d.save 
-                      end    
-                      retreat_demographic = Retreats::DemographicTag.find_or_create_by(retreat_id: retreat.id, demographic_id: internal.id)
+                   ##Save Location
+                    location = Location.find_or_create_by(:team_id => team.id, :name => val['Location'].to_s) do |l|
+                      l.initials = val['Location'].to_s[0, 2].upcase
+                      l.save
+                    end
+
+                    retreat_location = Retreats::LocationTag.find_or_create_by(retreat_id: retreat.id, location_id: location.id)
+                    retreat_location.save!
+                    puts "Location: " + retreat_location.location.name
+
+                  ##Save Demographic
+
+                  if val['Internal'] == "TRUE"
+                    puts "INTERNAL Group"
+                    internal = Demographic.find_or_create_by!(:team_id => team.id, :name => "Internal") do |d|
+                        d.save 
+                    end    
+                    retreat_demographic = Retreats::DemographicTag.find_or_create_by(retreat_id: retreat.id, demographic_id: internal.id)
+                    retreat_demographic.save
+                    retreat.internal = true
+                    retreat.save
+                  end
+
+                  if val['GroupType'].present?
+                      demographic = Demographic.find_or_create_by!(:team_id => team.id, :name => val['GroupType'].to_s) do |d|
+                        d.save 
+                      end 
+
+                      puts "Demographic: " + demographic.name
+
+                      retreat_demographic = Retreats::DemographicTag.find_or_create_by(retreat_id: retreat.id, demographic_id: demographic.id)
                       retreat_demographic.save
-                    end
-
-                    if val['GroupType'].present?
-                        demographic = Demographic.find_or_create_by!(:team_id => team.id, :name => val['GroupType'].to_s) do |d|
-                          d.save 
-                        end 
-
-                        puts "Demographic: " + demographic.name
-
-                        retreat_demographic = Retreats::DemographicTag.find_or_create_by(retreat_id: retreat.id, demographic_id: demographic.id)
-                        retreat_demographic.save
 
 
-                        exclusive = Demographic.find_or_create_by!(:team_id => team.id, :name => val['UseBasis'].to_s) do |e|
-                          e.save 
-                        end 
+                      exclusive = Demographic.find_or_create_by!(:team_id => team.id, :name => val['UseBasis'].to_s) do |e|
+                        e.save 
+                      end 
 
-                        puts "Exclusive: " + exclusive.name
+                      puts "Exclusive: " + exclusive.name
 
-                        retreat_demographic = Retreats::DemographicTag.find_or_create_by(retreat_id: retreat.id, demographic_id: exclusive.id)
-                        retreat_demographic.save
+                      retreat_demographic = Retreats::DemographicTag.find_or_create_by(retreat_id: retreat.id, demographic_id: exclusive.id)
+                      retreat_demographic.save
 
 
-                    end
-                    end
-                    #Download Retreat Reservations
-                    res = Reservations_download(retreat.id)
-                   puts "Successful Itinerary Download" 
-                   
-                  rescue => ex
-                    puts "Not a successful Itinerary Download"
-                    puts ex.message
-                  end   
-                end   ##JSON.parse 
-              end  ##if Key
-            end ## ct_results  
-          rescue => ex
-            puts ex.message
-          end 
-        puts "Completed Itinerary Download"
-      
+                  end
+                  end
+                  #Download Retreat Reservations
+                  res = Reservations_download(retreat.id)
+                 puts "Successful Itinerary Download" 
+                 
+                rescue => ex
+                  puts "Not a successful Itinerary Download"
+                  puts ex.message
+                end   
+              end   ##JSON.parse 
+            end  ##if Key
+          end ## ct_results  
+        rescue => ex
+          puts ex.message
+        end 
+      puts "Completed Itinerary Download"
+    
 
-        puts "Success"
-    end 
-   end #Group Download 
+      puts "Success"
+  end 
+ end #Group Download 
 
 
  def self.Reservations_download(itinerary)

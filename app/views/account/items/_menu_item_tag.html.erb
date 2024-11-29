@@ -1,0 +1,14 @@
+<% if can? :read, Item.new(team: current_team) %>
+  <%= render 'account/shared/menu/item', {
+    url: main_app.polymorphic_path([:account, current_team, :items], tag: tag),
+    label: tag,
+  } do |p| %>
+    <% p.icon do %>
+      <% if tag == "Lodging" %>
+        <i class="fal fa-solid fa-cabin"></i>
+      <% else %>
+        <i class="fal fa-solid fa-chair"></i> 
+      <% end %>  
+    <% end %>
+  <% end %>
+<% end %>

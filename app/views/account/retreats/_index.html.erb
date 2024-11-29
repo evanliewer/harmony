@@ -44,10 +44,13 @@
               <% if Time.zone.now < retreat.arrival %>
                 <!-- If the current time is before the arrival time -->
                 <div class="inline-block w-0 h-10 text-center rounded-lg bg-gradient-to-tl from-green-700 to-green-400">
+                  <% if false %>
                   <i class="leading-none text-sm relative top-1 text-white">
+
                     <%= (retreat.arrival.to_date - Time.zone.now.to_date).to_i %>
                   </i>
-                  <i class="leading-none text-xs relative top-1 text-white">Days</i>
+                  <i class="leading-none text-xs relative top-1 text-black">Days</i>
+                  <% end %>
                 </div>
               <% elsif Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure %>
                 <!-- If the current time is between the arrival and departure times -->
@@ -181,9 +184,9 @@
     <div class="flex flex-row -mx-3">
       <div class="flex-none w-2/3 max-w-full px-3">
         <div>
-          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Upcoming in 7 days</p>
-          <h5 class="mb-0 font-bold">XXXXX groups
-            <span class="leading-normal text-sm font-weight-bolder text-blue-500">XXXXX People</span>
+          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Next 7 days</p>
+          <h5 class="mb-0 font-bold"><%= pluralize(@next_7.count, "Group") if @next_7.present? %>
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500"><%= pluralize(@next_7.sum(:guest_count), "Guest") if @next_7.present? %></span>
           </h5>
         </div>
       </div>
@@ -204,14 +207,14 @@
       <div class="flex-none w-2/3 max-w-full px-3">
         <div>
           <p class="mb-0 font-sans font-semibold leading-normal text-lg">Stage Coach</p>
-          <h5 class="mb-0 font-bold text-green-500"><%= Reservation.currently_reserved(3330).exists? ? "OPEN" : "CLOSED" %>
+          <h5 class="mb-0 font-bold text-blue-500"><%= Reservation.currently_reserved(3330).exists? ? "OPEN" : "CLOSED" %>
 
             <span class="leading-normal text-sm font-weight-bolder text-blue-500"></span>
           </h5>
         </div>
         <div>
           <p class="mb-0 font-sans font-semibold leading-normal text-lg">Clubhouse</p>
-          <h5 class="mb-0 font-bold text-green-500"><%= Reservation.currently_reserved(3327).exists? ? "OPEN" : "CLOSED" %>
+          <h5 class="mb-0 font-bold text-blue-500"><%= Reservation.currently_reserved(3327).exists? ? "OPEN" : "CLOSED" %>
             <span class="leading-normal text-sm font-weight-bolder text-blue-500"></span>
           </h5>
         </div>
@@ -220,6 +223,35 @@
         <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
         
         <i class="fal fa-solid fa-cup-togo leading-none text-xl relative top-3.5 text-white"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------->
+<!--- Card Four --->
+<div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+  <div class="flex-auto p-4">
+    <div class="flex flex-row -mx-3">
+      <div class="flex-none w-2/3 max-w-full px-3">
+        <div>
+          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Next LV Meal</p>
+          <h5 class="mb-0 font-bold text-blue-500"><%= Reservation.next_meal_at("Lakeview") %>
+
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500"></span>
+          </h5>
+        </div>
+        <div>
+          <p class="mb-0 font-sans font-semibold leading-normal text-lg">Next FC Meal</p>
+          <h5 class="mb-0 font-bold text-blue-500"><%= Reservation.next_meal_at("Forest Center") %>
+            <span class="leading-normal text-sm font-weight-bolder text-blue-500"></span>
+          </h5>
+        </div>
+      </div>
+      <div class="px-3 text-right basis-1/3">
+        <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-700 to-blue-500">
+        
+        <i class="fal fa-solid fa-fork-knife leading-none text-xl relative top-3.5 text-white"></i>
         </div>
       </div>
     </div>

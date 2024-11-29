@@ -134,13 +134,13 @@ en:
         api_title: *actual_group_size
         api_description: *actual_group_size
       nps:
-        _: &nps Nps
+        _: &nps NPS
         label: *nps
         heading: *nps
         api_title: *nps
         api_description: *nps
       debrief:
-        _: &debrief Debrief
+        _: &debrief Retreat Debrief
         label: *debrief
         heading: *debrief
         api_title: *debrief

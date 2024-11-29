@@ -12,12 +12,12 @@ class Account::RetreatsController < Account::ApplicationController
       case params[:search]
       when "next_7"
         @retreats = Retreat.where(arrival: Date.today.beginning_of_day..(Date.today + 7.days).end_of_day).order(:arrival)
-      when "onsite"
+      when "on_site"
         @retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.current, Time.current).order(:arrival)
-      when "last_Week"
+      when "last_week"
         @retreats = Retreat.where('arrival >= ? AND arrival <= ?', 7.days.ago.beginning_of_day, Time.current.end_of_day).order(:arrival)
       when "no_internal"
-        @retreats = @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).where.not(internal: true).limit(50).order(:arrival)
+        @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).where.not(internal: true).limit(50).order(:arrival)
       when "forest_center"
         @retreats = Retreat.joins(:locations).where(locations: { name: 'Forest Center' }).where('arrival > ?', Date.today.beginning_of_day).limit(50).order(:arrival)
       when "lakeview"
@@ -30,6 +30,7 @@ class Account::RetreatsController < Account::ApplicationController
     else 
       @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).order(:arrival).limit(50)
     end  
+    @next_7 = Retreat.where(arrival: Date.today.beginning_of_day..(Date.today + 7.days).end_of_day).order(:arrival)
 
     
     delegate_json_to_api
@@ -41,6 +42,7 @@ class Account::RetreatsController < Account::ApplicationController
     create_flights
     create_requests
     delegate_json_to_api
+    @medforms_count = Medform.where(retreat_id: @retreat.id).count.to_i
     @previous_retreats = Retreat.where(organization_id: @retreat.organization_id).where.not(id: @retreat.id)
     @meals = Reservation.includes([:items_option, :item]).where(retreat_id: @retreat.id, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id)
     @meetingspaces = Reservation.where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false)

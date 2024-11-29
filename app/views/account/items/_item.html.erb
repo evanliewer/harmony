@@ -11,9 +11,6 @@
 
     <td><%= render 'shared/attributes/belongs_to', attribute: :location %></td>
     <td><%= item.tags.map{|tag| tag.name}.to_sentence %></td>
-    <td class="text-center"><%= render 'shared/attributes/option', attribute: :active %></td>
-
-    <td class="text-center"><%= render 'shared/attributes/option', attribute: :clean %></td>
 
     <td><%= render 'shared/attributes/belongs_to', attribute: :items_area %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>

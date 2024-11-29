@@ -86,10 +86,6 @@ class Item < ApplicationRecord
 
 
 def self.to_csv(items)
-  50.times do
-  puts "Items Count in to_csv: #{items.count}"
-
-end
     CSV.generate do |csv|
       # Custom message at the top
       csv << ["The document below is auto-generated to assist with your bed planning."]

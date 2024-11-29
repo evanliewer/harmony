@@ -7,13 +7,26 @@
 <% with_attribute_settings object: check do %>
   <tr data-id="<%= check.id %>">
     <%= render "shared/tables/checkbox", object: check %>
-    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, check] %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :retreat %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :flight %></td>
-    <td><%= render 'shared/attributes/belongs_to', attribute: :user %></td>
-    <td><%= render 'shared/attributes/date_and_time', attribute: :completed_at %></td>
+    <td><%= check.retreat.planners.present? ? check.retreat.planners.map { |p| p.full_name }.to_sentence : "Not Assigned" %></td>
+    <td>
+      <% if check.completed_at.present? %>
+           <%= check.completed_at.strftime("%B #{check.completed_at.day.ordinalize}") %>
+          <% else %>
+            <% time_until_warning = (check.retreat.arrival.to_date - Time.now.to_date).to_i - check.flight.warning.to_i %>
+            <% if time_until_warning > 0 %>
+             Due in <%= pluralize(time_until_warning,'day') %>
+            <% else %>
+              <% if time_until_warning.abs() == 0 %>
+                <div class="text-red-500">Due Today</div>
+              <% else %>  
+                <div class="text-red-500"><%= pluralize(time_until_warning.abs(),'day') %> overdue</div>
+              <% end %>  
+            <% end %> 
+          <% end %>  
+    </td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
-    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
     <td class="buttons">
       <% unless hide_actions %>
         <% if can? :edit, check %>

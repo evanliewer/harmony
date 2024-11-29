@@ -40,8 +40,13 @@
     <p><strong>Group Leaders: </strong><%= @retreat.contacts.present? ? @retreat.contacts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
     <p><strong>Event Planners: </strong><%= @retreat.planners.present? ? @retreat.planners.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
     <p><strong>Hosts: </strong><%= @retreat.hosts.present? ? @retreat.hosts.map { |p| p.full_name }.to_sentence : "Not Assigned" %></p>
-    <p><strong>Registraions: </strong>67 Registered, 45%</p>
+    <p><strong>Registrations: </strong><%= pluralize(@medforms_count, "Registration") %>, <%= @retreat.actual_count > 0 ? number_to_percentage((@medforms_count.to_f / @retreat.actual_count) * 100, precision: 1) : "N/A" %>
+</p>
     <p><strong>Itinerary:</strong> <%= @retreat.id %> <strong>Last Update:</strong> <%= distance_of_time_in_words(Time.zone.now, @retreat.updated_at) %> ago</p>
+
+   
+
+
 
     <% if @previous_retreats.any? %>
      Previous Retreats:
