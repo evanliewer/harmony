@@ -24,6 +24,7 @@
             <%= version.created_at.in_time_zone(current_user.time_zone).strftime("%B #{version.created_at.day.ordinalize} at %-l:%M%P") %>
           </time>
           <% valid_changes.each do |attribute, value| %>
+           <% begin %>
             <p class="text-base font-normal text-gray-500 dark:text-gray-400">
               <% if value[0].respond_to?(:strftime) %>
                 <%= attribute.titleize %> was changed from <%= value[0].strftime("%A %B #{value[0].day.ordinalize} %Y at %-l:%M%P") %> to <%= value[1].strftime("%A %B #{value[1].day.ordinalize} %Y at %-l:%M%P") %> by 
@@ -43,6 +44,9 @@
                 <% end %>
               <% end %>
             </p>
+           <% rescue => ex %>
+            <% puts ex.message %>
+           <% end %> 
           <% end %>
         </li>
       <% end %>

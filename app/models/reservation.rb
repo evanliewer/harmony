@@ -20,11 +20,15 @@ class Reservation < ApplicationRecord
   # 🚅 add scopes above.
 
   validates :name, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
   validates :retreat, scope: true
   validates :item, scope: true
   validates :user, scope: true
   before_validation :set_defaults
   validates :items_option, scope: true
+  validate :no_conflicting_reservations
+  validate :end_time_after_start_time
   # 🚅 add validations above.
 
   # 🚅 add callbacks above.
@@ -87,6 +91,24 @@ end
         "No upcoming meal"
       end  
       
+  end
+
+  def end_time_after_start_time
+    if end_time.present? && start_time.present? && end_time <= start_time
+      errors.add(:end_time, 'must be after the start time')
+    end
+  end
+
+  def no_conflicting_reservations  
+    return unless item&.exclusivable?
+
+    overlapping_reservations = Reservation.where(item_id: item.id)
+                                          .where.not(id: id) # Exclude the current reservation for updates
+                                          .where('start_time < ? AND end_time > ?', end_time, start_time)
+
+    if overlapping_reservations.exists?
+      errors.add(:start_time, 'conflicts with an existing reservation for this item. Please select a different time.')
+    end
   end
 
 

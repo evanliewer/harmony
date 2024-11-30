@@ -11,7 +11,7 @@
       <%= render 'shared/fields/super_select', method: :notifications_flag_id, options: {}, html_options: {},
         choices: @request.valid_notifications_flags.map { |flag| [flag.label_string, flag.id] } %>
       <%= render 'shared/fields/text_field', method: :days_before %>
-      <%= render 'shared/fields/options', method: :email %>
+      <%= render 'shared/fields/buttons', method: :email %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

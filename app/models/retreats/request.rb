@@ -5,7 +5,7 @@ class Retreats::Request < ApplicationRecord
 
   belongs_to :team
   belongs_to :retreat, touch: true
-  belongs_to :department, optional: true
+  belongs_to :department, optional: true, dependent: :destroy
   # 🚅 add belongs_to associations above.
 
   # 🚅 add has_many associations above.

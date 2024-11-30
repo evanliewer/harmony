@@ -252,6 +252,7 @@
       <div class="column">
         <!-- First Column: General Info -->
         <h3 class="section-title">Retail Openings</h3>
+        <% if @retail_openings.any? %>
          <table class="data-table">
           <thead>
             <tr>
@@ -267,10 +268,20 @@
               </tr>
             <% end %>
           </tbody>
+        <% else %>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>No Retail Openings in the timeframe.</th>
+              </tr>
+            </thead>
+          </table>      
+        <% end %>    
         </table>
       </div>
     <div class="column">
-      <h3 class="section-title">Rec Openings</h3>
+      <h3 class="section-title">Recreation Openings</h3>
+     <% if @rec_openings.any? %> 
       <table class="data-table">
           <thead>
             <tr>
@@ -287,13 +298,72 @@
             <% end %>
           </tbody>
         </table>
+       <% else %>
+        <table class="data-table">
+            <thead>
+              <tr>
+                <th>No Recreation Openings in the timeframe.</th>
+              </tr>
+            </thead>
+          </table>      
+       <% end %>  
     </div>
 </div>        
 
 
 
-<h3 class="section-title">Meal Times</h3>
-<h3 class="section-title">Groups listed on huddle</h3>
+ <!-- Two-Column Layout -->
+    <div class="two-column">
+      <div class="column">
+        <!-- First Column: General Info -->
+        <h3 class="section-title">Meals</h3>
+        <!--   <p class="highlight">Details of Groups</p>-->
+
+        <!-- Example Table 1: Financial Overview -->
+      <table class="data-table">
+          <thead>
+            <tr>
+              <th>Meal</th>
+              <th>Times</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @meals.each do |meal| %>
+              <tr>
+                <td><%= meal.item.name %></td>
+                <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %> - <%= meal.end_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+
+     
+
+      <div class="column">
+        <!-- Second Column: Project Milestones -->
+        <h3 class="section-title">Meals v2</h3>
+
+        <!-- Example Table 2: Resource Allocation -->
+          <table class="data-table">
+          <thead>
+            <tr>
+              <th>Meal</th>
+              <th>Times</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @meals.each do |meal| %>
+              <tr>
+                <td><%= meal.item.name %></td>
+                <td><%= meal.start_time.in_time_zone("America/Los_Angeles").strftime("%A %-l:%M%P") %> - <%= meal.end_time.in_time_zone("America/Los_Angeles").strftime("%-l:%M%P") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
 <h3 class="section-title">Add non-overlap and send yellow flag if these overlap or if there is a gap</h3>
 <h3 class="section-title">Shared Use items (fire pits, fields)</h3>
 

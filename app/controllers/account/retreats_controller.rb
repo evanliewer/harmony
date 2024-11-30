@@ -10,27 +10,29 @@ class Account::RetreatsController < Account::ApplicationController
       @retreats = Retreat.search_by_id_or_name(params[:search_query])
     elsif params[:search].present?
       case params[:search]
-      when "next_7"
-        @retreats = Retreat.where(arrival: Date.today.beginning_of_day..(Date.today + 7.days).end_of_day).order(:arrival)
+      when "next_7_days"
+        @retreats = Retreat.where(arrival: Date.today.beginning_of_day..(Date.today + 7.days).end_of_day).where(active: true).order(:arrival)
       when "on_site"
-        @retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.current, Time.current).order(:arrival)
+        @retreats = Retreat.where('arrival <= ? AND departure >= ?', Time.current, Time.current).where(active: true).order(:arrival)
       when "last_week"
-        @retreats = Retreat.where('arrival >= ? AND arrival <= ?', 7.days.ago.beginning_of_day, Time.current.end_of_day).order(:arrival)
+        @retreats = Retreat.where('arrival >= ? AND arrival <= ?', 7.days.ago.beginning_of_day, Time.current.end_of_day).where(active: true).order(:arrival)
       when "no_internal"
-        @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).where.not(internal: true).limit(50).order(:arrival)
+        @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).where.not(internal: true).where(active: true).limit(50).order(:arrival)
       when "forest_center"
-        @retreats = Retreat.joins(:locations).where(locations: { name: 'Forest Center' }).where('arrival > ?', Date.today.beginning_of_day).limit(50).order(:arrival)
+        @retreats = Retreat.joins(:locations).where(locations: { name: 'Forest Center' }).where('arrival > ?', Date.today.beginning_of_day).where(active: true).limit(50).order(:arrival)
       when "lakeview"
-        @retreats = Retreat.joins(:locations).where(locations: { name: 'Lakeview' }).where('arrival > ?', Date.today.beginning_of_day).limit(50).order(:arrival)
+        @retreats = Retreat.joins(:locations).where(locations: { name: 'Lakeview' }).where('arrival > ?', Date.today.beginning_of_day).where(active: true).limit(50).order(:arrival)
       when "creekside"
-        @retreats = Retreat.joins(:locations).where(locations: { name: 'Creekside' }).where('arrival > ?', Date.today.beginning_of_day).limit(50).order(:arrival)
+        @retreats = Retreat.joins(:locations).where(locations: { name: 'Creekside' }).where('arrival > ?', Date.today.beginning_of_day).where(active: true).limit(50).order(:arrival)
+      when "huddle"
+        @retreats = Retreat.where(arrival: (Date.today - 7.days).beginning_of_day..(Date.today + 7.days).end_of_day).where(active: true).where.not(internal: true).order(:arrival)
       else
-        @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).order(:arrival).limit(50)
+        @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).where(active: true).order(:arrival).limit(50)
       end
     else 
-      @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).order(:arrival).limit(50)
+      @retreats = Retreat.where('arrival > ?', Date.today.beginning_of_day).where(active: true).order(:arrival).limit(50)
     end  
-    @next_7 = Retreat.where(arrival: Date.today.beginning_of_day..(Date.today + 7.days).end_of_day).order(:arrival)
+    @next_7 = Retreat.where(arrival: Date.today.beginning_of_day..(Date.today + 7.days).end_of_day).where(active: true).order(:arrival)
 
     
     delegate_json_to_api
@@ -108,11 +110,10 @@ class Account::RetreatsController < Account::ApplicationController
   def create_requests
    requests = Retreats::Request.where(retreat_id: @retreat.id)
     unless requests.any?
-      departments = ["Audio Visual", "Buildings and Grounds", "Guest Dining", "Retail", "Recreation", "Accommodations"]
-      Department.where(team_id: current_team.id, name: departments).each do |department|
-        Retreats::Request.create!(department_id: department.id, retreat_id: @retreat.id, team_id: current_team.id)
-      end
-    end 
+      Department.where(team_id: current_team.id, dashboard: true).each do |department|
+      Retreats::Request.create!(department_id: department.id, retreat_id: @retreat.id, team_id: current_team.id)
+    end
+  end 
    
   end
 
@@ -165,7 +166,7 @@ class Account::RetreatsController < Account::ApplicationController
                               .where.not(locations: { name: "Wild Rock" })
                               .order(:name)
 
-                                
+    @meals = Reservation.includes([:items_option, :item]).where(retreat_id: @retreats.ids, item_id: Item.where(name: ["Breakfast", "Lunch", "Dinner"], team_id: current_team.id).ids, team_id: current_team.id)                            
     render layout: false
   end
 

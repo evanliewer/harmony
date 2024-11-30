@@ -49,7 +49,7 @@ class Item < ApplicationRecord
     layout.purge
   end
 
-    def ticketable?
+  def ticketable?
     tags.where(ticketable: true).any?
   end
 

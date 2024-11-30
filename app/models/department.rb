@@ -9,6 +9,7 @@ class Department < ApplicationRecord
 
   has_many :applied_tags, class_name: "Departments::AppliedTag", dependent: :destroy
   has_many :tags, through: :applied_tags, class_name: "Items::Tag"
+  has_many :retreats_requests, class_name: "Retreats::Request", dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add has_one associations above.
