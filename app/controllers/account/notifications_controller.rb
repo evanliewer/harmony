@@ -4,6 +4,9 @@ class Account::NotificationsController < Account::ApplicationController
   # GET /account/teams/:team_id/notifications
   # GET /account/teams/:team_id/notifications.json
   def index
+    notification = Notification.create!(name: "First notification", team_id: current_team.id, notifiable: Retreat.first, user_id: current_user.id, action_text: "belongs to")
+
+
     delegate_json_to_api
   end
 

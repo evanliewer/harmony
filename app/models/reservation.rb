@@ -2,7 +2,7 @@ class Reservation < ApplicationRecord
   # 🚅 add concerns above.
 
   # 🚅 add attribute accessors above.
-
+  has_many :notifications, as: :notifiable
   belongs_to :team
   belongs_to :retreat, optional: true, touch: true
   belongs_to :item, optional: true

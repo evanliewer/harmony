@@ -9,6 +9,7 @@
     <%= render "shared/tables/checkbox", object: notification %>
     <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, notification] %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :user %></td>
+    <td><%= link_to notification.notifiable.name, [:account, notification.notifiable] %></td>
     <td><%= render 'shared/attributes/date_and_time', attribute: :read_at %></td>
     <td><%= render 'shared/attributes/text', attribute: :action_text %></td>
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :emailed %></td>

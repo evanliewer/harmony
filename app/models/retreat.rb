@@ -3,7 +3,7 @@ class Retreat < ApplicationRecord
   # 🚅 add concerns above.
 
   # 🚅 add attribute accessors above.
-
+  has_many :notifications, as: :notifiable
   belongs_to :team
   belongs_to :organization, optional: true
   # 🚅 add belongs_to associations above.
