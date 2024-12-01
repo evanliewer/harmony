@@ -39,7 +39,7 @@ class Retreat < ApplicationRecord
   validates :name, presence: true
   validates :organization, scope: true
   # 🚅 add validations above.
-
+  after_update :notify_group_size_changes
   # 🚅 add callbacks above.
 
   # 🚅 add delegations above.
@@ -73,6 +73,57 @@ class Retreat < ApplicationRecord
   def valid_contacts
     team.organizations_contacts
   end
+
+  def notify_group_size_changes
+    @change = nil
+    # Check for changes in `actual_group_size` first
+    if saved_change_to_actual_group_size?
+      old_value, new_value = saved_change_to_actual_group_size
+      @change = "#{self.organization&.name} changed guest count from #{old_value} to #{new_value}"
+    elsif saved_change_to_guest_count?
+      # Check for changes in `guest_count` only if `actual_group_size` didn't change
+      old_value, new_value = saved_change_to_guest_count
+      @change = "#{self.organization&.name} changed guest count from #{old_value} to #{new_value}"
+    end
+
+    # Send the notification if there is a change
+    if @change
+      notification_requests = Notifications::Request.joins(:notifications_flag).where(notifications_flags: { name: "Group Size Changed" })
+                                                   .where("days_before::integer >= ?", calculate_days_before)
+
+      user_ids = notification_requests.pluck(:user_id).uniq
+      user_ids.each do |user_id|
+      notification = Notification.create!(
+                      team_id: self.team_id,
+                      name: @change,
+                      action_text: 'Reservation change',
+                      user_id: user_id,
+                      notifiable: self
+                    )
+
+      begin
+        # Send email notification
+        puts "2222222222222222222222222222222"
+       NotifyMailer.group_size_changed_email(user_id, notification).deliver_later
+       Rails.logger.info "Notification email sent successfully for user_id: #{user_id}"
+      rescue StandardError => e
+        # Log any errors encountered
+        Rails.logger.error "Failed to send notification email for user_id: #{user_id}. Error: #{e.message}"
+      end
+   end
+
+      
+    end
+  end
+
+  def calculate_days_before
+    retreat_start_date = self.arrival
+    return unless retreat_start_date
+
+    (retreat_start_date.to_date - Date.current).to_i
+end
+
+
 
   # 🚅 add methods above.
 end

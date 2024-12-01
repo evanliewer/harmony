@@ -6,5 +6,11 @@ class NotifyMailer < ApplicationMailer
     @notification = notification
     mail(from: 'Camp Dashboard <support@campdashboard.org>', to: @user.email, subject: @notification.name)
   end
+       
+   def group_size_changed_email(user, notification)
+    @user = User.find(user)
+    @notification = notification
+    mail(from: 'Camp Dashboard <support@campdashboard.org>', to: @user.email, subject: @notification.name)
+  end
 
 end
