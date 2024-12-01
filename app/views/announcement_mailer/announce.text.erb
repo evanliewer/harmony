@@ -1,0 +1,5 @@
+<%= @announcement.title %>
+
+<%= @announcement.body.to_plain_text %>
+
+<%= t('.signature.plain', support_email: t('application.support_email'), application_name: t('application.name')) %>

@@ -1,0 +1,5 @@
+<% team ||= @team %>
+
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team] %>
+
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'announcements' %>

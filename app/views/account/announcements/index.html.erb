@@ -1,0 +1,4 @@
+<%= render 'account/shared/page' do |page| %>
+  <% page.title t('.heading') %>
+  <% page.body.render 'index', announcements: @announcements %>
+<% end %>

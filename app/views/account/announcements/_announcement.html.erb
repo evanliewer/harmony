@@ -1,0 +1,22 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :announcements %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% cache announcement do %>
+  <% with_attribute_settings object: announcement do %>
+    <tr data-id="<%= announcement.id %>">
+      <td>
+        <div class="flex items-center">
+          <%= link_to announcement.title, [:account, announcement] %>
+        <div class="relative z-10 rounded-full bg-slate-50 ml-2 px-3 py-1.5 text-slate-600 hover:bg-slate-100 text-xs"><%= announcement.kind.capitalize %></div>
+        </div>
+      </td>
+      <td><%= render 'shared/attributes/date_and_time', attribute: :published_at %></td>
+      <td><%= announcement.for_public? ? "yes" : "no" %></td>
+      <td><%= Role.where(key: announcement.role_ids).count > 0 ? Role.where(key: announcement.role_ids).map(&:key).map(&:capitalize).join(", ") : "All" %></td>
+      <%# 🚅 super scaffolding will insert new fields above this line. %>
+    </tr>
+  <% end %>
+<% end %>

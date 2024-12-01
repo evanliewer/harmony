@@ -1,0 +1,8 @@
+<%= render 'account/shared/menu/item', {
+  url: account_announcements_path,
+  label: t('menus.main.labels.announcements'),
+} do |item| %>
+  <% item.icon do %>
+    <i class="fal fa-bell ti ti-bell"></i>
+  <% end %>
+<% end %>

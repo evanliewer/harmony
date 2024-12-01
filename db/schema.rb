@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_30_232004) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_01_201847) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,22 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_30_232004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
+  end
+
+  create_table "announcements", force: :cascade do |t|
+    t.string "title"
+    t.datetime "published_at"
+    t.datetime "delivered_at"
+    t.string "kind"
+    t.jsonb "delivery_methods", default: []
+    t.jsonb "role_ids", default: []
+    t.jsonb "price_ids", default: []
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_methods"], name: "index_announcements_on_delivery_methods", using: :gin
+    t.index ["kind"], name: "index_announcements_on_kind"
+    t.index ["price_ids"], name: "index_announcements_on_price_ids", using: :gin
+    t.index ["role_ids"], name: "index_announcements_on_role_ids", using: :gin
   end
 
   create_table "demographics", force: :cascade do |t|

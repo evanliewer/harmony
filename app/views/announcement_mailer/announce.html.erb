@@ -1,0 +1,9 @@
+<% content_for :preheader do %>
+  <%= @announcement.body.to_plain_text.truncate(80) %>
+<% end %>
+
+<h1><%= @announcement.title %></h1>
+
+<%= @announcement.body %>
+
+<%= t('.signature.html', support_email: t('application.support_email'), application_name: t('application.name')) %>

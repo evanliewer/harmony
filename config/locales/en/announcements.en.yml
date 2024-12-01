@@ -1,0 +1,51 @@
+en:
+  fields: &fields
+    id:
+      heading: Announcement ID
+    for_public:
+      heading: Public
+    published_at:
+      heading: Published
+    roles:
+      heading: Recipient Roles
+    team_id:
+      heading: Team ID
+    title:
+      heading: Title
+  menus:
+    main:
+      labels:
+        announcements: What's New
+  announcements:
+    fields: *fields
+  account:
+    announcements:
+      breadcrumbs:
+        label: Announcements
+      index:
+        heading: What's New
+        fields: *fields
+        contexts:
+          team:
+            header: Announcements
+            description: "News from %{application_name}"
+            description_empty: No announcements have been posted yet.
+      show:
+        section: "%{announcement_title}"
+  public:
+    announcements:
+      index:
+        heading: What's New
+        subheading: "News from %{application_name}"
+        empty_state: No announcements have been posted yet.
+  announcement_mailer:
+    announce:
+      subject: "News from %{application_name}"
+      signature:
+        html:
+          <p>If you have any questions, please don't hesitate to <a href="mailto:%{support_email}">send us an email</a>.</p>
+          <p>Thanks,<br>The %{application_name} Team</p>
+        plain: |
+          If you have any questions, please don't hesitate to send us an email (%{support_email}.
+          Thanks,
+          The %{application_name} Team

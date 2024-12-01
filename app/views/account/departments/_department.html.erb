@@ -8,6 +8,7 @@
   <tr data-id="<%= department.id %>">
     <%= render "shared/tables/checkbox", object: department %>
     <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, department] %></td>
+    <td><%= department.tags.map{|tag| tag.name}.to_sentence %></td>
     <td class="text-center"><%= render 'shared/attributes/option', attribute: :dashboard %></td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
     <td class="buttons">

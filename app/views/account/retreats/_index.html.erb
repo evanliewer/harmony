@@ -28,7 +28,15 @@
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
   <% @retreats.each do |retreat| %>
     <!-- Box for each retreat -->
-     <% dynamic_classes = Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure ? "border-2 border-green-800" : "border border-grey-500" %>
+     <%# dynamic_classes = Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure ? "border-2 border-green-800" : "border border-grey-500" %>
+      <% if Time.zone.now >= retreat.arrival && Time.zone.now <= retreat.departure %>
+         <% dynamic_classes = "border-2 border-green-800" %>
+      <% elsif Time.zone.now > retreat.arrival %>
+         <% dynamic_classes = "border-2 border-red-500" %>
+      <% else %>
+         <% dynamic_classes = "border border-grey-500" %>
+      <% end %>
+
       <div class="flex w-full p-3 flex-col rounded-lg bg-white shadow-sm <%= dynamic_classes %>">
        <div class="flex items-center gap-1 text-slate-800">
         

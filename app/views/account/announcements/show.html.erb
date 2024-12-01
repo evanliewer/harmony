@@ -1,0 +1,18 @@
+<%= render 'account/shared/page' do |page| %>
+  <% page.body do %>
+    <%= render 'account/shared/box', divider: false do |box| %>
+      <%= box.title do %>
+        <div class="flex items-center">
+          <%= @announcement.title %>
+          <div class="relative z-10 rounded-full bg-slate-50 ml-2 px-3 py-1.5 font-medium text-slate-600 hover:bg-slate-100 text-sm"><%= @announcement.kind.capitalize %></div>
+        </div>
+      <% end %>
+      <%= box.description do %>
+        <time datetime="<%= @announcement.published_at.to_date.to_fs(:db) %>" class="text-slate-500"><%= @announcement.published_at.to_date.to_fs(:long) %></time>
+      <% end %>
+      <%= box.body do %>
+        <%= @announcement.body %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

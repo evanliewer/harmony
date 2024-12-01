@@ -30,7 +30,7 @@ class Reservation < ApplicationRecord
   validate :no_conflicting_reservations
   validate :end_time_after_start_time
   # 🚅 add validations above.
-
+  after_save :reservation_update_notification
   # 🚅 add callbacks above.
 
   # 🚅 add delegations above.
@@ -114,17 +114,21 @@ end
   def reservation_update_notification
     Rails.logger.info 'Begin User Notifications'
 
-    # Find the associated resource and interested departments
-    item = Resource.find(self.item_id)
+    # Find the associated item and interested departments
+    item = Item.find(self.item_id)
     departments = item.interested_departments
+    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+    puts departments.to_s
 
     # Fetch notification requests for the relevant departments and within the specified window
-    notification_requests = Notifications::Request.joins(:notifications_flags)
-                                                   .where(notifications_flags: { department: departments })
-                                                   .where("days_before::integer = ?", calculate_days_before)
+                   
+    notification_requests = Notifications::Request.joins(:notifications_flag).where(notifications_flags: { department: departments })
+                                                   .where("days_before::integer >= ?", calculate_days_before)
 
     # Extract user IDs from the filtered notification requests
-    user_ids = notification_requests.pluck(:user_id)
+    user_ids = notification_requests.pluck(:user_id).uniq
+
+    puts "Users" + user_ids.to_s
 
     # Generate notification message
     notification_message = "#{self.retreat&.organization&.name || 'Unknown Organization'} had a reservation change for #{self.item&.name || 'Unknown Item'}"
@@ -141,7 +145,8 @@ end
 
       begin
         # Send email notification
-        NotificationMailer.retreat_change_email(user_id, notification).deliver_later
+       # NotificationMailer.retreat_change_email(user_id, notification).deliver_later
+       puts "*************************************************************************************************************4567"
         Rails.logger.info "Notification email sent successfully for user_id: #{user_id}"
       rescue StandardError => e
         # Log any errors encountered

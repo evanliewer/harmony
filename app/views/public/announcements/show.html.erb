@@ -1,0 +1,24 @@
+<div class="background-fade-container">
+  <div class="background-fade large-fade"></div>
+</div>
+
+<div class="py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl">
+    <div class="mx-auto max-w-2xl bg-white shadow-sm ring-1 ring-slate-900/5 sm:rounded-xl p-6 lg:p-8">
+      <div class="flex items-center gap-x-4 text-xs">
+        <time datetime="<%= @announcement.published_at.to_date.to_fs(:db) %>" class="text-slate-500"><%= @announcement.published_at.to_date.to_fs(:long) %></time>
+        <div class="relative z-10 rounded-full bg-slate-50 px-3 py-1.5 font-medium text-slate-600 hover:bg-slate-100"><%= @announcement.kind.capitalize %></div>
+      </div>
+
+      <h1 class="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl"><%= @announcement.title %></h1>
+
+      <div class="mt-10 prose">
+        <%= @announcement.body %>
+      </div>
+
+      <div class="mt-16">
+      <%= link_to "View all announcements", announcements_path %>
+      </div>
+    </div>
+  </div>
+</div>

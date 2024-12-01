@@ -2,6 +2,15 @@ en:
   users:
     fields:
       _:
+      locale:
+         _: &locale Locale
+         label: *locale
+         heading: *locale
+         api_title: *locale
+         api_description: *locale
+         options: # Added options key to fix the missing translation
+           en: "English"  
+           sp: "Spanish"
       # 🚅 super scaffolding will insert new fields above this line.
   activerecord:
     attributes:

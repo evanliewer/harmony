@@ -1,0 +1,54 @@
+<%# announcements = announcements.accessible_by(current_ability) %>
+<% team = @team %>
+<% context ||= team %>
+<% collection ||= :announcements %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% pagy ||= nil %>
+<% pagy, announcements = pagy(announcements, page_param: :announcements_page) unless pagy %>
+
+<%= cable_ready_updates_for context, collection, html_options: {class: "block"} do %>
+  <%= render 'account/shared/box', pagy: pagy do |box| %>
+    <% box.title t(".contexts.#{context.class.name.underscore}.header") %>
+    <% box.description do %>
+      <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless announcements.any?}", application_name: t("application.name")) %>
+      <%= render "shared/limits/index", model: announcements.model %>
+    <% end %>
+
+    <% box.table do %>
+      <% if announcements.any? %>
+        <table class="table">
+          <thead>
+            <tr>
+              <%= render "shared/tables/select_all" %>
+              <th><%= t('.fields.title.heading') %></th>
+              <%# 🚅 super scaffolding will insert new field headers above this line. %>
+              <th><%= t('.fields.published_at.heading') %></th>
+              <th><%= t('.fields.for_public.heading') %></th>
+              <th><%= t('.fields.roles.heading') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render partial: 'account/announcements/announcement', collection: announcements, cached: true %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+
+    <% box.actions do %>
+      <% unless hide_actions %>
+        <%# 🚅 super scaffolding will insert new targets one parent action model buttons above this line. %>
+        <%# 🚅 super scaffolding will insert new bulk action model buttons above this line. %>
+
+        <% unless hide_back %>
+          <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:announcement)} back" %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% box.raw_footer do %>
+      <%# 🚅 super scaffolding will insert new action model index views above this line. %>
+    <% end %>
+  <% end %>
+<% end %>
