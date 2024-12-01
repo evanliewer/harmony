@@ -111,6 +111,56 @@ end
     end
   end
 
+  def reservation_update_notification
+    Rails.logger.info 'Begin User Notifications'
+
+    # Find the associated resource and interested departments
+    item = Resource.find(self.item_id)
+    departments = item.interested_departments
+
+    # Fetch notification requests for the relevant departments and within the specified window
+    notification_requests = Notifications::Request.joins(:notifications_flags)
+                                                   .where(notifications_flags: { department: departments })
+                                                   .where("days_before::integer = ?", calculate_days_before)
+
+    # Extract user IDs from the filtered notification requests
+    user_ids = notification_requests.pluck(:user_id)
+
+    # Generate notification message
+    notification_message = "#{self.retreat&.organization&.name || 'Unknown Organization'} had a reservation change for #{self.item&.name || 'Unknown Item'}"
+
+    # Iterate through user IDs to create notifications and send emails
+    user_ids.each do |user_id|
+      notification = Notification.create!(
+        team_id: self.team_id,
+        name: notification_message,
+        action_text: 'Reservation change',
+        user_id: user_id,
+        notifiable: self
+      )
+
+      begin
+        # Send email notification
+        NotificationMailer.retreat_change_email(user_id, notification).deliver_later
+        Rails.logger.info "Notification email sent successfully for user_id: #{user_id}"
+      rescue StandardError => e
+        # Log any errors encountered
+        Rails.logger.error "Failed to send notification email for user_id: #{user_id}. Error: #{e.message}"
+      end
+  end
+
+  Rails.logger.info 'End User Notifications'
+end
+
+  def calculate_days_before
+    retreat_start_date = self.retreat&.arrival
+    return unless retreat_start_date
+
+    (retreat_start_date.to_date - Date.current).to_i
+  end
+
+
+
 
   # 🚅 add methods above.
 end

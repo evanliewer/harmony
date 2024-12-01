@@ -33,6 +33,10 @@ class Item < ApplicationRecord
 
   # 🚅 add delegations above.
 
+  def interested_departments
+    Department.joins(:tags).where(:items_tags => {:id => self.tags.ids })
+  end
+
   def valid_locations
     team.locations
   end

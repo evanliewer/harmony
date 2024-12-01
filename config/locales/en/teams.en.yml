@@ -20,6 +20,14 @@ en:
         heading: *groups_query
         api_title: *groups_query
         api_description: *groups_query
+      locale:
+         _: &locale Locale
+         label: *locale
+         heading: *locale
+         api_title: *locale
+         api_description: *locale
+         options: # Added options key to fix the missing translation
+           one: "One"
       reservation_download:
         _: &reservation_download Reservation Download
         label: *reservation_download
