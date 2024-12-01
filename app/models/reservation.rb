@@ -116,19 +116,12 @@ end
 
     # Find the associated item and interested departments
     item = Item.find(self.item_id)
-    departments = item.interested_departments
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-    puts departments.to_s
-
-    # Fetch notification requests for the relevant departments and within the specified window
-                   
+    departments = item.interested_departments                
     notification_requests = Notifications::Request.joins(:notifications_flag).where(notifications_flags: { department: departments })
                                                    .where("days_before::integer >= ?", calculate_days_before)
 
     # Extract user IDs from the filtered notification requests
     user_ids = notification_requests.pluck(:user_id).uniq
-
-    puts "Users" + user_ids.to_s
 
     # Generate notification message
     notification_message = "#{self.retreat&.organization&.name || 'Unknown Organization'} had a reservation change for #{self.item&.name || 'Unknown Item'}"
@@ -136,33 +129,33 @@ end
     # Iterate through user IDs to create notifications and send emails
     user_ids.each do |user_id|
       notification = Notification.create!(
-        team_id: self.team_id,
-        name: notification_message,
-        action_text: 'Reservation change',
-        user_id: user_id,
-        notifiable: self
-      )
+                      team_id: self.team_id,
+                      name: notification_message,
+                      action_text: 'Reservation change',
+                      user_id: user_id,
+                      notifiable: self
+                    )
 
       begin
         # Send email notification
-       # NotificationMailer.retreat_change_email(user_id, notification).deliver_later
-       puts "*************************************************************************************************************4567"
-        Rails.logger.info "Notification email sent successfully for user_id: #{user_id}"
+       NotifyMailer.retreat_change_email(user_id, notification).deliver_later
+       Rails.logger.info "Notification email sent successfully for user_id: #{user_id}"
       rescue StandardError => e
         # Log any errors encountered
         Rails.logger.error "Failed to send notification email for user_id: #{user_id}. Error: #{e.message}"
       end
+   end
+
+    Rails.logger.info 'End User Notifications'
   end
 
-  Rails.logger.info 'End User Notifications'
-end
 
-  def calculate_days_before
+def calculate_days_before
     retreat_start_date = self.retreat&.arrival
     return unless retreat_start_date
 
     (retreat_start_date.to_date - Date.current).to_i
-  end
+end
 
 
 
