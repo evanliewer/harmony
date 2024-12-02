@@ -90,6 +90,7 @@ Rails.application.routes.draw do
         get '/lodging' => 'items#lodging', as: 'lodging'
         get 'schedule_json' => 'reservations#schedule_json', as: 'schedule_json'
         get 'calendar_json' => 'reservations#calendar_json', as: 'calendar_json'
+        get 'mark_notification_read' => 'notifications#mark_notification_read', as: 'mark_notification_read'
 
         resources :demographics, concerns: [:sortable]
         resources :departments, concerns: [:sortable]

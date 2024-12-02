@@ -60,6 +60,13 @@ class Account::NotificationsController < Account::ApplicationController
     end
   end
 
+  def mark_notification_read
+    @notification = Notification.find(params[:notification_id])
+    @notification.update(read_at: Time.zone.now)
+    redirect_to [:account, current_team, :notifications]
+  end 
+
+
   private
 
   if defined?(Api::V1::ApplicationController)
