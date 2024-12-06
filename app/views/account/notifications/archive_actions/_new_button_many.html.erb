@@ -1,0 +1,21 @@
+<% if can? :create, Notifications::ArchiveAction.new(team: team) %>
+  <%= button_to "Archive Action to All", [:new, :account, team, :notifications_archive_action, notifications_archive_action: {target_all: true}], method: :get, class: 'button-secondary', data: { 'bulk-action-form-target': 'button' },
+    form: {
+      class: 'bulk-action button_to',
+      data: {
+        'controller': 'bulk-action-form',
+        'bulk-actions-target': 'action',
+        'bulk-action-form-hidden-class': 'bulk-action-unavailable',
+        # TODO We need to localize these.
+        'bulk-action-form-button-if-all-value': 'Mark as Read (All)',
+        'bulk-action-form-button-if-ids-value': 'Mark as Read ({num})',
+        'bulk-action-form-ids-value': '[]',
+        'bulk-action-form-all-value': 'false',
+        'bulk-action-form-object-name-value': 'notifications_archive_action',
+        'bulk-action-form-ids-field-name-value': 'target_ids',
+        'bulk-action-form-all-field-name-value': 'target_all',
+        'action': 'bulk-action-form#updateFormAndSubmit bulk-actions:update-ids->bulk-action-form#updateIds'
+      }
+    }
+  %>
+<% end %>

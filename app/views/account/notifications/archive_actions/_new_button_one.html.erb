@@ -1,0 +1,7 @@
+<% if can? :create, Notifications::ArchiveAction.new(team: team) %>
+  <%= button_to t('notifications/archive_actions.buttons.shorthand.create'), [:new, :account, team, :notifications_archive_action, notifications_archive_action: {target_ids: [notification.id]}], method: :get, class: 'button-secondary button-smaller',
+    form: {
+      class: 'bulk-action-single button_to'
+    }
+  %>
+<% end %>

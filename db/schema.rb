@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_01_201847) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_06_051729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -374,6 +374,27 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_201847) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
     t.index ["team_id"], name: "index_notifications_on_team_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "notifications_archive_actions", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.boolean "target_all", default: false
+    t.jsonb "target_ids", default: []
+    t.jsonb "failed_ids", default: []
+    t.integer "last_completed_id", default: 0
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.integer "target_count"
+    t.integer "performed_count", default: 0
+    t.datetime "scheduled_for"
+    t.string "sidekiq_jid"
+    t.bigint "created_by_id", null: false
+    t.bigint "approved_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_by_id"], name: "index_notifications_archives_on_approved_by_id"
+    t.index ["created_by_id"], name: "index_notifications_archives_on_created_by_id"
+    t.index ["team_id"], name: "index_notifications_archive_actions_on_team_id"
   end
 
   create_table "notifications_flags", force: :cascade do |t|
@@ -885,6 +906,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_201847) do
   add_foreign_key "memberships", "users"
   add_foreign_key "notifications", "memberships", column: "user_id"
   add_foreign_key "notifications", "teams"
+  add_foreign_key "notifications_archive_actions", "memberships", column: "approved_by_id"
+  add_foreign_key "notifications_archive_actions", "memberships", column: "created_by_id"
+  add_foreign_key "notifications_archive_actions", "teams"
   add_foreign_key "notifications_flags", "departments"
   add_foreign_key "notifications_flags", "teams"
   add_foreign_key "notifications_requests", "memberships", column: "user_id"

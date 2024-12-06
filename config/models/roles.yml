@@ -1,5 +1,6 @@
 default:
   models:
+    Notifications::ArchiveAction: read
     Diet: read
     Medform: read
     Game: read
@@ -97,6 +98,7 @@ admin:
     - default_staff
     
   models:
+    Notifications::ArchiveAction: manage
     Diet: manage
     Medform: manage
     Game: manage

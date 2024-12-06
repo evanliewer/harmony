@@ -42,21 +42,23 @@
         <% unless hide_actions %>
           <% if context == team %>
             <% if can? :create, Notification.new(team: team) %>
-              <%= link_to t('.buttons.new'), [:new, :account, team, :notification], class: "#{first_button_primary(:notification)} new" %>
+              <%# link_to t('.buttons.new'), [:new, :account, team, :notification], class: "#{first_button_primary(:notification)} new" %>
             <% end %>
           <% end %>
 
           <%# 🚅 super scaffolding will insert new targets one parent action model buttons above this line. %>
+          <%= render "account/notifications/archive_actions/new_button_many", team: team %>
           <%# 🚅 super scaffolding will insert new bulk action model buttons above this line. %>
           <%= render "shared/bulk_action_select" if notifications.any? %>
 
           <% unless hide_back %>
-            <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:notification)} back" %>
+            <%# link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:notification)} back" %>
           <% end %>
         <% end %>
       <% end %>
 
       <% box.raw_footer do %>
+        <%# render 'account/notifications/archive_actions/index', archive_actions: context.notifications_archive_actions %>
         <%# 🚅 super scaffolding will insert new action model index views above this line. %>
       <% end %>
     <% end %>

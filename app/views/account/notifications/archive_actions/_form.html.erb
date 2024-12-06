@@ -1,0 +1,35 @@
+<%= form_with model: archive_action, url: (archive_action.persisted? ? [:account, archive_action] : [:account, @team, :notifications_archive_actions]), local: true, class: 'form' do |form| %>
+  <%= render 'account/shared/forms/errors', form: form %>
+  <%= form.hidden_field :allow_empty_form, value: nil %>
+
+  <%= render "shared/alert" do %>
+    <% if @archive_action.target_all? %>
+      We're preparing to Archive <strong>all Notifications</strong> of <strong><%= @team.name %></strong>.
+    <% else %>
+      We're preparing to Archive <strong><%= archive_action.target_ids.count %> <%= archive_action.target_ids.count > 1 ? "Notification".pluralize(archive_action.target_ids.count) : "Notification" %></strong> of <strong><%= @team.name %></strong>.
+    <% end %>
+  <% end %>
+
+  <% with_field_settings form: form do %>
+
+    <div class="inline hidden">
+      <%= render 'shared/fields/buttons', method: :target_all, html_options: {autofocus: true} %>
+      <%= render 'shared/fields/super_select', method: :target_ids, html_options: {multiple: true},
+        choices: @archive_action.valid_targets.map { |archive_action| [archive_action.label_string, archive_action.id] } %>
+    </div>
+
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+
+    <%= render "shared/actions/scheduling" %>
+  <% end %>
+
+  <div class="buttons">
+    <%= form.submit (form.object.persisted? ? t('.buttons.update') : t('.buttons.create')), class: "button" %>
+    <% if form.object.persisted? %>
+    <%= link_to t('global.buttons.cancel'), [:account, archive_action], class: "button-secondary" %>
+    <% else %>
+    <%= link_to t('global.buttons.cancel'), [:account, @team, :notifications_archive_actions], class: "button-secondary" %>
+    <% end %>
+  </div>
+
+<% end %>

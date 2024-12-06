@@ -1,0 +1,143 @@
+en:
+  notifications/archive_actions: &archive_actions
+    label: &label Archive Actions
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-puzzle-piece
+    buttons: &buttons
+      new: Add New Archive Action
+      create: Perform Archive Action
+      edit: Edit Archive Action
+      update: Update Archive Action
+      destroy: Remove Archive Action
+      approve: Approve Archive Action
+      shorthand:
+        show: Details
+        edit: Edit
+        destroy: Cancel
+        dismiss: Dismiss
+        approve: Approve
+        create: Archive
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove this operation receipt?
+    fields: &fields
+      id:
+        heading: Archive Action ID
+      team_id:
+        heading: Team ID
+      target_all:
+        _: &target_all Target All
+        label: *target_all
+        heading: *target_all
+        options:
+          yes: "Yes"
+          no: "No"
+      target_ids: &targets
+        _: &target_ids Targets
+        label: *target_ids
+        heading: *target_ids
+        placeholder: None
+      targets: *targets
+      target_count:
+        _: &target_count Total Count
+        label: *target_count
+        heading: *target_count
+      performed_count:
+        _: &performed_count Progress Count
+        label: *performed_count
+        heading: *performed_count
+      created_by_id: &created_by
+        _: &created_by_id Created By
+        label: *created_by_id
+        heading: *created_by_id
+        placeholder: None
+      created_by: *created_by
+      approved_by_id: &approved_by
+        _: &approved_by_id Approved By
+        label: *approved_by_id
+        heading: *approved_by_id
+        placeholder: None
+      approved_by: *approved_by
+      scheduled_for:
+        _: &scheduled_for Scheduled For
+        label: "Would you like this action to be performed at a future time?"
+        heading: *scheduled_for
+        help: Leave this blank if you would like the action to take place immediately.
+      started_at:
+        _: &started_at Began At
+        label: *started_at
+        heading: *started_at
+      completed_at:
+        _: &completed_at Completed At
+        label: *completed_at
+        heading: *completed_at
+      performed_count_over_target_count:
+        heading: Progress
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    index:
+      section: "%{teams_possessive} Archive Actions"
+      contexts:
+        team:
+          header: Current and Scheduled Archive Operations
+          description: Below is a list of previously scheduled or performed operations to perform an action on one or more Notifications of %{team_name}. Operations will only appear here if they are scheduled for the future, currently in progress, or specifically were configured to retain their receipt after completion.
+          headers:
+            active: Active Archive Operations
+            scheduled: Scheduled Archive Operations
+            awaiting_approval: Archive Operations Awaiting Approval
+            completed: Completed Archive Operations
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{archive_action_name}"
+      header: Archive Action Details
+      description: Below are the details we have for %{archive_action_name}.
+      manage_description: You'll also find options for updating these details or removing %{archive_action_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "Archive Notifications of %{team_name}"
+      header: Archive Notifications
+      description: The following options are available for this operation.
+      form: *form
+    edit:
+      section: "%{archive_action_name}"
+      header: Edit Archive Action Details
+      description: You can update the details or settings for %{archive_action_name} below.
+      form: *form
+    notifications:
+      created: Archive Action was successfully created.
+      updated: Archive Action was successfully updated.
+      destroyed: Archive Action was successfully destroyed.
+      approved: Archive Action was approved.
+  account:
+    notifications:
+      archive_actions: *archive_actions
+  activerecord:
+    attributes:
+      notifications/archive_action:
+        target_all: *target_all
+        target_ids: *target_ids
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        target_count: *target_count
+        performed_count: *performed_count
+        created_by_id: *created_by_id
+        approved_by_id: *approved_by_id
+        scheduled_for: *scheduled_for
+        started_at: *started_at
+        completed_at: *completed_at
+        created_at: *created_at
+        updated_at: *updated_at

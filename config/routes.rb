@@ -136,6 +136,11 @@ Rails.application.routes.draw do
         namespace :notifications do
           resources :flags
           resources :requests
+          resources :archive_actions do
+            member do
+              post 'approve'
+            end
+          end
         end
 
         resources :seasons

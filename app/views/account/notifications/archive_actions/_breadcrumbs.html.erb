@@ -1,0 +1,8 @@
+<% archive_action ||= @archive_action %>
+<% team ||= @team || archive_action&.team %>
+<%= render 'account/notifications/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :notifications_archive_actions] %>
+<% if archive_action&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: archive_action.label_string, url: [:account, archive_action] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'notifications/archive_actions' %>

@@ -219,4 +219,5 @@ gem "bullet_train-power_pack", github: "julianrubisch/bullet_train-power_pack"
 gem 'paper_trail'
 gem 'simple_calendar'
 gem "bullet_train-audit_logs", git: "https://github.com/bullet-train-pro/bullet_train-audit_logs.git"
+gem "bullet_train-action_models", git: "https://github.com/bullet-train-pro/bullet_train-action_models.git"
 
