@@ -4,10 +4,6 @@
 
 
 
-
-
-
-
   <%= render 'account/shared/menu/section' do %>
     <%= render 'account/teams/menu_item' %>
     <%= render 'account/scaffolding/absolutely_abstract/creative_concepts/menu_item' unless scaffolding_things_disabled? %>
@@ -46,9 +42,10 @@
 
     
     <%= render 'account/shared/menu/section', title: "Notifications" do %>
-      <%= render 'account/notifications/requests/menu_item' %>
-      <%= render 'account/notifications/flags/menu_item' %>
       <%= render 'account/notifications/menu_item' %>
+      <%= render 'account/notifications/requests/menu_item' %>
+      
+      
     <% end %>
     
     
@@ -69,6 +66,7 @@
       <%= render 'account/demographics/menu_item' %>
       <%= render 'account/websiteimages/menu_item' %>
       <%= render 'account/questions/menu_item' %>
+      <%= render 'account/notifications/flags/menu_item' %>
       <%= render 'account/games/menu_item' %>
     <% end %>
 

@@ -10,13 +10,11 @@
     <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, notification.notifiable] %></td>
     <td><%= render 'shared/attributes/belongs_to', attribute: :user %></td>
     <td><%= render 'shared/attributes/date_and_time', attribute: :read_at %></td>
+    <td><%= distance_of_time_in_words(Time.zone.now, notification.created_at) %> ago</td>
     <%# 🚅 super scaffolding will insert new fields above this line. %>
     <td class="buttons">
       <% unless hide_actions %>
         <%= link_to "Mark as Read", account_team_mark_notification_read_path(team_id: current_team.id, notification_id: notification.id), class: 'button-secondary button-smaller' %>
-        <% if can? :edit, notification %>
-          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, notification], class: 'button-secondary button-smaller' %>
-        <% end %>
         <% if can? :destroy, notification %>
           <%= button_to t('.buttons.shorthand.destroy'), [:account, notification], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(notification)) }, class: 'button-secondary button-smaller' %>
         <% end %>

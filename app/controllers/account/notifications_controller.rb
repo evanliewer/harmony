@@ -4,7 +4,7 @@ class Account::NotificationsController < Account::ApplicationController
   # GET /account/teams/:team_id/notifications
   # GET /account/teams/:team_id/notifications.json
   def index
-   
+    @notifications = current_user.notifications.order(created_at: :DESC)
     delegate_json_to_api
   end
 

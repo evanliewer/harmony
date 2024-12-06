@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # 🚅 add concerns above.
 
   # 🚅 add belongs_to associations above.
-
+  has_many :notifications, dependent: :destroy
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.
