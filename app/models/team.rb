@@ -28,7 +28,7 @@ class Team < ApplicationRecord
   has_many :games, dependent: :destroy, enable_cable_ready_updates: true
   has_many :medforms, dependent: :destroy, enable_cable_ready_updates: true
   has_many :diets, dependent: :destroy
-  has_many :notifications_archive_actions, class_name: "Notifications::ArchiveAction", dependent: :destroy, foreign_key: :team_id, enable_updates: true, inverse_of: :team
+  has_many :notifications_archive_actions, class_name: "Notifications::ArchiveAction", dependent: :destroy, foreign_key: :team_id, enable_cable_ready_updates: true, inverse_of: :team
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.
