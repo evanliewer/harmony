@@ -47,5 +47,10 @@
   "packageManager": "yarn@4.5.3",
   "devDependencies": {
     "tailwindcss": "^3.4.15"
+  },
+  "engines": {
+    "node": ">=22.11.0",
+    "yarn": ">=4.5.3"
   }
+  
 }
