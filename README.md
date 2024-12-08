@@ -21,3 +21,12 @@
 ## Information about Bullet Train
 If this is your first time working on a Bullet Train application, be sure to review the [Bullet Train Basic Techniques](https://bullettrain.co/docs/getting-started) and the [Bullet Train Developer Documentation](https://bullettrain.co/docs).
 
+
+### Heroku
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/evanliewer/harmony.git)
+
+Clicking this button will take you to the first step of a process that, when completed, will provision demo-grade infrastructure and services for your Bullet Train application which will cost about **$22/month**.
+
+Once that process has completed, be sure to complete the other steps from the [Deploying to Heroku](https://bullettrain.co/docs/heroku) documentation.
+
