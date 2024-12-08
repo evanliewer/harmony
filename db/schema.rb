@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_06_051729) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_08_215052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -787,6 +787,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_051729) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "verified_at", precision: nil
+  end
+
+  create_table "webhooks_incoming_camp_dashboard_webhooks", force: :cascade do |t|
+    t.jsonb "data"
+    t.datetime "processed_at"
+    t.datetime "verified_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "webhooks_incoming_jotform_webhooks", force: :cascade do |t|

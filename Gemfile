@@ -215,7 +215,9 @@ gem "pry"
 # that you run into a merge conflict in the future.
 
 # 🚅 super scaffolding will insert new oauth providers above this line.
-gem "bullet_train-power_pack", github: "julianrubisch/bullet_train-power_pack"
+#gem "bullet_train-power_pack", github: "julianrubisch/bullet_train-power_pack"
+gem 'bullet_train-power_pack', git: 'git@github.com:julianrubisch/bullet_train-power_pack.git'
+
 gem 'paper_trail'
 gem 'simple_calendar'
 gem "bullet_train-audit_logs", git: "https://github.com/bullet-train-pro/bullet_train-audit_logs.git"

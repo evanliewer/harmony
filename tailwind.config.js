@@ -12,8 +12,8 @@ let themeConfig = require(themeConfigFile)
 
 // *** Uncomment these if required for your overrides ***
 
-// const defaultTheme = require('tailwindcss/defaultTheme')
-// const colors = require('tailwindcss/colors')
+//const defaultTheme = require('tailwindcss/defaultTheme')
+//const colors = require('tailwindcss/colors')
 
 // *** Add your own overrides here ***
 
@@ -32,4 +32,14 @@ module.exports = {
     'bg-green-800'
   ],
   // other Tailwind config...
+
+
 };
+
+themeConfig.safelist = [
+  'bg-red-600',
+  'bg-blue-400',
+  'bg-yellow-400',
+  'bg-green-400',
+  'bg-green-700'
+];

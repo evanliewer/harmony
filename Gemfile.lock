@@ -1,4 +1,12 @@
 GIT
+  remote: git@github.com:julianrubisch/bullet_train-power_pack.git
+  revision: ea7034ffbc0e4932e8c92637c305814138b30eae
+  specs:
+    bullet_train-power_pack (0.1.0)
+      bullet_train (>= 1.7.17)
+      bullet_train-super_scaffolding (>= 1.7.17)
+
+GIT
   remote: https://github.com/bullet-train-pro/bullet_train-action_models.git
   revision: 7d8e80ecfcf7951910475ea19e2f67f98e07791e
   specs:
@@ -18,14 +26,6 @@ GIT
       diffy (~> 3.4)
       paper_trail (>= 14.0)
       rails (>= 6.0)
-
-GIT
-  remote: https://github.com/julianrubisch/bullet_train-power_pack.git
-  revision: ea7034ffbc0e4932e8c92637c305814138b30eae
-  specs:
-    bullet_train-power_pack (0.1.0)
-      bullet_train (>= 1.7.17)
-      bullet_train-super_scaffolding (>= 1.7.17)
 
 GEM
   remote: https://rubygems.org/
