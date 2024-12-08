@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   namespace :webhooks do
     namespace :incoming do
+      resources :camp_dashboard_webhooks
       resources :jotform_webhooks
       namespace :oauth do
         # 🚅 super scaffolding will insert new oauth provider webhooks above this line.
