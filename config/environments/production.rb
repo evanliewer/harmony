@@ -71,13 +71,10 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-<<<<<<< HEAD
+
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "harmony_production"
-=======
-  # config.active_job.queue_adapter = :resque
-  # config.active_job.queue_name_prefix = "untitled_application_production"
->>>>>>> v1.8.0
+
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
