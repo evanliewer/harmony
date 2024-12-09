@@ -1,7 +1,7 @@
 
 
     <!-- Agenda Section -->
-    <% @schedule = Reservation.where(retreat_id: @retreats.ids).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: @department.name }).ids }).where.not(active: false).order(:name) %>
+    <% @schedule = Reservation.where(retreat_id: @retreats.ids).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: @department.name }).ids }).where.not(active: false).order(:name) %> 
 
 
 
