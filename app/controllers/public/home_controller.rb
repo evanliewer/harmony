@@ -4,35 +4,36 @@ class Public::HomeController < Public::ApplicationController
 
  
    def index
-
-    redirect_to new_user_session_path unless params[:id].present?
     
-    ActiveStorage::Current.url_options = {host: "https://campdashboard.s3.amazonaws.com"}
-    
-    if params[:id].present?
+    if params[:id].present? && params[:id].strip != ""
       @retreat = Retreat.find_by_obfuscated_id(params[:id])
-    else 
-      @retreat = Retreat.second
-    end    
-      @planner = User.first
-      @schedule = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.schedulable.ids }).where(items: { active: true})
-      @timeline = Flights::Check.includes(:flight).where(retreat_id: @retreat.id).where(:flights => { :external => true }).merge(Flight.order(sort_order: :desc))
-      @meetingspaces = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false)
-      @snacks = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Snacks" }).ids }).where(items: { active: true})
-      @questions = Question.joins([:locations]).where(locations: { id: @retreat.location_ids }).order(:sort_order)
-      @medforms = Medform.where(retreat_id: @retreat.id)
-      @cabins = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false)
-      @cabin_ids = @cabins.pluck(:item_id)
-      @cabin_resources = Item.where(id: @cabin_ids).distinct
-
-    
-      
-
-      respond_to do |format|
-       format.html { render layout: false }
-       format.csv { send_data Item.to_csv(@cabin_resources), filename: "CabinAssignments-#{@retreat&.organization&.name}-#{@retreat.arrival.strftime("%B #{@retreat.arrival.day.ordinalize} %Y")}.csv" }          
+      unless @retreat
+        redirect_to new_account_user_path, alert: "Retreat not found." and return
       end
-      
+    else
+      redirect_to new_account_user_path, alert: "Please log in to access this page." and return
+    end
+
+    ActiveStorage::Current.url_options = {host: "https://campdashboard.s3.amazonaws.com"} 
+    @planner = User.first
+    @schedule = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.schedulable.ids }).where(items: { active: true})
+    @timeline = Flights::Check.includes(:flight).where(retreat_id: @retreat.id).where(:flights => { :external => true }).merge(Flight.order(sort_order: :desc))
+    @meetingspaces = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Meeting Spaces" }).ids }).where.not(active: false)
+    @snacks = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Snacks" }).ids }).where(items: { active: true})
+    @questions = Question.joins([:locations]).where(locations: { id: @retreat.location_ids }).order(:sort_order)
+    @medforms = Medform.where(retreat_id: @retreat.id)
+    @cabins = Reservation.includes([:item]).where(retreat_id: @retreat.id).joins(:item).where(items: { id: Item.joins(:tags).where(items_tags: { name: "Lodging" }).ids }).where.not(active: false)
+    @cabin_ids = @cabins.pluck(:item_id)
+    @cabin_resources = Item.where(id: @cabin_ids).distinct
+
+  
+    
+
+    respond_to do |format|
+     format.html { render layout: false }
+     format.csv { send_data Item.to_csv(@cabin_resources), filename: "CabinAssignments-#{@retreat&.organization&.name}-#{@retreat.arrival.strftime("%B #{@retreat.arrival.day.ordinalize} %Y")}.csv" }          
+    end
+    
   end
 
 
