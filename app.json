@@ -53,6 +53,10 @@
       "description": "The number of workers per puma thread. We set it low to prevent OOM errors on new heroku apps. If you move to larger dynos you can increase this. https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#recommended-default-puma-process-and-thread-configuration",
       "value": "2"
     },
+    "BUNDLE_GITHUB__COM": {
+      "description": "powerPack required",
+      "value": "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"
+    },
     "JEMALLOC_ENABLED": {
       "description": "Activate the jemalloc buildpack. https://elements.heroku.com/buildpacks/gaffneyc/heroku-buildpack-jemalloc",
       "value": "true"
