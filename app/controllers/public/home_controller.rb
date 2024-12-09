@@ -4,6 +4,9 @@ class Public::HomeController < Public::ApplicationController
 
  
    def index
+
+    redirect_to new_user_session_path unless params[:id].present?
+    
     ActiveStorage::Current.url_options = {host: "https://campdashboard.s3.amazonaws.com"}
     
     if params[:id].present?
