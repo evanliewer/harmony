@@ -62,11 +62,16 @@ group :development, :test do
 
   # A gem for generating test coverage results in your browser.
   gem "simplecov", require: false
+  gem "simplecov-json", require: false
 
   # Generate test objects.
   # 6.3.0 and 6.4.0 have a bug https://github.com/thoughtbot/factory_bot_rails/issues/433
   # And now 6.4.1 and 6.4.2 break some things: https://github.com/bullet-train-co/bullet_train-core/issues/707
   gem "factory_bot_rails", "~> 6.2", "!= 6.3.0", "!= 6.4.0", "!= 6.4.1", "!= 6.4.2"
+
+  # In CI we use parallel tests to help increase test speed while keeping the number of
+  # test runners down. You can tweak the workflow to adjust your parallelism as needed.
+  gem "parallel_tests"
 end
 
 group :development do
@@ -112,7 +117,7 @@ end
 
 # We use a constant here so that we can ensure that all of the bullet_train-*
 # packages are on the same version.
-BULLET_TRAIN_VERSION = "1.11.0"
+BULLET_TRAIN_VERSION = "1.12.0"
 
 # Core packages.
 gem "bullet_train", BULLET_TRAIN_VERSION

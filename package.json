@@ -2,9 +2,9 @@
   "name": "app",
   "private": true,
   "dependencies": {
-    "@bullet-train/bullet-train": "1.11.0",
-    "@bullet-train/bullet-train-sortable": "1.11.0",
-    "@bullet-train/fields": "1.11.0",
+    "@bullet-train/bullet-train": "1.12.0",
+    "@bullet-train/bullet-train-sortable": "1.12.0",
+    "@bullet-train/fields": "1.12.0",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@fortawesome/fontawesome-pro": "^6.6.0",
     "@fullcalendar/core": "^6.1.15",
@@ -34,7 +34,7 @@
     "postcss-nested": "^7.0.2",
     "stimulus-reveal": "^1.4.2",
     "stimulus-scroll-reveal": "^3.2.0",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^3.4.16",
     "yalc": "^1.0.0-pre.53"
   },
   "scripts": {
